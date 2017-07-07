@@ -283,10 +283,15 @@ License: You must have a valid license purchased only from themeforest(the above
                 </li>
                 @if(session('admin')->sadmin != 'sa')
                     <li>
-                        <a href="{{url('')}}">
+                        <a href="">
                             <i class="icon-users"></i>
-                            <span class="title">Modul</span>
+                            <span class="title">Danh sách đối tượng</span>
+                            <span class="arrow "></span>
                         </a>
+                        <ul class="sub-menu">
+                            <li><a href="{{url('danhsachdoituongtx')}}">Thường xuyên</a></li>
+                            <li><a href="{{url('')}}">Đột xuất</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="{{url('')}}">
@@ -303,10 +308,20 @@ License: You must have a valid license purchased only from themeforest(the above
                         <span class="arrow "></span>
                     </a>
                     <ul class="sub-menu">
-                            <li><a href="{{url('districts')}}"> Thông tin quận huyện</a></li>
-                            <li><a href="{{url('towns')}}"> Thông tin xã phường</a></li>
-                            <li><a href="{{url('users')}}"> Quản lý tài khoản</a></li>
-                            <li><a href="{{url('cau_hinh_he_thong')}}">Cấu hình hệ thống</a></li>
+                        <li><a href="{{url('districts')}}"> Thông tin quận huyện</a></li>
+                        <li><a href="{{url('towns')}}"> Thông tin xã phường</a></li>
+                        <li>
+                            <a href="">
+                                <span class="title">Danh mục đối tượng</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li><a href="{{url('dmtrocaptx')}}">Thường xuyên</a></li>
+                                <li><a href="{{url('')}}">Đột xuất</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{{url('users')}}"> Quản lý tài khoản</a></li>
+                        <li><a href="{{url('cau_hinh_he_thong')}}">Cấu hình hệ thống</a></li>
                     </ul>
                 </li>
                 @endif

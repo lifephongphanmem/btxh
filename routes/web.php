@@ -49,6 +49,12 @@ Route::resource('towns','TownsController');
 Route::post('towns/delete','TownsController@destroy');
 //End Thông tin xã phường
 
+//Dm trợ cấp tx
+Route::resource('dmtrocaptx','DmTroCapTxController');
+Route::post('dmtrocaptx/delete','DmTroCapTxController@destroy');
+
+//End dm đối tượng
+
 // </editor-fold>//End Setting
 
 // <editor-fold defaultstate="collapsed" desc="--Reports--">
@@ -58,5 +64,8 @@ Route::post('towns/delete','TownsController@destroy');
 
 
 // <editor-fold defaultstate="collapsed" desc="--Manage--">
+Route::resource('danhsachdoituongtx','DsDoiTuongTxController');
+Route::get('danhsachdoituongtx/{trocap}/create','DsDoiTuongTxController@create');
+Route::get('danhsachdoituongtx/{id}/show','DsDoiTuongTxController@show');
 
 // </editor-fold>//End Manage

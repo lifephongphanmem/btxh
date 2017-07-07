@@ -262,7 +262,13 @@ function can($module = null, $action = null)
         return false;
 
 }
-
+function canEdit($trangthaihoso){
+    if((session('admin')->level == 'X' || session('admin')->level == 'H') && ($trangthaihoso == 'Đã chuyển' || $trangthaihoso == 'Đã duyệt') ){
+        return false;
+    }else{
+        return true;
+    }
+}
 
 function canGeneral($module = null, $action =null)
 {
@@ -397,42 +403,6 @@ function getQuocTichSelectOptions() {
     return $options;
 }
 
-function getQuyenHoTichT($plhotich){
-    $quyenhotichs = \App\SoHoTich::where('plhotich',$plhotich)
-        ->get();
-
-    $options = array();
-
-    foreach ($quyenhotichs as $quyenhotich) {
-
-        $options[$quyenhotich->quyenhotich] = $quyenhotich->quyenhotich;
-    }
-    return $options;
-}
-function getQuyenHoTichH($mahuyen,$plhotich){
-    $quyenhotichs = \App\SoHoTich::where('plhotich',$plhotich)
-        ->where('mahuyen',$mahuyen)
-        ->get();
-
-    $options = array();
-
-    foreach ($quyenhotichs as $quyenhotich) {
-
-        $options[$quyenhotich->quyenhotich] = $quyenhotich->quyenhotich;
-    }
-    return $options;
-}
-function getQuyenHoTichX($maxa,$mahuyen,$plhotich){
-    $quyenhotichs = \App\SoHoTich::where('plhotich',$plhotich)
-        ->where('mahuyen',$mahuyen)
-        ->where('maxa',$maxa)
-        ->get();
-    $options = array();
-    foreach ($quyenhotichs as $quyenhotich) {
-        $options[$quyenhotich->quyenhotich] = $quyenhotich->quyenhotich;
-    }
-    return $options;
-}
 
 function listHuyen(){
     return \App\Districts::all();
