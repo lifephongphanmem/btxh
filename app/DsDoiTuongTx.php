@@ -32,6 +32,8 @@ class DsDoiTuongTx extends Model
         'sosotc',
         'pltrocap',
         'matrocap',
+        'heso',
+        'sotientc',
         'ngayhuong',
         'ngaydunghuong',
         'lydodunghuong',

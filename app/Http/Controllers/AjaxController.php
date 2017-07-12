@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ConNuoi;
 use App\Districts;
+use App\DmTroCapTx;
 use App\KetHon;
 use App\KhaiSinh;
 use App\KhaiTu;
@@ -82,6 +83,96 @@ class AjaxController extends Controller
                 }
             }
             $result['message'] .= '</select>';
+            $result['status'] = 'success';
+        }
+
+        die(json_encode($result));
+    }
+
+    public function getChiTietTc(Request $request){
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if(!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+
+        $inputs = $request->all();
+
+        if(isset($inputs['noidung'])){
+            $chitiets = DmTroCapTx::where('noidung',$inputs['noidung'])->get();
+            $result['message'] = '<select name="select_chitiet" id="select_chitiet" class="form-control">';
+            if(count($chitiets) > 0){
+                foreach($chitiets as $chitiet){
+                    $result['message'] .= '<option value="'.$chitiet->matrocap.'">'.$chitiet->chitiet.'- Hệ số: '.$chitiet->heso.'</option>';
+                }
+            }
+            $result['message'] .= '</select>';
+            $result['status'] = 'success';
+        }
+
+        die(json_encode($result));
+    }
+
+    public function addTcTx(Request $request){
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if(!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+
+        $inputs = $request->all();
+
+        if(isset($inputs['matrocap'])){
+            $tttrocap = DmTroCapTx::where('matrocap',$inputs['matrocap'])->first();
+
+            $result['message'] = '<div id="tttrocap">';
+            $result['message'] .='<div class="row">';
+            $result['message'] .='<div class="col-md-12">';
+            $result['message'] .='<div class="form-group">';
+            $result['message'] .='<label class="col-sm-2 control-label">Nội dung</label>';
+            $result['message'] .='<div class="col-sm-10" style="color: blue;font-size: 15px">'.$tttrocap->noidung.'</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+
+            $result['message'] .='<div class="row">';
+            $result['message'] .='<div class="col-md-12">';
+            $result['message'] .='<div class="form-group">';
+            $result['message'] .='<label class="col-sm-2 control-label">Chi tiết</label>';
+            $result['message'] .='<div class="col-sm-10" style="color: blue;margin: auto; font-size: 15px" >'.$tttrocap->chitiet.'</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+
+            $result['message'] .='<div class="row">';
+            $result['message'] .='<div class="col-md-6">';
+            $result['message'] .='<div class="form-group">';
+            $result['message'] .='<label class="col-sm-4 control-label">Hệ số</label>';
+            $result['message'] .='<div class="col-sm-8"><input type="text" class="form-control" name="heso" id="heso" value="'.$tttrocap->heso.'" readonly></div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .='<div class="col-md-6">';
+            $result['message'] .='<div class="form-group">';
+            $result['message'] .='<label class="col-sm-4 control-label">Số tiền</label>';
+            $result['message'] .='<div class="col-sm-8"><input type="text" class="form-control" name="sotientc" id="sotientc" value="" readonly></div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+
+            $result['message'] .= '<input type="text" id="matrocap" name="matrocap" value="'.$tttrocap->matrocap.'">';
+            $result['message'] .= '</div>';
             $result['status'] = 'success';
         }
 

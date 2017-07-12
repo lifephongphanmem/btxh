@@ -7,6 +7,8 @@ Route::get('/checkmahuyen','AjaxController@checkmahuyen');
 Route::get('/checkmaxa','AjaxController@checkmaxa');
 Route::get('/checkuser','AjaxController@checkuser');
 Route::get('getXas','AjaxController@getXas');
+Route::get('getChiTietTc','AjaxController@getChiTietTc');
+Route::get('/addTcTx','AjaxController@addTcTx');
 // </editor-fold>//End Ajax
 
 // <editor-fold defaultstate="collapsed" desc="--Setting--">

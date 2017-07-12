@@ -38,6 +38,8 @@ class CreateDsdoituongtxTable extends Migration
             $table->string('sosotc')->nullable();
             $table->string('pltrocap')->nullable();
             $table->string('matrocap')->nullable();
+            $table->string('heso')->nullable();
+            $table->string('sotientc')->nullable();
             $table->date('ngayhuong')->nullable();
             $table->string('ngaydunghuong')->nullable();
             $table->string('lydodunghuong')->nullable();

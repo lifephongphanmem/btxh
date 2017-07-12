@@ -97,6 +97,9 @@ class DsDoiTuongTxController extends Controller
                 $xadf = $xas->where('maxa', session('admin')->maxa)->first()->maxa;
             }
             $selectloaidt = DmTroCapTx::where('pltrocap', $trocap)->get();
+            $selectnoidungtc = $this->getNoiDungTcTx($trocap);
+            $selectchitiettc = $this->getChiTietTcTx($selectnoidungtc);
+
             $loaitrocapdf = $selectloaidt->first()->matrocap;
             $loaitrocap = PlTroCapTx::where('maloai', $trocap)->first();
             return view('manage.danhsachdoituong.thuongxuyen.create')
@@ -108,11 +111,35 @@ class DsDoiTuongTxController extends Controller
                 ->with('trocap', $trocap)
                 ->with('loaitrocap', $loaitrocap)
                 ->with('selectloaidt', $selectloaidt)
+                ->with('selectnoidungtc',$selectnoidungtc)
+                ->with('selectchitiettc',$selectchitiettc)
                 ->with('loaitrocapdf',$loaitrocapdf)
                 ->with('trocap',$trocap)
                 ->with('pageTitle', 'Thêm mới đối tượng trợ cấp thường xuyên');
         } else
             return view('errors.notlogin');
+    }
+
+    public function getNoiDungTcTx($trocap){
+        $model = DmTroCapTx::where('pltrocap',$trocap)->groupby('noidung')->select('noidung')->geT();
+        $options = array();
+
+        foreach ($model as $tt) {
+
+            $options[] = $tt->noidung;
+        }
+        return $options;
+    }
+
+    public function getChiTietTcTx($noidung){
+        $model = DmTroCapTx::where('noidung',$noidung)->get();
+        $options = array();
+
+        foreach ($model as $tt) {
+
+            $options[$tt->matrocap] = $tt->chitiet.'- Hệ số: '.$tt->heso;
+        }
+        return $options;
     }
 
     public function store(Request $request){
@@ -149,9 +176,10 @@ class DsDoiTuongTxController extends Controller
             $xas = Towns::where('mahuyen', $model->mahuyen)->get();
             $huyendf = $model->mahuyen;
             $xadf = $model->maxa;
-            $selectloaidt = DmTroCapTx::where('pltrocap', $model->pltrocap)->get();
+            $selectnoidungtc = $this->getNoiDungTcTx($model->pltrocap);
+            $selectchitiettc = $this->getChiTietTcTx($selectnoidungtc);
 
-
+            $tttrocap = DmTroCapTx::where('matrocap',$model->matrocap)->first();
             $loaitrocap = PlTroCapTx::where('maloai', $model->pltrocap)->first();
             return view('manage.danhsachdoituong.thuongxuyen.edit')
                 ->with('action', 'edit')
@@ -159,9 +187,11 @@ class DsDoiTuongTxController extends Controller
                 ->with('mahuyen', $huyendf)
                 ->with('xas', $xas)
                 ->with('maxa', $xadf)
+                ->with('selectnoidungtc',$selectnoidungtc)
+                ->with('selectchitiettc',$selectchitiettc)
                 ->with('loaitrocap',$loaitrocap)
-                ->with('selectloaidt', $selectloaidt)
                 ->with('model',$model)
+                ->with('tttrocap',$tttrocap)
                 ->with('pageTitle', 'Chỉnh sửa đối tượng trợ cấp thường xuyên');
         } else
             return view('errors.notlogin');

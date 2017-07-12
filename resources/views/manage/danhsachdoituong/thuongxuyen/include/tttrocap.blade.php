@@ -90,35 +90,62 @@
                 </div>
             </div>
         @endif
-        @if($action == 'create')
         <div class="row">
-            @foreach($selectloaidt as $tc)
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="col-sm-1"></label>
-                    <label class="col-sm-11">{!! Form::radio ('matrocap', $tc->matrocap,null,array('id' => 'matrocap','class' => 'form-control required',$tc->matrocap == $loaitrocapdf ? 'checked' : '')) !!}
-                        &nbsp; &nbsp; {{$tc->noidung}} {{$tc->chitiet != '' ? '- '.$tc->chitiet : ''}}- <b>Hệ số: {{$tc->heso}}</b> </label>
+                    <div class="col-md-1"></div>
+                    <a data-target="#modal-addtc" data-toggle="modal">Chọn loại đối tượng trợ cấp</a>
                 </div>
             </div>
-            @endforeach
         </div>
-        @else
-            <div class="row">
-                @foreach($selectloaidt as $tc)
+        @if($action == 'edit')
+            <div id="tttrocap">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="col-sm-1"></label>
-                            <label class="col-sm-11">{!! Form::radio ('matrocap', $tc->matrocap,null,array('id' => 'matrocap','class' => 'form-control required',$tc->matrocap == $model->matrocap ? 'checked' : '')) !!}
-                                &nbsp; &nbsp; {{$tc->noidung}} {{$tc->chitiet != '' ? '- '.$tc->chitiet : ''}}- <b>Hệ số: {{$tc->heso}}</b> </label>
+                            <label class="col-sm-2 control-label">Nội dung</label>
+                            <div class="col-sm-10" style="color: blue;font-size: 15px">{{$tttrocap->noidung}}</div>
                         </div>
                     </div>
-                @endforeach
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Chi tiết</label>
+                            <div class="col-sm-10" style="color: blue;margin: auto; font-size: 15px" >{{$tttrocap->chitiet}}- Hệ số: {{$tttrocap->heso}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Hệ số</label>
+                            <div class="col-sm-8">
+                                {!!Form::text('heso',null, array('id' => 'heso','class' => 'form-control','readonly'))!!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Số tiền</label>
+                            <div class="col-sm-8">
+                                {!!Form::text('sotientc',null, array('id' => 'sotientc','class' => 'form-control','readonly'))!!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {!!Form::hidden('matrocap',null, array('id' => 'matrocap','class' => 'form-control','readonly'))!!}
+            </div>
+        @else
+            <div id="tttrocap">
             </div>
         @endif
-
-
     </div>
 </div>
+
+
 <script>
     jQuery(function($){
         $('#trangthaihuong').change(function(){
@@ -131,6 +158,44 @@
                 $( "#ngaydung" ).toggle( "fast" );
             }
         });
+        $('#select_noidung').change(function(){
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: '/getChiTietTc',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    noidung: $("#select_noidung option:selected" ).text(),
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if(data.status == 'success')
+                        $('#select_chitiet').replaceWith(data.message);
+                }
+            });
+        });
     });
+</script>
+<script>
+    function addtc(){
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: '/addTcTx',
+            type: 'GET',
+            data: {
+                _token: CSRF_TOKEN,
+                matrocap: $('#select_chitiet').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if(data.status == 'success') {
+                    toastr.success("Nhập trợ cấp cho đối tượng thành công!");
+                    $('#tttrocap').replaceWith(data.message);
+                    $('#modal-addtc').modal("hide");
+
+                }
+            }
+        })
+    }
 </script>
 
