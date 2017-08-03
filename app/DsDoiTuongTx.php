@@ -15,6 +15,7 @@ class DsDoiTuongTx extends Model
         'trangthaihoso',
         'lydotralai',
         'ttthaotac',
+        'avatar',
 
         'mahoso',
         'hoten',
@@ -27,7 +28,6 @@ class DsDoiTuongTx extends Model
         'bhyt',
         'noikhambenh',
 
-        'ttquyetdinh',
         'trangthaihuong',
         'sosotc',
         'pltrocap',
@@ -35,7 +35,9 @@ class DsDoiTuongTx extends Model
         'heso',
         'sotientc',
         'ngayhuong',
+        'qdhuong',
         'ngaydunghuong',
+        'qddunghuong',
         'lydodunghuong',
 
         'ipt1',

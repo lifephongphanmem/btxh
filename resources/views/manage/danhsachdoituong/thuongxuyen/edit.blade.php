@@ -40,10 +40,10 @@
     {{$loaitrocap->tenloai}} <small> chỉnh sửa</small>
 </h3>
 <div class="row">
-    {!! Form::model($model, ['method' => 'PATCH', 'url'=>'danhsachdoituongtx/'. $model->id, 'class'=>'horizontal-form']) !!}
+    {!! Form::model($model, ['method' => 'PATCH','enctype'=>'multipart/form-data','url'=>'danhsachdoituongtx/'. $model->id, 'class'=>'horizontal-form']) !!}
     <input type="hidden" name="pltrocap" id="pltrocap" value="{{$model->pltrocap}}">
     <div class="col-md-12">
-        <div class="portlet box blue" id="form_wizard_1">
+        <div class="portlet box" id="form_wizard_1">
             <div class="portlet-body form" id="form_wizard">
                 <div class="form-body">
                     <ul class="nav nav-pills nav-justified steps">
@@ -176,6 +176,20 @@
             if($('#matrocap').val()==''){
                 strb2 += '  - Phân loại trợ cấp  \n';
                 ok = false;
+            }
+            if($('#trangthaihuong').val() == 'Dừng hưởng'){
+                if($('#ngaydunghuong').val()==''){
+                    strb2 += ' - Ngày dừng hưởng  \n';
+                    ok = false;
+                }
+                if($('#qddunghuong').val()==''){
+                    strb2 += '  - Quyết định dừng hưởng \n';
+                    ok = false;
+                }
+                if($('#lydodunghuong').val()==''){
+                    strb2 += '  - Lý do dừng hưởng  \n';
+                    ok = false;
+                }
             }
 
             //Kết quả

@@ -1,106 +1,65 @@
 @extends('main')
 
 @section('custom-style')
-
+    <link rel="stylesheet" type="text/css" href="{{url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url('assets/global/plugins/select2/select2.css')}}"/>
+    <!-- END THEME STYLES -->
 @stop
 
 
 @section('custom-script')
-
+    <script type="text/javascript" src="{{url('assets/global/plugins/select2/select2.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js')}}"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <script src="{{url('assets/admin/pages/scripts/table-managed.js')}}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            TableManaged.init();
+        });
+    </script>
 @stop
 
 @section('content')
-
-
-    <h3 class="page-title">
-        Thông tin <small>{{$loaidt}}</small>
-    </h3>
-    <!-- END PAGE HEADER-->
-
-    <!-- BEGIN DASHBOARD STATS -->
     <div class="row">
         <div class="col-md-12">
-            <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box">
-                <!--div class="portlet-title">
-                    <div class="caption">
-                    </div>
-                    <div class="actions">
-
-                    </div>
-                </div-->
+                <div class="portlet-title">
+                    <h3 class="page-title">
+                        Thông tin <small>{{$loaidt}}</small>
+                    </h3>
+                </div>
                 <div class="portlet-body">
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8">
-                            <table id="user" class="table table-bordered table-striped">
-                                <tbody>
-                                <tr>
-                                    <td style="width:280; text-align: center" rowspan="5">
-                                        <img src="{{ url('images/avatar/no-image.png')}}">
-                                    </td>
-                                    <td><b>Đơn vị quản lý:</b> {{$dvql}}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <b>Họ và tên:</b> {{$model->hoten}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><b>Mã hồ sơ:</b> {{$model->mahoso}}</td>
-                                </tr>
-                                <tr>
-                                   <td><b>Ngày sinh:</b> {{getDayVn($model->ngaysinh)}}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Giới tính:</b> {{$model->gioitinh}}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Địa chỉ</b></td>
-                                    <td>{{$model->diachi}}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <b>Bảo hiểm y tế- Nơi khám chữa bệnh</b>
-                                    </td>
-                                    <td>{{$model->bhyt}}- {{$model->noikhambenh}}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Thông tin quyết định trợ cấp</b></td>
-                                    <td>{{$model->ttquyetdinh}}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Sổ trợ cấp</b></td>
-                                    <td>{{$model->sosotc}}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Trạng thái hưởng</b></td>
-                                    <td>{{$model->trangthaihuong}}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Ngày bắt đâu-kết thúc hưởng</b></td>
-                                    <td>{{getDayVn($model->ngayhuong)}} - {{$model->trangthaihuong=='Dừng hưởng' ? getDayVn($model->ngaydunghuong) : ''}}</td>
-                                </tr>
-                                @if($model->trangthaihuong == 'Dừng hưởng')
-                                <tr>
-                                    <td><b>Lý do dừng hưởng</b></td>
-                                    <td>{{$model->lydodunghuong}}</td>
-                                </tr>
-                                @endif
-                                <tr>
-                                    <td><b>Loại trợ cấp</b></td>
-                                    <td>{{$loaitc->noidung}} {{$loaitc->chitiet != '' ? '- '.$loaitc->chitiet : ''}}- <b>Hệ số: {{$loaitc->heso}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                    <div class="tabbable-line boxless">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tab_1" data-toggle="tab">
+                                    Thông tin hồ sơ đối tượng</a>
+                            </li>
+                            <li>
+                                <a href="#tab_2" data-toggle="tab">
+                                    Thông tin thay đổi</a>
+                            </li>
+                            <li>
+                                <a href="#tab_3" data-toggle="tab">
+                                    Thông tin giấy tờ đính kèm</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            @include('manage.danhsachdoituong.thuongxuyen.include.tthosoprofile')
+                            @include('manage.danhsachdoituong.thuongxuyen.include.ttthaydoiprofile')
+                            @include('manage.danhsachdoituong.thuongxuyen.include.ttdinhkemprofile')
                         </div>
                     </div>
                 </div>
             </div>
-            <div style="text-align: center">
-                <a href="{{url('danhsachdoituongtx?&trocap='.$model->pltrocap)}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
-                <a href="" class="btn btn-default"><i class="fa fa-search"></i>&nbsp;Lịch sử</a>
-            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div style="text-align: center">
+            <a href="{{url('danhsachdoituongtx?&trocap='.$model->pltrocap)}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+            <a href="" class="btn btn-default"><i class="fa fa-search"></i>&nbsp;Lịch sử</a>
         </div>
     </div>
 @stop

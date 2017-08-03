@@ -52,8 +52,24 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td><input type="checkbox" {{ (isset($setting->doituongbtxh->index) && $setting->doituongbtxh->index == 1) ? 'checked' : '' }} value="1" name="roles[doituongbtxh][index]"/></td>
-                                        <td>Đối tượng bảo trợ</td>
+                                        <td><input type="checkbox" {{ (isset($setting->dttx->index) && $setting->dttx->index == 1) ? 'checked' : '' }} value="1" name="roles[dttx][index]"/></td>
+                                        <td>Đối tượng bảo trợ thường xuyên</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" {{ (isset($setting->dtdx->index) && $setting->dtdx->index == 1) ? 'checked' : '' }} value="1" name="roles[dtdx][index]"/></td>
+                                        <td>Đối tượng bảo trợ đột xuất</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" {{ (isset($setting->ctdttx->index) && $setting->ctdttx->index == 1) ? 'checked' : '' }} value="1" name="roles[ctdttx][index]"/></td>
+                                        <td>Chi trả đối tượng bảo trợ thường xuyên</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" {{ (isset($setting->ctdtdx->index) && $setting->ctdtdx->index == 1) ? 'checked' : '' }} value="1" name="roles[ctdtdx][index]"/></td>
+                                        <td>Chi trả đối tượng bảo trợ thường xuyên</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" {{ (isset($setting->baocao->index) && $setting->baocao->index == 1) ? 'checked' : '' }} value="1" name="roles[baocao][index]"/></td>
+                                        <td>Sổ sách báo cáo</td>
                                     </tr>
                                     </tbody>
                                 </table>

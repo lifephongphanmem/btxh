@@ -3,27 +3,6 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Thông tin quyết định</label>
-
-                    <div class="col-sm-8 controls">
-                        {!!Form::text('ttquyetdinh', null, array('id' => 'ttquyetdinh','class' => 'form-control'))!!}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Sổ trợ cấp</label>
-
-                    <div class="col-sm-8">
-                        {!!Form::text('sosotc',null, array('id' => 'sosotc','class' => 'form-control required'))!!}
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
                     <label class="col-sm-4 control-label">Trạng thái hưởng<span class="require">*</span></label>
                     <div class="col-sm-8 controls">
                         {!! Form::select(
@@ -36,9 +15,30 @@
                         !!}
                     </div>
                 </div>
+
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Số quyết định hưởng</label>
+
+                    <div class="col-sm-8 controls">
+                        {!!Form::text('qdhuong', null, array('id' => 'qdhuong','class' => 'form-control'))!!}
+                    </div>
+                </div>
+
+            </div>
+
         </div>
         <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Sổ trợ cấp</label>
+
+                    <div class="col-sm-8">
+                        {!!Form::text('sosotc',null, array('id' => 'sosotc','class' => 'form-control required'))!!}
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Ngày hưởng<span class="require">*</span></label>
@@ -47,12 +47,22 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             @if($action =='create')
             <div id="ngaydung" class="col-md-6" style="display: none">
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Ngày dừng hưởng</label>
                     <div class="col-sm-8">
                         {!!Form::text('ngaydunghuong',null, array('id' => 'ngaydunghuong','data-inputmask'=>"'alias': 'date'",'class' => 'form-control required'))!!}
+                    </div>
+                </div>
+            </div>
+            <div id="qddunghuong" class="col-md-6" style="display: none">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Quyết định dừng hưởng</label>
+                    <div class="col-sm-8">
+                        {!!Form::text('qddunghuong',null, array('id' => 'qddunghuong','class' => 'form-control required'))!!}
                     </div>
                 </div>
             </div>
@@ -65,10 +75,17 @@
                         </div>
                     </div>
                 </div>
+                <div id="qddungtc" class="col-md-6" style="{{$model->trangthaihuong == 'Đang hưởng' ? 'display: none' :''}}">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Quyết định dừng hưởng</label>
+                        <div class="col-sm-8">
+                            {!!Form::text('qddunghuong',null, array('id' => 'qddunghuong','class' => 'form-control required'))!!}
+                        </div>
+                    </div>
+                </div>
             @endif
         </div>
-        @if($action =='create')
-        <div id="lydo" class="row" style="display: none">
+        <div id="lydo" class="row" style="{{isset($model) && $model->trangthaihuong == 'Dừng hưởng' ? '' :'display: none'}}">
             <div class="col-md-12">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Lý do dừng hưởng</label>
@@ -78,18 +95,6 @@
                 </div>
             </div>
         </div>
-        @else
-            <div id="lydo" class="row" style="{{$model->trangthaihuong == 'Đang hưởng' ? 'display: none' :''}}">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Lý do dừng hưởng</label>
-                        <div class="col-sm-10">
-                            {!!Form::text('lydodunghuong',null, array('id' => 'lydodunghuong','class' => 'form-control required'))!!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -98,6 +103,7 @@
                 </div>
             </div>
         </div>
+
         @if($action == 'edit')
             <div id="tttrocap">
                 <div class="row">
@@ -131,7 +137,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Số tiền</label>
                             <div class="col-sm-8">
-                                {!!Form::text('sotientc',null, array('id' => 'sotientc','class' => 'form-control','readonly'))!!}
+                                {!!Form::text('sotientc',null, array('id' => 'sotientc','data-mask'=>'fdecimal','style'=>'text-align: right','class' => 'form-control required','readonly'))!!}
                             </div>
                         </div>
                     </div>
@@ -153,9 +159,11 @@
             if($(this).val() == 'Đang hưởng'){
                 $( "#lydo" ).hide();
                 $( "#ngaydung" ).hide();
+                $('#qddungtc').hide();
             } else {
                 $( "#lydo" ).toggle( "fast" );
                 $( "#ngaydung" ).toggle( "fast" );
+                $('#qddungtc').toggle( "fast" );
             }
         });
         $('#select_noidung').change(function(){
@@ -198,4 +206,5 @@
         })
     }
 </script>
+@include('includes.script.create-header-scripts')
 

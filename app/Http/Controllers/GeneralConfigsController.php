@@ -50,6 +50,7 @@ class GeneralConfigsController extends Controller
 
             if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
                 $model = GeneralConfigs::findOrFail($id);
+                $inputs['muctrocapchuan'] = getMoneyToDb($inputs['muctrocapchuan']);
                 $model->update($inputs);
                 return redirect('cau_hinh_he_thong');
             }else{

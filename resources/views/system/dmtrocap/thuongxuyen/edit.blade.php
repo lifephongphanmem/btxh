@@ -41,7 +41,7 @@
             </div>
 
             <div style="text-align: center">
-                <a href="{{url('dmtrocap?&trocap='.$model->pltrocap)}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                <a href="{{url('dmtrocaptx?&trocap='.$model->pltrocap)}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                 <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Nhập lại</button>
                 <button type="submit" class="btn green" onclick="validateForm()"><i class="fa fa-check"></i> Hoàn thành</button>
             </div>

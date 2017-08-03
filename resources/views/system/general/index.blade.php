@@ -10,8 +10,6 @@
 @stop
 
 @section('content')
-
-
     <h3 class="page-title">
         Thông tin <small>cấu hình hệ thống</small>
     </h3>
@@ -107,6 +105,15 @@
                             </td>
                             <td style="width:35%">
                                 <span class="text-muted">{{$model->nguoilapbieu}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:15%">
+                                <b>Mức trợ cấp chuẩn</b>
+                            </td>
+                            <td style="width:35%">
+                                <span class="text-muted">{{number_format($model->muctrocapchuan)}}
                                 </span>
                             </td>
                         </tr>

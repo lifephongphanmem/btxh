@@ -12,6 +12,7 @@ use App\SoHoTich;
 use App\Towns;
 use App\TTHonNhan;
 use App\Users;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -137,6 +138,9 @@ class AjaxController extends Controller
         if(isset($inputs['matrocap'])){
             $tttrocap = DmTroCapTx::where('matrocap',$inputs['matrocap'])->first();
 
+            $muctcchuan = getGeneralConfigs()['muctrocapchuan'];
+            $sotien = $tttrocap->heso * $muctcchuan;
+
             $result['message'] = '<div id="tttrocap">';
             $result['message'] .='<div class="row">';
             $result['message'] .='<div class="col-md-12">';
@@ -166,16 +170,17 @@ class AjaxController extends Controller
             $result['message'] .='<div class="col-md-6">';
             $result['message'] .='<div class="form-group">';
             $result['message'] .='<label class="col-sm-4 control-label">Số tiền</label>';
-            $result['message'] .='<div class="col-sm-8"><input type="text" class="form-control" name="sotientc" id="sotientc" value="" readonly></div>';
+            $result['message'] .='<div class="col-sm-8"><input type="text" style="text-align: right" class="form-control" name="sotientc" id="sotientc" value="'.number_format($sotien).'" readonly></div>';
             $result['message'] .= '</div>';
             $result['message'] .= '</div>';
             $result['message'] .= '</div>';
 
-            $result['message'] .= '<input type="text" id="matrocap" name="matrocap" value="'.$tttrocap->matrocap.'">';
+            $result['message'] .= '<input type="hidden" id="matrocap" name="matrocap" value="'.$tttrocap->matrocap.'">';
             $result['message'] .= '</div>';
             $result['status'] = 'success';
         }
 
         die(json_encode($result));
     }
+
 }

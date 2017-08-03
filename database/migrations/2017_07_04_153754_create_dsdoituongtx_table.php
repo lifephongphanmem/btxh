@@ -21,6 +21,7 @@ class CreateDsdoituongtxTable extends Migration
             $table->string('trangthaihoso')->nullable();
             $table->string('lydotralai')->nullable();
             $table->string('ttthaotac')->nullable();
+            $table->string('avatar')->nullable();
 
             $table->string('mahoso')->nullable();
             $table->string('hoten')->nullable();
@@ -33,7 +34,7 @@ class CreateDsdoituongtxTable extends Migration
             $table->string('bhyt')->nullable();
             $table->string('noikhambenh')->nullable();
 
-            $table->string('ttquyetdinh')->nullable();
+
             $table->string('trangthaihuong')->nullable();
             $table->string('sosotc')->nullable();
             $table->string('pltrocap')->nullable();
@@ -41,7 +42,9 @@ class CreateDsdoituongtxTable extends Migration
             $table->string('heso')->nullable();
             $table->string('sotientc')->nullable();
             $table->date('ngayhuong')->nullable();
+            $table->string('qdhuong')->nullable();
             $table->string('ngaydunghuong')->nullable();
+            $table->string('qddunghuong')->nullable();
             $table->string('lydodunghuong')->nullable();
 
             $table->string('ipt1')->nullable();

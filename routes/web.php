@@ -68,6 +68,12 @@ Route::post('dmtrocaptx/delete','DmTroCapTxController@destroy');
 // <editor-fold defaultstate="collapsed" desc="--Manage--">
 Route::resource('danhsachdoituongtx','DsDoiTuongTxController');
 Route::get('danhsachdoituongtx/{trocap}/create','DsDoiTuongTxController@create');
-Route::get('danhsachdoituongtx/{id}/show','DsDoiTuongTxController@show');
+Route::post('danhsachdoituongtx/delete','DsDoiTuongTxController@destroy');
+Route::post('danhsachdoituongtx/tralai','DsDoiTuongTxController@tralai');
+Route::post('danhsachdoituongtx/chuyen','DsDoiTuongTxController@chuyen');
+Route::post('danhsachdoituongtx/duyet','DsDoiTuongTxController@duyet');
+Route::get('ajax/lydodttx','DsDoiTuongTxController@lydo');
+
+
 
 // </editor-fold>//End Manage

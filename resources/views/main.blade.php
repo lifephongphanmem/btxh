@@ -289,16 +289,45 @@ License: You must have a valid license purchased only from themeforest(the above
                             <span class="arrow "></span>
                         </a>
                         <ul class="sub-menu">
-                            <li><a href="{{url('danhsachdoituongtx')}}">Thường xuyên</a></li>
-                            <li><a href="{{url('')}}">Đột xuất</a></li>
+                            @if(canGeneral('dttx','index'))
+                                @if(can('dttx','index'))
+                                <li><a href="{{url('danhsachdoituongtx')}}">Thường xuyên</a></li>
+                                @endif
+                            @endif
+                            @if(canGeneral('dtdx','index'))
+                                @if(can('dtdx','index'))
+                                <li><a href="{{url('')}}">Đột xuất</a></li>
+                                @endif
+                            @endif
                         </ul>
                     </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-money"></i>
+                            <span class="title">Chi trả trợ cấp đối tượng</span>
+                            <span class="arrow "></span>
+                        </a>
+                        <ul class="sub-menu">
+                            @if(canGeneral('ctdttx','index'))
+                                @if(can('ctdttx','index'))
+                                <li><a href="{{url('')}}">Thường xuyên</a></li>
+                                @endif
+                            @endif
+                            @if(canGeneral('ctdtdx','index'))
+                                @if(can('ctdtdx','index'))
+                                <li><a href="{{url('')}}">Đột xuất</a></li>
+                                @endif
+                            @endif
+                        </ul>
+                    </li>
+                    @if(canGeneral('baocao','index'))
                     <li>
                         <a href="{{url('')}}">
                             <i class="fa fa-file-o fa-fw"></i>
                             <span class="title">Sổ sách báo cáo</span>
                         </a>
                     </li>
+                    @endif
                 @endif
                 @if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'ssa')
                 <li>

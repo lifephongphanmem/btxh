@@ -62,6 +62,7 @@ class DsDoiTuongTxController extends Controller
             }
             $model = $model->get();
 
+
             return view('manage.danhsachdoituong.thuongxuyen.index')
                 ->with('huyens', $huyens)
                 ->with('xas', $xas)
@@ -151,10 +152,74 @@ class DsDoiTuongTxController extends Controller
             $inputs['ngaysinh'] = getDateToDb($inputs['ngaysinh']);
             $inputs['ngayhuong'] = getDateToDb($inputs['ngayhuong']);
             $inputs['ngaydunghuong'] = getDateToDb($inputs['ngaydunghuong']);
+            $inputs['sotientc'] = getMoneyToDb($inputs['sotientc']);
+
             if(session('admin')->level == 'T')
                 $inputs['trangthaihoso'] = 'Đã duyệt';
             else
                 $inputs['trangthaihoso'] = 'Chờ chuyển';
+            //UpLoadAvatar
+            if(isset($inputs['avatar'])){
+                $inputs['avatar'] = 'no-image.png';
+            }else{
+                $avatar = $request->file('avatar');
+                $inputs['avatar'] = $inputs['mahoso'] .'.'.$avatar->getClientOriginalExtension();
+                $avatar->move(public_path() . '/images/avatar/doituongtx/', $inputs['avatar']);
+            }
+            //EndUpLoadAvatar
+            //FileUpLoad
+            if(isset($inputs['ipf1'])){
+                $ipf1 = $request->file('ipf1');
+                $inputs['ipf1'] = $inputs['mahoso'].'_1_'.changeNameFile($ipf1->getClientOriginalName());
+                $ipf1->move(public_path().'/file/doituongtx/',$inputs['ipf1']);
+            }
+            if(isset($inputs['ipf2'])){
+                $ipf2 = $request->file('ipf2');
+                $inputs['ipf2'] = $inputs['mahoso'].'_2_'.changeNameFile($ipf2->getClientOriginalName());
+                $ipf2->move(public_path().'/file/doituongtx/',$inputs['ipf2']);
+            }
+            if(isset($inputs['ipf3'])){
+                $ipf3 = $request->file('ipf3');
+                $inputs['ipf3'] = $inputs['mahoso'].'_3_'.changeNameFile($ipf3->getClientOriginalName());
+                $ipf3->move(public_path().'/file/doituongtx/',$inputs['ipf3']);
+            }
+            if(isset($inputs['ipf4'])){
+                $ipf4 = $request->file('ipf4');
+                $inputs['ipf4'] = $inputs['mahoso'].'_4_'.changeNameFile($ipf4->getClientOriginalName());
+                $ipf4->move(public_path().'/file/doituongtx/',$inputs['ipf4']);
+            }
+            if(isset($inputs['ipf5'])){
+                $ipf5 = $request->file('ipf5');
+                $inputs['ipf5'] = $inputs['mahoso'].'_5_'.changeNameFile($ipf5->getClientOriginalName());
+                $ipf5->move(public_path().'/file/doituongtx/',$inputs['ipf5']);
+            }
+            if(isset($inputs['ipf6'])){
+                $ipf6 = $request->file('ipf6');
+                $inputs['ipf6'] = $inputs['mahoso'].'_6_'.changeNameFile($ipf6->getClientOriginalName());
+                $ipf6->move(public_path().'/file/doituongtx/',$inputs['ipf6']);
+            }
+            if(isset($inputs['ipf7'])){
+                $ipf7 = $request->file('ipf7');
+                $inputs['ipf7'] = $inputs['mahoso'].'_7_'.changeNameFile($ipf7->getClientOriginalName());
+                $ipf7->move(public_path().'/file/doituongtx/',$inputs['ipf7']);
+            }
+            if(isset($inputs['ipf8'])){
+                $ipf8 = $request->file('ipf8');
+                $inputs['ipf8'] = $inputs['mahoso'].'_8_'.changeNameFile($ipf8->getClientOriginalName());
+                $ipf8->move(public_path().'/file/doituongtx/',$inputs['ipf8']);
+            }
+            if(isset($inputs['ipf9'])){
+                $ipf9 = $request->file('ipf9');
+                $inputs['ipf9'] = $inputs['mahoso'].'_9_'.changeNameFile($ipf9->getClientOriginalName());
+                $ipf9->move(public_path().'/file/doituongtx/',$inputs['ipf9']);
+            }
+            if(isset($inputs['ipf10'])){
+                $ipf10 = $request->file('ipf10');
+                $inputs['ipf10'] = $inputs['mahoso'].'_10_'.changeNameFile($ipf10->getClientOriginalName());
+                $ipf10->move(public_path().'/file/doituongtx/',$inputs['ipf10']);
+            }
+            //EndFileUpLoad
+
             $model = new DsDoiTuongTx();
             $model->create($inputs);
             return redirect('danhsachdoituongtx?&trocap='.$inputs['pltrocap']);
@@ -200,12 +265,74 @@ class DsDoiTuongTxController extends Controller
     public function update(Request $request,$id){
         if (Session::has('admin')) {
             $inputs = $request->all();
+
             $inputs['matinh'] = getmatinh();
             $inputs['ttthaotac'] = session('admin')->name .'('.session('admin')->username.')'.'- Cập nhật';
             $inputs['ngaysinh'] = getDateToDb($inputs['ngaysinh']);
             $inputs['ngayhuong'] = getDateToDb($inputs['ngayhuong']);
             $inputs['ngaydunghuong'] = getDateToDb($inputs['ngaydunghuong']);
+            $inputs['sotientc'] = getMoneyToDb($inputs['sotientc']);
             $model = DsDoiTuongTx::find($id);
+            //UpAvatar
+            if(isset($inputs['avatar'])){
+                $avatar = $request->file('avatar');
+                $inputs['avatar'] = $model->mahoso .'.'.$avatar->getClientOriginalExtension();
+                $avatar->move(public_path() . '/images/avatar/doituongtx/', $inputs['avatar']);
+            }
+            //End UpAvatar
+            //FileUpLoad
+            if(isset($inputs['ipf1'])){
+                $ipf1 = $request->file('ipf1');
+                $inputs['ipf1'] = $model->mahoso.'_1_'.changeNameFile($ipf1->getClientOriginalName());
+                $ipf1->move(public_path().'/file/doituongtx/',$inputs['ipf1']);
+            }
+            if(isset($inputs['ipf2'])){
+                $ipf2 = $request->file('ipf2');
+                $inputs['ipf2'] = $model->mahoso.'_2_'.changeNameFile($ipf2->getClientOriginalName());
+                $ipf2->move(public_path().'/file/doituongtx/',$inputs['ipf2']);
+            }
+            if(isset($inputs['ipf3'])){
+                $ipf3 = $request->file('ipf3');
+                $inputs['ipf3'] = $model->mahoso.'_3_'.changeNameFile($ipf3->getClientOriginalName());
+                $ipf3->move(public_path().'/file/doituongtx/',$inputs['ipf3']);
+            }
+            if(isset($inputs['ipf4'])){
+                $ipf4 = $request->file('ipf4');
+                $inputs['ipf4'] = $model->mahoso.'_4_'.changeNameFile($ipf4->getClientOriginalName());
+                $ipf4->move(public_path().'/file/doituongtx/',$inputs['ipf4']);
+            }
+            if(isset($inputs['ipf5'])){
+                $ipf5 = $request->file('ipf5');
+                $inputs['ipf5'] = $model->mahoso.'_5_'.changeNameFile($ipf5->getClientOriginalName());
+                $ipf5->move(public_path().'/file/doituongtx/',$inputs['ipf5']);
+            }
+            if(isset($inputs['ipf6'])){
+                $ipf6 = $request->file('ipf6');
+                $inputs['ipf6'] = $model->mahoso.'_6_'.changeNameFile($ipf6->getClientOriginalName());
+                $ipf6->move(public_path().'/file/doituongtx/',$inputs['ipf6']);
+            }
+            if(isset($inputs['ipf7'])){
+                $ipf7 = $request->file('ipf7');
+                $inputs['ipf7'] = $model->mahoso.'_7_'.changeNameFile($ipf7->getClientOriginalName());
+                $ipf7->move(public_path().'/file/doituongtx/',$inputs['ipf7']);
+            }
+            if(isset($inputs['ipf8'])){
+                $ipf8 = $request->file('ipf8');
+                $inputs['ipf8'] = $model->mahoso.'_8_'.changeNameFile($ipf8->getClientOriginalName());
+                $ipf8->move(public_path().'/file/doituongtx/',$inputs['ipf8']);
+            }
+            if(isset($inputs['ipf9'])){
+                $ipf9 = $request->file('ipf9');
+                $inputs['ipf9'] = $model->mahoso.'_9_'.changeNameFile($ipf9->getClientOriginalName());
+                $ipf9->move(public_path().'/file/doituongtx/',$inputs['ipf9']);
+            }
+            if(isset($inputs['ipf10'])){
+                $ipf10 = $request->file('ipf10');
+                $inputs['ipf10'] = $model->mahoso.'_10_'.changeNameFile($ipf10->getClientOriginalName());
+                $ipf10->move(public_path().'/file/doituongtx/',$inputs['ipf10']);
+            }
+            //EndFileUpLoad
+
             $model->update($inputs);
             return redirect('danhsachdoituongtx?&trocap='.$inputs['pltrocap']);
         } else
@@ -225,8 +352,106 @@ class DsDoiTuongTxController extends Controller
                 ->with('dvql',$xa.'- '.$huyen)
                 ->with('loaitc',$loaitc)
                 ->with('loaidt',$loaidt)
+                ->with('attachments',$this->getAttachments($model))
                 ->with('pageTitle', 'Thông tin đối tượng trợ cấp thường xuyên');
         } else
             return view('errors.notlogin');
     }
+
+    public function destroy(Request $request){
+        if (Session::has('admin')) {
+            $id = $request->all()['iddelete'];
+            $model = DsDoiTuongTx::find($id);
+            $pltrocap = $model->pltrocap;
+            $model->delete();
+            return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function tralai(Request $request){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $id = $inputs['idtralai'];
+            $model = DsDoiTuongTx::find($id);
+            $model->trangthaihoso = 'Bị trả lại';
+            $model->lydotralai = $inputs['lydotralai'];
+            $model->save();
+            $pltrocap = $model->pltrocap;
+            return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function chuyen(Request $request){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $id = $inputs['idchuyen'];
+            $model = DsDoiTuongTx::find($id);
+            $model->trangthaihoso = 'Chờ duyệt';
+            $model->save();
+            $pltrocap = $model->pltrocap;
+            return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function duyet(Request $request){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $id = $inputs['idduyet'];
+            $model = DsDoiTuongTx::find($id);
+            $model->trangthaihoso = 'Đã duyệt';
+            $model->save();
+            $pltrocap = $model->pltrocap;
+            return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function lydo(Request $request){
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if(!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+        //dd($request);
+        $inputs = $request->all();
+
+        if(isset($inputs['id'])){
+            $model = DsDoiTuongTx::where('id',$inputs['id'])
+                ->first();
+            $result['message'] = '<div id="lydo" style="color: blue">'.$model->lydotralai.'</div>';
+            $result['status'] = 'success';
+        }
+        die(json_encode($result));
+    }
+
+    public function getAttachments($model) {
+
+        $attachments = array();
+
+        $attachment = array();
+
+        for ($i = 1; $i <= 10; $i++) {
+            $ipf = 'ipf' . $i;
+            if ($model->$ipf != null) {
+                $ipt = 'ipt' . $i;
+                $attachment['ipt'] = $model->$ipt;
+                $attachment['ipf'] = $model->$ipf;
+                $attachments[] = $attachment;
+            }
+        }
+
+        return $attachments;
+    }
+
+
+
 }

@@ -3,222 +3,115 @@ function getPermissionDefault($level) {
     $roles = array();
 
     $roles['T'] = array(
-        'congdan' => array(
+        'dttx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 1,
+            'forward'=> 0,
         ),
-        'khaisinh' => array(
+        'dtdx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 1,
+            'forward'=> 0,
         ),
-        'khaitu' => array(
+        'ctdttx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 1,
+            'forward'=> 0,
         ),
-        'tthonnhan' => array(
+        'ctdtdx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 1,
+            'forward'=> 0,
         ),
-        'kethon' => array(
+        'baocao' => array(
             'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
         ),
-        'dkconnuoi' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'dkgiamho' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'dknhanchamecon' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'capbansao' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'chungthuc' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-
-
     );
     $roles['H'] = array(
-        'congdan' => array(
+        'dttx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 1,
+            'forward'=> 0,
         ),
-        'khaisinh' => array(
+        'dtdx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 1,
+            'forward'=> 0,
         ),
-        'khaitu' => array(
+        'ctdttx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 1,
+            'forward'=> 0,
         ),
-        'tthonnhan' => array(
+        'ctdtdx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 1,
+            'forward'=> 0,
         ),
-        'kethon' => array(
+        'baocao' => array(
             'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'dkconnuoi' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'dkgiamho' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'dknhanchamecon' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'capbansao' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'chungthuc' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
         ),
 
     );
     $roles['X'] = array(
-        'congdan' => array(
+        'dttx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 0,
+            'forward'=> 1,
         ),
-        'khaisinh' => array(
+        'dtdx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 0,
+            'forward'=> 1,
         ),
-        'khaitu' => array(
+        'ctdttx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 0,
+            'forward'=> 1,
         ),
-        'tthonnhan' => array(
+        'ctdtdx' => array(
             'index' => 1,
             'create' => 1,
             'edit' => 1,
             'delete' => 1,
-            'approve'=> 1
+            'approve'=> 0,
+            'forward'=> 1,
         ),
-        'kethon' => array(
+        'baocao' => array(
             'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'dkconnuoi' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'dkgiamho' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'dknhanchamecon' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'capbansao' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
-        ),
-        'chungthuc' => array(
-            'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
-            'approve'=> 1
         ),
 
     );
@@ -263,7 +156,7 @@ function can($module = null, $action = null)
 
 }
 function canEdit($trangthaihoso){
-    if((session('admin')->level == 'X' || session('admin')->level == 'H') && ($trangthaihoso == 'Đã chuyển' || $trangthaihoso == 'Đã duyệt') ){
+    if((session('admin')->level == 'X' || session('admin')->level == 'H') && ($trangthaihoso == 'Chờ duyệt' || $trangthaihoso == 'Chờ chuyển'|| $trangthaihoso == 'Đã duyệt') ){
         return false;
     }else{
         return true;
@@ -274,14 +167,15 @@ function canGeneral($module = null, $action =null)
 {
     $model = \App\GeneralConfigs::first();
     if(isset($model)){
+        $setting = json_decode($model->setting, true);
 
+        if(isset($setting[$module][$action]) && $setting[$module][$action] ==1 )
+            return true;
+        else
+            return false;
     }
-    $setting = json_decode($model->setting, true);
+    return false;
 
-    if(isset($setting[$module][$action]) && $setting[$module][$action] ==1 )
-        return true;
-    else
-        return false;
 }
 
 function getGeneralConfigs() {
@@ -368,6 +262,7 @@ function getDateToDb($value){
 }
 
 function getMoneyToDb ($value){
+    if($value == '') return $kq=0;
     $kq = str_replace(',','',$value);
     $kq = str_replace('.','',$kq);
     return $kq;
@@ -613,4 +508,42 @@ function getDateText($date){
     $text.= getYearText(date('Y',strtotime($date)));
     return $text;
 }
+
+function stripUnicode($str){
+    if(!$str) return false;
+    $unicode = array(
+        'a' => 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|A',
+        'b' =>'B',
+        'c' => 'C',
+        'd' => 'đ|Đ|D',
+        'e' => 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ|E',
+        'f' => 'F',
+        'g' => 'G',
+        'h' => 'H',
+        'i' => 'í|ì|ỉ|ĩ|ị|Í|Ì|Ỉ|Ĩ|Ị,I',
+        'j' => 'J',
+        'k' => 'K',
+        'l' => 'L',
+        'n' => 'N',
+        'm' => 'M',
+        'o' => 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ|O',
+        'u' => 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|U',
+        'y' => 'ý|ỳ|ỷ|ỹ|ỵ|Ý|Ỳ|Ỷ|Ỹ|Ỵ|Y',
+        't' => 'T',
+        'p' => 'P',
+        'x' => 'X',
+        's' => 'S',
+        'r' => 'R',
+        'v' => 'V',
+    );
+    foreach($unicode as $nonUnicode=>$uni) $str = preg_replace("/($uni)/i",$nonUnicode,$str);
+    return $str;
+}
+
+function changeNameFile($name){
+    $namefile = stripUnicode($name);
+    $newnamefile = str_replace(' ','_',$namefile);
+    return $newnamefile;
+}
+
 ?>

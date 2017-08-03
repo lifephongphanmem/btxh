@@ -23,7 +23,7 @@
     <div class="row center">
         <div class="col-md-12 center">
             <!-- BEGIN VALIDATION STATES-->
-            <div class="portlet box blue">
+            <div class="portlet box">
                 <!--div class="portlet-title">
                 </div-->
                 <div class="portlet-body form">
@@ -103,6 +103,12 @@
                                 <div class="form-group">
                                     <label class="control-label">Người lập biểu<span class="require">*</span></label>
                                     {!!Form::text('nguoilapbieu', null, array('id' => 'nguoilapbieu','class' => 'form-control'))!!}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Mức trợ cấp chuẩn<span class="require">*</span></label>
+                                    {!!Form::text('muctrocapchuan',null, array('id' => 'ngaysinh','data-mask'=>'fdecimal','style'=>'text-align: right','class' => 'form-control required'))!!}
                                 </div>
                             </div>
                         </div>

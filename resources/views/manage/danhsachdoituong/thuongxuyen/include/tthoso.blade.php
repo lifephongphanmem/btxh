@@ -106,8 +106,34 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Hình ảnh đại diện</label>
+                    <div class="col-sm-8 controls">
+                        @if($action == 'create')
+                            <p><img src="{{ url('images/avatar/doituongtx/no-image.png')}}" width="96"></p>
+                        @else
+                            <p><img src="{{ url('images/avatar/doituongtx/'.$model->avatar)}}" width="96">
+                                @if(isset($model->avatar))
+                                    <a href="{{ url('images/avatar/doituongtx/'.$model->avatar)}}" target="_blank">{{$model->avatar}}</a>
+                                @endif
+                            </p>
+                        @endif
 
-
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">
+                    </label>
+                    <div class="col-sm-8 controls">
+                        {!!Form::file('avatar',array('id'=>'avatar','class' => 'passvalid','accept'=>'image/*'))!!}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
