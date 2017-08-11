@@ -34,7 +34,6 @@ class CreateDsdoituongtxTable extends Migration
             $table->string('bhyt')->nullable();
             $table->string('noikhambenh')->nullable();
 
-
             $table->string('trangthaihuong')->nullable();
             $table->string('sosotc')->nullable();
             $table->string('pltrocap')->nullable();

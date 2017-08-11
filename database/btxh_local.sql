@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2017 at 05:19 AM
+-- Generation Time: Aug 11, 2017 at 10:37 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 7.0.1
 
@@ -201,7 +201,7 @@ CREATE TABLE `dsdoituongtx` (
 --
 
 INSERT INTO `dsdoituongtx` (`id`, `matinh`, `mahuyen`, `maxa`, `trangthaihoso`, `lydotralai`, `ttthaotac`, `avatar`, `mahoso`, `hoten`, `ngaysinh`, `gioitinh`, `dantoc`, `quequan`, `diachi`, `socmnd`, `bhyt`, `noikhambenh`, `qdhuong`, `trangthaihuong`, `sosotc`, `pltrocap`, `matrocap`, `heso`, `sotientc`, `ngayhuong`, `ngaydunghuong`, `qddunghuong`, `lydodunghuong`, `ipt1`, `ipf1`, `ipt2`, `ipf2`, `ipt3`, `ipf3`, `ipt4`, `ipf4`, `ipt5`, `ipf5`, `ipt6`, `ipf6`, `ipt7`, `ipf7`, `ipt8`, `ipf8`, `ipt9`, `ipf9`, `ipt10`, `ipf10`, `created_at`, `updated_at`) VALUES
-(2, 'LIFE', 'QCG', 'PMD', 'Bị trả lại', 'AVATAR', 'Phường Mai Dịch(phuongmaidich)- Cập nhật', 'LIFEQCGPMDTX2.jpg', 'LIFEQCGPMDTX2', 'Nguyễn Thị Nụ', '2018-12-31', 'Nữ', NULL, NULL, 'Hn', 'A9876543', 'Có', '', '91263w213', 'Đang hưởng', 'sđâs', 'CD', 'CD1499138251', '1', '270000', '1990-09-15', NULL, '', '', 'Đề xuất sửa PM', 'LIFEQCGPMDTX2_1_de_xuat_sua_pm_kntc.docx', 'BB làm việc', 'LIFEQCGPMDTX2_2_bb_lam_viec.doc', 'BC CV Hưởng', 'LIFEQCGPMDTX2_3_bccV-huong.xls', 'CÔNg Bố Giá', 'LIFEQCGPMDTX2_4_cOngbOgIa_.xls', 'BB', 'LIFEQCGPMDTX2_5_bb_lam_viec.doc', 'bb lÀM VIỆC', 'LIFEQCGPMDTX2_6_bien_ban_lam_viec_ngay_13-4-17.doc', 'CTTC2013Rar', 'LIFEQCGPMDTX2_7_cttc2013.rar', 'DÀi Bắc Cao Hùng', 'LIFEQCGPMDTX2_8_daI_bac_daI_tRung_caO_hung_5n4d.doc', 'DÀI LOàn 5N', 'LIFEQCGPMDTX2_9_daI_lOan_5n_kh_25.7.doc', 'CV_Minh', 'LIFEQCGPMDTX2_10_images.jpg', '2017-07-07 03:16:44', '2017-08-02 08:43:47');
+(2, 'LIFE', 'QCG', 'PMD', 'Đã duyệt', 'AVATAR', 'Phường Mai Dịch(phuongmaidich)- Cập nhật', 'LIFEQCGPMDTX2.jpg', 'LIFEQCGPMDTX2', 'Nguyễn Thị Nụ', '2018-12-31', 'Nữ', NULL, NULL, 'Hn', 'A9876543', 'Có', '', '91263w213', 'Đang hưởng', 'sđâs', 'CD', 'CD1499138251', '1', '270000', '2007-09-15', NULL, '', '', 'Đề xuất sửa PM', 'LIFEQCGPMDTX2_1_de_xuat_sua_pm_kntc.docx', 'BB làm việc', 'LIFEQCGPMDTX2_2_bb_lam_viec.doc', 'BC CV Hưởng', 'LIFEQCGPMDTX2_3_bccV-huong.xls', 'CÔNg Bố Giá', 'LIFEQCGPMDTX2_4_cOngbOgIa_.xls', 'BB', 'LIFEQCGPMDTX2_5_bb_lam_viec.doc', 'bb lÀM VIỆC', 'LIFEQCGPMDTX2_6_bien_ban_lam_viec_ngay_13-4-17.doc', 'CTTC2013Rar', 'LIFEQCGPMDTX2_7_cttc2013.rar', 'DÀi Bắc Cao Hùng', 'LIFEQCGPMDTX2_8_daI_bac_daI_tRung_caO_hung_5n4d.doc', 'DÀI LOàn 5N', 'LIFEQCGPMDTX2_9_daI_lOan_5n_kh_25.7.doc', 'CV_Minh', 'LIFEQCGPMDTX2_10_images.jpg', '2017-07-07 03:16:44', '2017-08-02 08:43:47');
 
 -- --------------------------------------------------------
 
@@ -259,7 +259,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2017_06_07_095652_create_quoctich_table', 1),
 (11, '2017_07_04_092533_create_dmtrocaptx_table', 2),
 (13, '2017_07_04_153754_create_dsdoituongtx_table', 3),
-(14, '2017_07_05_144124_create_pltrocaptx_table', 4);
+(14, '2017_07_05_144124_create_pltrocaptx_table', 4),
+(15, '2017_08_03_142159_create_tcdoituongtx_table', 5),
+(16, '2017_08_03_150334_create_tcdoituongtxct_table', 5);
 
 -- --------------------------------------------------------
 
@@ -297,6 +299,69 @@ CREATE TABLE `quoctich` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tcdoituongtx`
+--
+
+CREATE TABLE `tcdoituongtx` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `matinh` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mahuyen` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `maxa` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `trangthai` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `thang` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nam` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tengoitc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pltrocap` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `matrocap` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ghichu` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tcdoituongtx`
+--
+
+INSERT INTO `tcdoituongtx` (`id`, `matinh`, `mahuyen`, `maxa`, `trangthai`, `thang`, `nam`, `tengoitc`, `pltrocap`, `matrocap`, `ghichu`, `created_at`, `updated_at`) VALUES
+(26, 'LIFE', 'QCG', 'PMD', 'Đã duyệt', '08', '2017', 'Trợ cấp đối tượng BTXH sống trong cơ sở bảo trợ xã hội tháng 8 năm 2017', 'CD', 'LIFEQCGPMDTCTX082017CD', '', '2017-08-10 03:52:32', '2017-08-11 07:43:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tcdoituongtxct`
+--
+
+CREATE TABLE `tcdoituongtxct` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `matrocap` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mahoso` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hoten` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `diachi` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `namsinh` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `qdhuong` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `noidung` text COLLATE utf8_unicode_ci,
+  `chitiet` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `heso` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sotientc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tltungay` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tldenngay` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `thangtl` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sotientl` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hientrang` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tcdoituongtxct`
+--
+
+INSERT INTO `tcdoituongtxct` (`id`, `matrocap`, `mahoso`, `hoten`, `diachi`, `namsinh`, `qdhuong`, `noidung`, `chitiet`, `heso`, `sotientc`, `tltungay`, `tldenngay`, `thangtl`, `sotientl`, `hientrang`, `created_at`, `updated_at`) VALUES
+(1, 'LIFEQCGPMDTCTX082017CD', 'LIFEQCGPMDTX2', 'Nguyễn Thị Nụ', 'Hn', '2018', '91263w213', 'Hộ gia đình đang trực tiếp nuôi dưỡng, chăm sóc người khuyết tật đặc biệt nặng', '', '1', '270000', NULL, NULL, '1', '100000', 'Chờ lĩnh', '2017-08-10 03:52:33', '2017-08-11 03:31:34');
 
 -- --------------------------------------------------------
 
@@ -425,6 +490,18 @@ ALTER TABLE `quoctich`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tcdoituongtx`
+--
+ALTER TABLE `tcdoituongtx`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tcdoituongtxct`
+--
+ALTER TABLE `tcdoituongtxct`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `towns`
 --
 ALTER TABLE `towns`
@@ -471,7 +548,7 @@ ALTER TABLE `general-configs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `pltrocaptx`
 --
@@ -482,6 +559,16 @@ ALTER TABLE `pltrocaptx`
 --
 ALTER TABLE `quoctich`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tcdoituongtx`
+--
+ALTER TABLE `tcdoituongtx`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+--
+-- AUTO_INCREMENT for table `tcdoituongtxct`
+--
+ALTER TABLE `tcdoituongtxct`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `towns`
 --

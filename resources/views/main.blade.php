@@ -285,6 +285,17 @@ License: You must have a valid license purchased only from themeforest(the above
                     <li>
                         <a href="">
                             <i class="icon-users"></i>
+                            <span class="title">Hồ sơ đề xuất</span>
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="{{url('hosodexuat')}}">Thường xuyên</a></li>
+                            <li><a href="">Đột xuất</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-users"></i>
                             <span class="title">Danh sách đối tượng</span>
                             <span class="arrow "></span>
                         </a>
@@ -310,7 +321,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <ul class="sub-menu">
                             @if(canGeneral('ctdttx','index'))
                                 @if(can('ctdttx','index'))
-                                <li><a href="{{url('')}}">Thường xuyên</a></li>
+                                <li><a href="{{url('trocapdoituongtx')}}">Thường xuyên</a></li>
                                 @endif
                             @endif
                             @if(canGeneral('ctdtdx','index'))

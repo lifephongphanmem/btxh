@@ -546,4 +546,24 @@ function changeNameFile($name){
     return $newnamefile;
 }
 
+function getSelectNam(){
+    $nam_start = intval(date('Y')) - 5 ;
+    $nam_stop = intval(date('Y')) + 1 ;
+    $options = array();
+
+    for($i = $nam_start; $i <= $nam_stop; $i++){
+        $options[$i] = 'Năm '.$i;
+    }
+    return $options;
+}
+
+function getXaHuyen($model){
+    foreach($model as $tt){
+        $xa = \App\Towns::where('maxa',$tt->maxa)->first();
+        $huyen = \App\Districts::where('mahuyen',$tt->mahuyen)->first();
+        $tt->tenxa = $xa->tenxa;
+        $tt->tenhuyen = $huyen->tenhuyen;
+    }
+    return $model;
+}
 ?>

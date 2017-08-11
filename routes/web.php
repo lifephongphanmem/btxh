@@ -9,6 +9,7 @@ Route::get('/checkuser','AjaxController@checkuser');
 Route::get('getXas','AjaxController@getXas');
 Route::get('getChiTietTc','AjaxController@getChiTietTc');
 Route::get('/addTcTx','AjaxController@addTcTx');
+Route::get('/tcdoituongtx/check','AjaxController@checktcdoituongtx');
 // </editor-fold>//End Ajax
 
 // <editor-fold defaultstate="collapsed" desc="--Setting--">
@@ -66,6 +67,12 @@ Route::post('dmtrocaptx/delete','DmTroCapTxController@destroy');
 
 
 // <editor-fold defaultstate="collapsed" desc="--Manage--">
+Route::get('hosodexuat',function(){
+    return view('manage.hosodexuat.doituongtx.index')
+
+        ->with('pageTitle','Hồ sơ đề xuất');
+});
+//Danh sách đối tượng thường xuyên
 Route::resource('danhsachdoituongtx','DsDoiTuongTxController');
 Route::get('danhsachdoituongtx/{trocap}/create','DsDoiTuongTxController@create');
 Route::post('danhsachdoituongtx/delete','DsDoiTuongTxController@destroy');
@@ -73,6 +80,25 @@ Route::post('danhsachdoituongtx/tralai','DsDoiTuongTxController@tralai');
 Route::post('danhsachdoituongtx/chuyen','DsDoiTuongTxController@chuyen');
 Route::post('danhsachdoituongtx/duyet','DsDoiTuongTxController@duyet');
 Route::get('ajax/lydodttx','DsDoiTuongTxController@lydo');
+//End danh sách đối tượng thường xuyên
+
+//Trợ cấp đối tượng thường xuyên
+Route::resource('trocapdoituongtx','TcDoiTuongTxController');
+Route::get('trocapdoituongtx/{trocap}/create','TcDoiTuongTxController@create');
+Route::post('trocapdoituongtx/duyet','TcDoiTuongTxController@duyet');
+Route::post('trocapdoituongtx/delete','TcDoiTuongTxController@destroy');
+    //Chi tiết trợ cấp đối tượng
+Route::get('/trocapdoituongtxtc/truylinh','TcDoiTuongTxCtController@truylinh');
+Route::get('/trocapdoituongtxtc/thongtin','TcDoiTuongTxCtController@thongtin');
+Route::post('trocapdoituongtxct/truylinh','TcDoiTuongTxCtController@updatetruylinh');
+Route::post('trocapdoituongtxct/duyet','TcDoiTuongTxCtController@duyet');
+    //End chi tiết trợ cấp đối tượng
+
+//End Trợ cấp đối tượng thường xuyên
+
+
+
+
 
 
 

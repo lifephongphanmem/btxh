@@ -8,7 +8,7 @@
                     <tbody>
                     <tr>
                         <td style="width:280; text-align: center" rowspan="5">
-                            <img src="{{ url('images/avatar/no-image.png')}}">
+                            <img src="{{ url('/images/avatar/doituongtx/'.$model->avatar)}}">
                         </td>
                         <td><b>Đơn vị quản lý:</b> {{$dvql}}</td>
                     </tr>

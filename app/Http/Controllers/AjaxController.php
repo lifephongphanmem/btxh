@@ -9,6 +9,7 @@ use App\KetHon;
 use App\KhaiSinh;
 use App\KhaiTu;
 use App\SoHoTich;
+use App\TcDoiTuongTx;
 use App\Towns;
 use App\TTHonNhan;
 use App\Users;
@@ -179,6 +180,34 @@ class AjaxController extends Controller
             $result['message'] .= '</div>';
             $result['status'] = 'success';
         }
+
+        die(json_encode($result));
+    }
+
+    public function checktcdoituongtx(Request $request){
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if(!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+
+        $inputs = $request->all();
+        $model = TcDoiTuongTx::where('thang',$inputs['thang'])
+            ->where('nam',$inputs['nam'])
+            ->where('mahuyen',$inputs['mahuyen'])
+            ->where('maxa',$inputs['maxa'])
+            ->where('pltrocap',$inputs['pltrocap'])
+            ->first();
+        if(count($model)>0){
+            $result['status'] = 'error';
+        }else
+            $result['status'] = 'success';
 
         die(json_encode($result));
     }
