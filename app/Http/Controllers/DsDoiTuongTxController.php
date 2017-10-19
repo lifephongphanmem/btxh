@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Districts;
 use App\DmTroCapTx;
 use App\DsDoiTuongTx;
+use App\HoSoDungTcTx;
+use App\HoSoXinHuongTx;
 use App\PlTroCapTx;
 use App\Towns;
 use Illuminate\Http\Request;
@@ -60,6 +62,8 @@ class DsDoiTuongTxController extends Controller
                 $model = $model->where('trangthaihoso', '<>', 'Chờ chuyển')
                     ->where('trangthaihoso', '<>', 'Bị trả lại');
             }
+            //Loại các TH hs bị chuyển đi, dừng hưởng
+            $model = $model->where('trangthaihoso','<>','Dừng hưởng');
             $model = $model->get();
 
 
@@ -150,9 +154,12 @@ class DsDoiTuongTxController extends Controller
             $inputs['ttthaotac'] = session('admin')->name .'('.session('admin')->username.')'.'- Thêm mới';
             $inputs['mahoso'] = getmatinh().$inputs['mahuyen'].$inputs['maxa'].'TX'.$this->getIdForCreateBTXH();
             $inputs['ngaysinh'] = getDateToDb($inputs['ngaysinh']);
-            $inputs['ngayhuong'] = getDateToDb($inputs['ngayhuong']);
-            $inputs['ngaydunghuong'] = getDateToDb($inputs['ngaydunghuong']);
-            $inputs['sotientc'] = getMoneyToDb($inputs['sotientc']);
+            if(isset($inputs['ngayhuong']))
+                $inputs['ngayhuong'] = getDateToDb($inputs['ngayhuong']);
+            if(isset($inputs['ngaydunghuong']))
+                $inputs['ngaydunghuong'] = getDateToDb($inputs['ngaydunghuong']);
+            if(isset( $inputs['sotientc']))
+                $inputs['sotientc'] = getMoneyToDb($inputs['sotientc']);
 
             if(session('admin')->level == 'T')
                 $inputs['trangthaihoso'] = 'Đã duyệt';
@@ -160,11 +167,11 @@ class DsDoiTuongTxController extends Controller
                 $inputs['trangthaihoso'] = 'Chờ chuyển';
             //UpLoadAvatar
             if(isset($inputs['avatar'])){
-                $inputs['avatar'] = 'no-image.png';
-            }else{
                 $avatar = $request->file('avatar');
                 $inputs['avatar'] = $inputs['mahoso'] .'.'.$avatar->getClientOriginalExtension();
                 $avatar->move(public_path() . '/images/avatar/doituongtx/', $inputs['avatar']);
+            }else{
+                $inputs['avatar'] = 'no-image.png';
             }
             //EndUpLoadAvatar
             //FileUpLoad
@@ -387,9 +394,13 @@ class DsDoiTuongTxController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $id = $inputs['idchuyen'];
+            $inputs['trangthaihoso'] = 'Chờ duyệt';
             $model = DsDoiTuongTx::find($id);
-            $model->trangthaihoso = 'Chờ duyệt';
-            $model->save();
+            if($model->update($inputs)){
+                $inputs['ngayxinhuong'] = date('Y-m-d');
+                $modelxh = HoSoXinHuongTx::where('mahoso',$model->mahoso)->first();
+                $modelxh->update($inputs);
+            }
             $pltrocap = $model->pltrocap;
             return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
         } else
@@ -450,6 +461,78 @@ class DsDoiTuongTxController extends Controller
         }
 
         return $attachments;
+    }
+
+    public function xinhuong(Request $request){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $id = $inputs['idxinhuong'];
+            $model = DsDoiTuongTx::find($id);
+            $model->trangthaihoso = 'Chờ duyệt';
+            if($model->save()){
+                $modelxh = new HoSoXinHuongTx();
+                $modelxh->ngayxinhuong = date('Y-m-d');
+                $modelxh->mahoso = $model->mahoso;
+                $modelxh->hoten = $model->hoten;
+                $modelxh->ngaysinh = $model->ngaysinh;
+                $modelxh->diachi = $model->diachi;
+                $modelxh->ndxinhuong = $inputs['ndxinhuong'];
+                $modelxh->trangthaihoso = 'Chờ duyệt';
+                $modelxh->save();
+            }
+            $pltrocap = $model->pltrocap;
+            return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function dungtc(Request $request){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $id = $inputs['iddungtc'];
+            $model = DsDoiTuongTx::find($id);
+            $model->trangthaihuong = 'Chờ xét duyệt dừng trợ cấp';
+            if($model->save()){
+                $modeldungtc = new HoSoDungTcTx();
+                $modeldungtc->ngayxindung = date('Y-m-d');
+                $modeldungtc->mahoso = $model->mahoso;
+                $modeldungtc->hoten = $model->hoten;
+                $modeldungtc->ngaysinh = $model->ngaysinh;
+                $modeldungtc->diachi = $model->diachi;
+                $modeldungtc->pldunghuong = $inputs['pldunghuong'];
+                $modeldungtc->lydodunghuong = $inputs['lydodunghuong'];
+                $modeldungtc->trangthaihoso = 'Chờ duyệt';
+                $modeldungtc->save();
+            }
+            $pltrocap = $model->pltrocap;
+            return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function dichuyen(Request $request){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            dd($inputs);
+            $id = $inputs['iddichuyen'];
+            $model = DsDoiTuongTx::find($id);
+            $model->trangthaihuong = 'Chờ xét duyệt di chuyển';
+            if($model->save()){
+                $modeldungtc = new HoSoDungTcTx();
+                $modeldungtc->ngayxindung = date('Y-m-d');
+                $modeldungtc->mahoso = $model->mahoso;
+                $modeldungtc->hoten = $model->hoten;
+                $modeldungtc->ngaysinh = $model->ngaysinh;
+                $modeldungtc->diachi = $model->diachi;
+                $modeldungtc->pldunghuong = $inputs['pldunghuong'];
+                $modeldungtc->lydodunghuong = $inputs['lydodunghuong'];
+                $modeldungtc->trangthaihoso = 'Chờ duyệt';
+                $modeldungtc->save();
+            }
+            $pltrocap = $model->pltrocap;
+            return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
+        } else
+            return view('errors.notlogin');
     }
 
 

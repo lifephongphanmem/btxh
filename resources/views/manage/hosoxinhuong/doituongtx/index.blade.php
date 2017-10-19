@@ -19,26 +19,21 @@
         jQuery(document).ready(function() {
             TableManaged.init();
         });
-        function getId(id){
-            document.getElementById("iddelete").value=id;
-        }
         function getIdTraLai(id){
             document.getElementById("idtralai").value=id;
-        }
-        function getIdChuyen(id){
-            document.getElementById("idchuyen").value=id;
         }
         function getIdDuyet(id){
             document.getElementById("idduyet").value=id;
         }
-        function ClickChuyen(){
-            $('#frm_chuyen').submit();
-        }
-        function ClickDelete(){
-            $('#frm_delete').submit();
-        }
         function ClickDuyet(){
-            $('#frm_duyet').submit();
+            if($('#qdhuong').val() == '' || $('#sosotc').val() == '' || $('#ngayhuong').val() == ''){
+                toastr.error("Bạn cần nhập thông tin hồ sơ", "Lỗi!!!");
+                $("#frm_duyet").submit(function (e){
+                    e.preventDefault();
+                });
+            }else{
+                $("#frm_duyet").unbind('submit').submit();
+            }
         }
         function ClickTraLai(){
             if($('#lydotralai').val() == ''){
@@ -50,31 +45,12 @@
                 $("#frm_tralai").unbind('submit').submit();
             }
         }
-
-        function ShowLyDo(id) {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            //alert(id);
-            $.ajax({
-                url: 'ajax/lydodttx',
-                type: 'GET',
-                data: {
-                    _token: CSRF_TOKEN,
-                    id: id
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if(data.status == 'success') {
-                        $('#lydo').replaceWith(data.message);
-                    }
-                }
-            })
-        }
     </script>
 @stop
 
 @section('content')
     <h3 class="page-title">
-        Danh sách hồ sơ đối tượng thường xuyên <small>&nbsp;đề xuất</small>
+        Danh sách hồ sơ đối tượng thường xuyên <small>&nbsp;xin hưởng</small>
     </h3>
     <!-- END PAGE HEADER-->
     <div class="row">
@@ -128,13 +104,42 @@
                         <thead>
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
+                            <th style="text-align: center">Ngày xin hưởng</th>
                             <th style="text-align: center;width: 20%" >Họ và tên</th>
                             <th style="text-align: center; width: 10% ">Ngày sinh</th>
-                            <th style="text-align: center" width="5%">Giới tính</th>
+                            <th style="text-align: center">Địa chỉ</th>
+                            <th style="text-align: center">Nội dung xin huỏng</th>
                             <th style="text-align: center ; width: 5%">Trạng thái</th>
                             <th style="text-align: center">Thao tác</th>
                         </tr>
                         </thead>
+                        @foreach($model as $key=>$tt)
+                            <tr>
+                                <td style="text-align: center">{{$key+1}}</td>
+                                <td style="text-align: center">{{getDayVn($tt->ngayxinhuong)}}</td>
+                                <td>{{$tt->hoten}}</td>
+                                <td>{{getDayVn($tt->ngaysinh)}}</td>
+                                <td>{{$tt->diachi}}</td>
+                                <td>{{$tt->ndxinhuong}}</td>
+                                @if($tt->trangthaihoso == 'Đã duyệt')
+                                    <td style="text-align: center"><span class="label label-sm label-success">Đã duyệt</span></td>
+                                @elseif($tt->trangthaihoso == 'Chờ duyệt')
+                                    <td style="text-align: center"><span class="label label-sm label-warning">Chờ duyệt</span></td>
+                                @elseif($tt->trangthaihoso == 'Bị trả lại')
+                                    <td style="text-align: center"><span class="label label-sm label-danger">Bị trả lại</span></td>
+                                @endif
+                                <td>
+                                    <a href="{{url('hosoxinhuongtx/'.$tt->mahoso)}}" target="_blank" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Thông tin hồ sơ</a>
+                                    @if(canDuyet($tt->trangthaihoso))
+                                        @if($tt->trangthaihoso == 'Chờ duyệt')
+                                            <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Duyệt</button>
+                                            <button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                Trả lại</button>
+                                        @endif
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                         <tbody>
                     </table>
                 </div>
@@ -147,60 +152,28 @@
 
     <!-- END DASHBOARD STATS -->
 
-    </div>
     <div class="clearfix"></div>
-    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                {!! Form::open(['url'=>'danhsachdoituongtx/delete','id' => 'frm_delete'])!!}
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Đồng ý xóa?</h4>
-                </div>
-                <input type="hidden" name="iddelete" id="iddelete">
-                <div class="modal-footer">
-                    <button type="submit" class="btn blue" onclick="ClickDelete()">Đồng ý</button>
-                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
-                </div>
-                {!! Form::close() !!}
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
-    <div class="modal fade" id="chuyen-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                {!! Form::open(['url'=>'danhsachdoituongtx/chuyen','id' => 'frm_chuyen'])!!}
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Đồng ý chuyển hồ sơ?</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label><b>Lý do</b></label>
-                        <input type="text">
-                    </div>
-                </div>
-                <input type="hidden" name="idchuyen" id="idchuyen">
-                <div class="modal-footer">
-                    <button type="submit" class="btn blue" onclick="ClickChuyen()">Đồng ý</button>
-                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
-                </div>
-                {!! Form::close() !!}
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
     <div class="modal fade" id="duyet-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'danhsachdoituongtx/duyet','id' => 'frm_duyet'])!!}
+                {!! Form::open(['url'=>'hosoxinhuongtx/duyet','id' => 'frm_duyet'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Đồng ý duyệt hồ sơ?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Thông tin quyết định hưởng trợ cấp</b></label>
+                        {!!Form::text('qdhuong',null, array('id' => 'qdhuong','class' => 'form-control required'))!!}
+                    </div>
+                    <div class="form-group">
+                        <label><b>Ngày hưởng trợ cấp</b></label>
+                        {!!Form::text('ngayhuong',date('d/m/Y'), array('id' => 'ngayhuong','data-inputmask'=>"'alias': 'date'",'class' => 'form-control required'))!!}
+                    </div>
+                    <div class="form-group">
+                        <label><b>Số sổ trợ cấp</b></label>
+                        {!!Form::text('sosotc',null, array('id' => 'sosotc','class' => 'form-control required'))!!}
+                    </div>
                 </div>
                 <input type="hidden" name="idduyet" id="idduyet">
                 <div class="modal-footer">
@@ -217,7 +190,7 @@
     <div class="modal fade" id="tralai-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'danhsachdoituongtx/tralai','id' => 'frm_tralai'])!!}
+                {!! Form::open(['url'=>'hosoxinhuongtx/tralai','id' => 'frm_tralai'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Đồng ý trả lại?</h4>

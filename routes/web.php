@@ -10,6 +10,7 @@ Route::get('getXas','AjaxController@getXas');
 Route::get('getChiTietTc','AjaxController@getChiTietTc');
 Route::get('/addTcTx','AjaxController@addTcTx');
 Route::get('/tcdoituongtx/check','AjaxController@checktcdoituongtx');
+Route::get('getXasDiChuyen','AjaxController@getXasDiChuyen');
 // </editor-fold>//End Ajax
 
 // <editor-fold defaultstate="collapsed" desc="--Setting--">
@@ -60,18 +61,20 @@ Route::post('dmtrocaptx/delete','DmTroCapTxController@destroy');
 
 // </editor-fold>//End Setting
 
-// <editor-fold defaultstate="collapsed" desc="--Reports--">
+//<editor-fold defaultstate="collapsed" desc="--Manage--">
+//Route::resource('hosodexuattx','HoSoDeXuatTxController');
+    //Hồ sơ xin hưởng
+Route::resource('hosoxinhuongtx','HoSoXinHuongTxController');
+Route::post('hosoxinhuongtx/duyet','HoSoXinHuongTxController@duyet');
+Route::post('hosoxinhuongtx/tralai','HoSoXinHuongTxController@tralai');
 
-// </editor-fold>//End Reports
+    //Hồ sơ xin dừng
+Route::resource('hosoxindungtctx','HoSoDungTcTxController');
+Route::post('hosoxindungtctx/duyet','HoSoDungTcTxController@duyet');
 
+    //Hồ sơ xin di chuyển
+Route::resource('hosodichuyennttx','HoSoDiChuyenNtTxController');
 
-
-// <editor-fold defaultstate="collapsed" desc="--Manage--">
-Route::get('hosodexuat',function(){
-    return view('manage.hosodexuat.doituongtx.index')
-
-        ->with('pageTitle','Hồ sơ đề xuất');
-});
 //Danh sách đối tượng thường xuyên
 Route::resource('danhsachdoituongtx','DsDoiTuongTxController');
 Route::get('danhsachdoituongtx/{trocap}/create','DsDoiTuongTxController@create');
@@ -80,6 +83,11 @@ Route::post('danhsachdoituongtx/tralai','DsDoiTuongTxController@tralai');
 Route::post('danhsachdoituongtx/chuyen','DsDoiTuongTxController@chuyen');
 Route::post('danhsachdoituongtx/duyet','DsDoiTuongTxController@duyet');
 Route::get('ajax/lydodttx','DsDoiTuongTxController@lydo');
+Route::post('danhsachdoituongtx/xinhuong','DsDoiTuongTxController@xinhuong');
+Route::post('danhsachdoituongtx/dungtc','DsDoiTuongTxController@dungtc');
+Route::post('danhsachdoituongtx/dichuyen','DsDoiTuongTxController@dichuyen');
+
+Route::resource('danhsachdoituongdungtctx','DsDoiTuongDungTcTxController');
 //End danh sách đối tượng thường xuyên
 
 //Trợ cấp đối tượng thường xuyên
@@ -103,3 +111,11 @@ Route::post('trocapdoituongtxct/duyet','TcDoiTuongTxCtController@duyet');
 
 
 // </editor-fold>//End Manage
+
+//<editor-fold defaultstate="collapsed" desc="--Reports--">
+Route::get('reports','ReportsController@index');
+Route::get('reports/hsxhbtxh','ReportsController@hsxhbtxh');
+Route::get('reports/hscqdbtxh','ReportsController@hscqdbtxh');
+Route::get('reports/hsdctc','ReportsController@hsdctc');
+Route::get('reports/dscttcht','ReportsController@dscttcht');
+// </editor-fold>//End Reports

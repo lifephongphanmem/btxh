@@ -172,12 +172,12 @@
             }
 
 
-            if($('#ngayhuong').val()==''){
+            /*if($('#ngayhuong').val()==''){
                 strb2 += ' - Ngày bắt đầu hưởng trợ cấp \n';
                 ok = false;
-            }
+            }*/
             if($('#matrocap').val()==''){
-                strb2 += '  - Phân loại trợ cấp  \n';
+                strb2 += '  - Chọn loại trợ cấp  \n';
                 ok = false;
             }
 

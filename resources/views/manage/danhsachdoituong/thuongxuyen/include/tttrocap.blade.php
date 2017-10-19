@@ -1,5 +1,6 @@
 <div id="tab2" class="tab-pane active" >
     <div class="form-horizontal">
+        @if(session('admin')->level == 'T' || session('admin')=='H')
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -8,6 +9,7 @@
                         {!! Form::select(
                         'trangthaihuong',
                         array(
+                        'Chờ xét duyệt dừng trợ cấp'=>'Chờ xét duyệt dừng trợ cấp',
                         'Đang hưởng' => 'Đang hưởng',
                         'Dừng hưởng' => 'Dừng hưởng',
                         ),null,
@@ -48,6 +50,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             @if($action =='create')
             <div id="ngaydung" class="col-md-6" style="display: none">
@@ -95,6 +98,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -142,11 +146,12 @@
                         </div>
                     </div>
                 </div>
-                {!!Form::hidden('matrocap',null, array('id' => 'matrocap','class' => 'form-control','readonly'))!!}
+                {!!Form::hidden('matrocap',null, array('id' => 'matrocap','class' => 'form-control'))!!}
             </div>
         @else
             <div id="tttrocap">
             </div>
+            {!!Form::hidden('matrocap',null, array('id' => 'matrocap','class' => 'form-control'))!!}
         @endif
     </div>
 </div>

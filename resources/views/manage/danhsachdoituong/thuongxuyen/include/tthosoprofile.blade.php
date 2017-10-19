@@ -64,7 +64,12 @@
                     @endif
                     <tr>
                         <td><b>Loại trợ cấp</b></td>
-                        <td>{{$loaitc->noidung}} {{$loaitc->chitiet != '' ? '- '.$loaitc->chitiet : ''}}-Hệ số: {{$loaitc->heso}}-  <b>Số tiền trợ cấp: {{number_format($model->sotientc)}}</b></td>
+
+                        <td>
+                            @if(isset($loaitc))
+                            {{$loaitc->noidung}} {{$loaitc->chitiet != '' ? '- '.$loaitc->chitiet : ''}}-Hệ số: {{$loaitc->heso}}-  <b>Số tiền trợ cấp: {{number_format($model->sotientc)}}</b>
+                            @endif
+                        </td>
                     </tr>
                     </tbody>
                 </table>

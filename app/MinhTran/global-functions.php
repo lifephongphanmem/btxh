@@ -156,7 +156,15 @@ function can($module = null, $action = null)
 
 }
 function canEdit($trangthaihoso){
-    if((session('admin')->level == 'X' || session('admin')->level == 'H') && ($trangthaihoso == 'Chờ duyệt' || $trangthaihoso == 'Chờ chuyển'|| $trangthaihoso == 'Đã duyệt') ){
+    if((session('admin')->level == 'X' /*|| session('admin')->level == 'H'*/) && ($trangthaihoso == 'Chờ duyệt' || $trangthaihoso == 'Đã duyệt') ){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+function canDuyet($trangthaihoso){
+    if((session('admin')->level == 'X' /*|| session('admin')->level == 'H'*/) && ($trangthaihoso == 'Chờ duyệt')){
         return false;
     }else{
         return true;

@@ -28,27 +28,50 @@
         function getIdChuyen(id){
             document.getElementById("idchuyen").value=id;
         }
-        function getIdDuyet(id){
-            document.getElementById("idduyet").value=id;
+        function getIdXinHuong(id){
+            document.getElementById("idxinhuong").value=id;
+        }
+        function getIdDungTC(id){
+            document.getElementById("iddungtc").value=id;
+        }
+        function getIdDiChuyen(id){
+            document.getElementById("iddichuyen").value=id;
+        }
+        function ClickXinHuong(){
+            if($('#ndxinhuong').val() == ''){
+                toastr.error("Bạn cần nhập nội dung xin hưởng", "Lỗi!!!");
+                $("#frm_xinhuong").submit(function (e){
+                    e.preventDefault();
+                });
+            }else{
+                $("#frm_xinhuong").unbind('submit').submit();
+            }
+        }
+        function ClickDungTc(){
+            if($('#lydodunghuong').val() == ''){
+                toastr.error("Bạn cần nhập lý do dừng hưởng", "Lỗi!!!");
+                $("#frm_dungtc").submit(function (e){
+                    e.preventDefault();
+                });
+            }else{
+                $("#frm_dungtc").unbind('submit').submit();
+            }
         }
         function ClickChuyen(){
             $('#frm_chuyen').submit();
         }
-        function ClickDelete(){
-            $('#frm_delete').submit();
-        }
-        function ClickDuyet(){
-            $('#frm_duyet').submit();
-        }
-        function ClickTraLai(){
-            if($('#lydotralai').val() == ''){
-                toastr.error("Bạn cần nhập lý do trả lại hồ sơ", "Lỗi!!!");
-                $("#frm_tralai").submit(function (e){
+        function ClickDiChuyen(){
+            if($('#nddichuyen').val() == ''){
+                toastr.error("Bạn cần nhập thông tin di chuyển", "Lỗi!!!");
+                $("#frm_dichuyen").submit(function (e){
                     e.preventDefault();
                 });
             }else{
-                $("#frm_tralai").unbind('submit').submit();
+                $("#frm_dichuyen").unbind('submit').submit();
             }
+        }
+        function ClickDelete(){
+            $('#frm_delete').submit();
         }
 
         function ShowLyDo(id) {
@@ -166,27 +189,32 @@
                                     <a href="{{url('danhsachdoituongtx/'.$tt->id)}}" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                     @if(canEdit($tt->trangthaihoso))
                                         <a href="{{url('danhsachdoituongtx/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
-
-                                        @if($tt->trangthaihoso == 'Bị trả lại' || $tt->trangthaihoso == 'Chờ chuyển')
+                                        @if($tt->trangthaihoso == 'Chờ chuyển')
                                             @if(can('dttx','forward'))
-                                            <button type="button" onclick="getIdChuyen('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#chuyen-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
-                                                Chuyển</button>
-                                            @endif
-                                            @if($tt->trangthaihoso == 'Bị trả lại')
-                                                <button type="button" onclick="ShowLyDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-modal" data-toggle="modal"><i class="fa fa-search"></i>&nbsp;
-                                                    Lý do trả lại</button>
+                                            <button type="button" onclick="getIdXinHuong('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#xinhuong-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                Xin hưởng</button>
                                             @endif
                                         @endif
-                                        @if($tt->trangthaihoso == 'Chờ duyệt')
-                                            @if(can('dttx','approve'))
-                                            <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;
-                                               Duyệt</button>
-                                            <button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-reply"></i>&nbsp;
-                                                Trả lại</button>
+                                        @if($tt->trangthaihoso == 'Bị trả lại')
+                                            @if(can('dttx','forward'))
+                                                <button type="button" onclick="getIdChuyen('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#chuyen-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                    Chuyển lại</button>
                                             @endif
+                                                <button type="button" data-target="#lydo-modal" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ShowLyDo('{{$tt->id}}}')" ><i class="fa fa-search"></i>&nbsp;Lý do trả lại</button>
                                         @endif
+                                        @if($tt->trangthaihoso == 'Chờ chuyển')
                                         <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
                                             Xóa</button>
+                                        @endif
+
+                                    @endif
+                                    @if($tt->trangthaihoso == 'Đã duyệt' && session('admin')->level == 'X')
+                                        @if($tt->trangthaihuong == 'Đang hưởng')
+                                        <button type="button" onclick="getIdDungTC('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#stop-modal" data-toggle="modal"><i class="fa fa-stop"></i>&nbsp;
+                                            Dừng trợ cấp</button>
+                                        <button type="button" onclick="getIdDiChuyen('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#dichuyen-modal" data-toggle="modal"><i class="fa fa-send"></i>&nbsp;
+                                            Di chuyển</button>
+                                        @endif
                                     @endif
                                 </td>
                             </tr>
@@ -231,7 +259,13 @@
                 {!! Form::open(['url'=>'danhsachdoituongtx/chuyen','id' => 'frm_chuyen'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Đồng ý chuyển hồ sơ?</h4>
+                    <h4 class="modal-title">Đồng ý chuyển lại hồ sơ xin hưởng lên cấp trên?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Nội dung xin chuyển lại</b></label>
+                        <textarea id="ndxinhuong" class="form-control required" name="ndxinhuong" cols="30" rows="5"></textarea>
+                    </div>
                 </div>
                 <input type="hidden" name="idchuyen" id="idchuyen">
                 <div class="modal-footer">
@@ -244,50 +278,34 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" id="duyet-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="xinhuong-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'danhsachdoituongtx/duyet','id' => 'frm_duyet'])!!}
+                {!! Form::open(['url'=>'danhsachdoituongtx/xinhuong','id' => 'frm_xinhuong'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Đồng ý duyệt hồ sơ?</h4>
+                    <h4 class="modal-title">Đồng ý chuyển hồ sơ xin hưởng lên cấp trên?</h4>
                 </div>
-                <input type="hidden" name="idduyet" id="idduyet">
-                <div class="modal-footer">
-                    <button type="submit" class="btn blue" onclick="ClickDuyet()">Đồng ý</button>
-                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
-                </div>
-                {!! Form::close() !!}
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
-    <div class="modal fade" id="tralai-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                {!! Form::open(['url'=>'danhsachdoituongtx/tralai','id' => 'frm_tralai'])!!}
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Đồng ý trả lại?</h4>
-                </div>
-                <div class="modal-body">
+                <div class="modal-body" id="ttnhanhsedit">
+                    <!--div class="form-group">
+                        <label><b>Ngày chuyển</b></label>
+                        {!!Form::text('ngayxinhuong',date('d/m/Y'), array('id' => 'ngayxinhuong','data-inputmask'=>"'alias': 'date'",'class' => 'form-control required'))!!}
+                    </div-->
                     <div class="form-group">
-                        <label><b>Lý do trả lại</b></label>
-                        <textarea id="lydotralai" class="form-control required" name="lydotralai" cols="30" rows="5"></textarea>
+                        <label><b>Nội dung xin hưởng</b></label>
+                        <textarea id="ndxinhuong" class="form-control required" name="ndxinhuong" cols="30" rows="5"></textarea>
                     </div>
+                    <input type="hidden" name="idxinhuong" id="idxinhuong">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn blue" onclick="ClickXinHuong()">Đồng ý</button>
+                        <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
-                <input type="hidden" name="idtralai" id="idtralai">
-                <div class="modal-footer">
-                    <button type="submit" class="btn blue" onclick="ClickTraLai()">Đồng ý</button>
-                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
-                </div>
-                {!! Form::close() !!}
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
     </div>
 
     <div class="modal fade" id="lydo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -295,7 +313,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Lý do trả lại hồ sơ!!!</h4>
+                    <h4 class="modal-title">Lý do bị trả lại?</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -303,7 +321,6 @@
                         <div id="lydo"></div>
                     </div>
                 </div>
-                <input type="hidden" name="idtralai" id="idtralai">
                 <div class="modal-footer">
                     <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
                 </div>
@@ -312,6 +329,86 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+
+    <div class="modal fade" id="stop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url'=>'danhsachdoituongtx/dungtc','id' => 'frm_dungtc'])!!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý dừng trợ cấp đối tượng?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Phân loại dừng trợ cấp</b></label>
+                        {!! Form::select(
+                        'pldunghuong',
+                        array(
+                        'Mất' => 'Mất',
+                        'Chuyển ngoại tỉnh' => 'Chuyển ngoại tỉnh'
+                        ),null,
+                        array('id' => 'pldunghuong', 'class' => 'form-control'))
+                        !!}
+                    </div>
+                    <div class="form-group">
+                        <label><b>Lý do dừng trợ cấp</b></label>
+                        <textarea id="lydodunghuong" class="form-control required" name="lydodunghuong" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+                <input type="hidden" name="iddungtc" id="iddungtc">
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue" onclick="ClickDungTc()">Đồng ý</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="dichuyen-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url'=>'danhsachdoituongtx/dichuyen','id' => 'frm_dichuyen'])!!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý dừng trợ cấp đối tượng?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Thông tin di chuyển</b></label>
+                        <textarea id="nddichuyen" class="form-control required" name="nddichuyen" cols="30" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label><b>Di chuyển đến huyện</b></label>
+                        <select id="mahuyendichuyen" name="mahuyendichuyen" class="form-control">
+                            @foreach ($huyens as $huyen)
+                                <option {{ ($huyen->mahuyen == $mahuyen) ? 'selected' : '' }} value="{{ $huyen->mahuyen }}">{{ $huyen->tenhuyen }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><b>Di chuyển đến xã</b></label>
+                        <select id="maxadichuyen"  name="maxadichuyen" class="form-control">
+                            @foreach ($xas as $xa)
+                                <option {{ ($xa->maxa == $maxa) ? 'selected' : '' }} value="{{ $xa->maxa }}">{{ $xa->tenxa }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <input type="hidden" name="iddichuyen" id="iddichuyen">
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue" onclick="ClickDiChuyen()">Đồng ý</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 
     <script>
         $(function(){
@@ -333,9 +430,28 @@
                 var url = current_path_url+trocap+mahuyen+maxa;
                 window.location.href = url;
             });
+            $('select[name="mahuyendichuyen"]').change(function(){
+                alert($(this).val());
+                if($(this).val() != 'all'){
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                    $.ajax({
+                        url: '/getXasDiChuyen/',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            mahuyen: $(this).val()
+                        },
+                        dataType: 'JSON',
+                        success: function (data) {
+                            if(data.status == 'success')
+                                $('select[name="maxadichuyen"]').replaceWith(data.message);
+                        }
+                    });
+                } else {
+                    $('select[name="maxa"]').val('all');
+                }
+            });
         })
-
-
     </script>
 
 @stop

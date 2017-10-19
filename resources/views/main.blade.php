@@ -285,29 +285,19 @@ License: You must have a valid license purchased only from themeforest(the above
                     <li>
                         <a href="">
                             <i class="icon-users"></i>
-                            <span class="title">Hồ sơ đề xuất</span>
-                            <span class="arrow"></span>
-                        </a>
-                        <ul class="sub-menu">
-                            <li><a href="{{url('hosodexuat')}}">Thường xuyên</a></li>
-                            <li><a href="">Đột xuất</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="icon-users"></i>
                             <span class="title">Danh sách đối tượng</span>
                             <span class="arrow "></span>
                         </a>
                         <ul class="sub-menu">
                             @if(canGeneral('dttx','index'))
                                 @if(can('dttx','index'))
-                                <li><a href="{{url('danhsachdoituongtx')}}">Thường xuyên</a></li>
+                                    <li><a href="{{url('danhsachdoituongtx')}}">Thường xuyên</a></li>
+                                    <li><a href="{{url('danhsachdoituongdungtctx')}}">Dừng trợ cấp</a></li>
                                 @endif
                             @endif
                             @if(canGeneral('dtdx','index'))
                                 @if(can('dtdx','index'))
-                                <li><a href="{{url('')}}">Đột xuất</a></li>
+                                    <li><a href="{{url('')}}">Đột xuất</a></li>
                                 @endif
                             @endif
                         </ul>
@@ -321,21 +311,64 @@ License: You must have a valid license purchased only from themeforest(the above
                         <ul class="sub-menu">
                             @if(canGeneral('ctdttx','index'))
                                 @if(can('ctdttx','index'))
-                                <li><a href="{{url('trocapdoituongtx')}}">Thường xuyên</a></li>
+                                    <li><a href="{{url('trocapdoituongtx')}}">Thường xuyên</a></li>
                                 @endif
                             @endif
                             @if(canGeneral('ctdtdx','index'))
                                 @if(can('ctdtdx','index'))
-                                <li><a href="{{url('')}}">Đột xuất</a></li>
+                                    <li><a href="{{url('')}}">Đột xuất</a></li>
                                 @endif
                             @endif
                         </ul>
                     </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-users"></i>
+                            <span class="title">Hồ sơ xin hưởng</span>
+                            <span class="arrow "></span>
+                        </a>
+                        <ul class="sub-menu">
+                            @if(canGeneral('dttx','index'))
+                                @if(can('dttx','index'))
+                                    <li><a href="{{url('hosoxinhuongtx')}}">Thường xuyên</a></li>
+                                @endif
+                            @endif
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-users"></i>
+                            <span class="title">Hồ sơ dừng trợ cấp</span>
+                            <span class="arrow "></span>
+                        </a>
+                        <ul class="sub-menu">
+                            @if(canGeneral('dttx','index'))
+                                @if(can('dttx','index'))
+                                    <li><a href="{{url('hosoxindungtctx')}}">Thường xuyên</a></li>
+                                @endif
+                            @endif
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-users"></i>
+                            <span class="title">Hồ sơ di chuyển</span>
+                            <span class="arrow "></span>
+                        </a>
+                        <ul class="sub-menu">
+                            @if(canGeneral('dttx','index'))
+                                @if(can('dttx','index'))
+                                    <li><a href="{{url('hosodichuyennttx')}}">Nội tỉnh</a></li>
+                                @endif
+                            @endif
+                        </ul>
+                    </li>
+
                     @if(canGeneral('baocao','index'))
                     <li>
-                        <a href="{{url('')}}">
+                        <a href="{{url('reports')}}">
                             <i class="fa fa-file-o fa-fw"></i>
-                            <span class="title">Sổ sách báo cáo</span>
+                            <span class="title">Báo cáo tổng hợp</span>
                         </a>
                     </li>
                     @endif

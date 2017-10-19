@@ -212,4 +212,34 @@ class AjaxController extends Controller
         die(json_encode($result));
     }
 
+    public function getXasDiChuyen(Request $request){
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if(!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+
+        $inputs = $request->all();
+
+        if(isset($inputs['mahuyen'])){
+            $xas = Towns::where('mahuyen', '=', $inputs['mahuyen'])->get();
+            $result['message'] = '<select id="maxadichuyen" name="maxadichuyen" class="form-control">';
+            if(count($xas) > 0){
+                foreach($xas as $xa){
+                    $result['message'] .= '<option value="'.$xa->maxa.'">'.$xa->tenxa.'</option>';
+                }
+                $result['message'] .= '</select>';
+                $result['status'] = 'success';
+            }
+        }
+
+        die(json_encode($result));
+    }
+
 }
