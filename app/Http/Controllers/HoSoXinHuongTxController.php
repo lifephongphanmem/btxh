@@ -23,8 +23,14 @@ class HoSoXinHuongTxController extends Controller
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
 
             $model = HoSoXinHuongTx::whereMonth('ngayxinhuong', $inputs['thang'])
-                ->whereYear('ngayxinhuong',  $inputs['nam'])
-                ->get();
+                ->whereYear('ngayxinhuong',  $inputs['nam']);
+            if(session('admin')->level == 'X')
+                $model= $model->where('maxa',session('admin')->maxa);
+            elseif(session('admin')->level =='H')
+                $model = $model->where('mahuyen',session('admin')->mahuyen);
+
+            $model = $model->get();
+
 
             return view('manage.hosoxinhuong.doituongtx.index')
                 ->with('thang',$inputs['thang'])
@@ -101,6 +107,22 @@ class HoSoXinHuongTxController extends Controller
             $model = HoSoXinHuongTx::find($id);
             if($model->update($inputs)){
                 $modelhs = DsDoiTuongTx::where('mahoso',$model->mahoso)->first();
+                $modelhs->update($inputs);
+            }
+            return redirect('hosoxinhuongtx');
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function nhanhs(Request $request){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $id = $inputs['idnhanhs'];
+            $inputs['trangthaihoso'] = 'Đã duyệt';
+            $model = HoSoXinHuongTx::find($id);
+            if($model->update($inputs)){
+                $modelhs = DsDoiTuongTx::where('mahoso',$model->mahoso)->first();
+                $inputs['trangthaihoso'] = 'Đã duyệt';
                 $modelhs->update($inputs);
             }
             return redirect('hosoxinhuongtx');

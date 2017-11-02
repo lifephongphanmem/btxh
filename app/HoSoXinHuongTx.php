@@ -19,6 +19,9 @@ class HoSoXinHuongTx extends Model
         'lydotralai',
         'ngayhuong',
         'qdhuong',
-        'sosotc'
+        'sosotc',
+        'plxinhuong',
+        'maxa',
+        'mahuyen'
     ];
 }

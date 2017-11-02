@@ -26,6 +26,7 @@ class CreateHosoxinhuongtxTable extends Migration
             $table->date('ngayhuong')->nullable();
             $table->string('qdhuong')->nullable();
             $table->string('sosotc')->nullable();
+            $table->string('plxinhuong')->nullable();
             $table->timestamps();
         });
     }

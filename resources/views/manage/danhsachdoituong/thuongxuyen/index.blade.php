@@ -38,7 +38,7 @@
             document.getElementById("iddichuyen").value=id;
         }
         function ClickXinHuong(){
-            if($('#ndxinhuong').val() == ''){
+            if($('textarea[id="ndxinhuong"]').val() == '') {
                 toastr.error("Bạn cần nhập nội dung xin hưởng", "Lỗi!!!");
                 $("#frm_xinhuong").submit(function (e){
                     e.preventDefault();
@@ -56,9 +56,6 @@
             }else{
                 $("#frm_dungtc").unbind('submit').submit();
             }
-        }
-        function ClickChuyen(){
-            $('#frm_chuyen').submit();
         }
         function ClickDiChuyen(){
             if($('#nddichuyen').val() == ''){
@@ -197,8 +194,8 @@
                                         @endif
                                         @if($tt->trangthaihoso == 'Bị trả lại')
                                             @if(can('dttx','forward'))
-                                                <button type="button" onclick="getIdChuyen('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#chuyen-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
-                                                    Chuyển lại</button>
+                                                <button type="button" onclick="getIdXinHuong('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#xinhuong-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                    Xin hưởng</button>
                                             @endif
                                                 <button type="button" data-target="#lydo-modal" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ShowLyDo('{{$tt->id}}}')" ><i class="fa fa-search"></i>&nbsp;Lý do trả lại</button>
                                         @endif
@@ -214,6 +211,7 @@
                                             Dừng trợ cấp</button>
                                         <button type="button" onclick="getIdDiChuyen('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#dichuyen-modal" data-toggle="modal"><i class="fa fa-send"></i>&nbsp;
                                             Di chuyển</button>
+
                                         @endif
                                     @endif
                                 </td>
@@ -253,31 +251,6 @@
         <!-- /.modal-dialog -->
     </div>
 
-    <div class="modal fade" id="chuyen-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                {!! Form::open(['url'=>'danhsachdoituongtx/chuyen','id' => 'frm_chuyen'])!!}
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Đồng ý chuyển lại hồ sơ xin hưởng lên cấp trên?</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label><b>Nội dung xin chuyển lại</b></label>
-                        <textarea id="ndxinhuong" class="form-control required" name="ndxinhuong" cols="30" rows="5"></textarea>
-                    </div>
-                </div>
-                <input type="hidden" name="idchuyen" id="idchuyen">
-                <div class="modal-footer">
-                    <button type="submit" class="btn blue" onclick="ClickChuyen()">Đồng ý</button>
-                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
-                </div>
-                {!! Form::close() !!}
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
     <div class="modal fade" id="xinhuong-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -391,7 +364,9 @@
                         <label><b>Di chuyển đến xã</b></label>
                         <select id="maxadichuyen"  name="maxadichuyen" class="form-control">
                             @foreach ($xas as $xa)
-                                <option {{ ($xa->maxa == $maxa) ? 'selected' : '' }} value="{{ $xa->maxa }}">{{ $xa->tenxa }}</option>
+                                @if($maxa != $xa->maxa)
+                                <option value="{{ $xa->maxa }}">{{ $xa->tenxa }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -431,7 +406,6 @@
                 window.location.href = url;
             });
             $('select[name="mahuyendichuyen"]').change(function(){
-                alert($(this).val());
                 if($(this).val() != 'all'){
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({

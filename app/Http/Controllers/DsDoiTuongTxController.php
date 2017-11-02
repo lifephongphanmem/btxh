@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Districts;
 use App\DmTroCapTx;
 use App\DsDoiTuongTx;
+use App\HoSoDiChuyenNtTx;
 use App\HoSoDungTcTx;
 use App\HoSoXinHuongTx;
 use App\PlTroCapTx;
@@ -58,12 +59,18 @@ class DsDoiTuongTxController extends Controller
             }else{
                 $model = $model->where('maxa', $xa);
             }
+
+            //Hồ sơ đã duyệt mới hiển thị lên cấp H và T nhìn thấy và chỉnh sửa còn hồ sơ còn lại xã nhìn th
             if (session('admin')->level == 'T' || session('admin')->level == 'H') {
-                $model = $model->where('trangthaihoso', '<>', 'Chờ chuyển')
-                    ->where('trangthaihoso', '<>', 'Bị trả lại');
-            }
+                $model = $model->where('trangthaihoso', 'Đã duyệt');
+            }else
+                $model = $model ->where('trangthaihoso','Chờ chuyển')
+                    ->OrWhere('trangthaihoso','Chờ duyệt')
+                    ->OrWhere('trangthaihoso','Bị trả lại')
+                    ->OrWhere('trangthaihoso','Đã duyệt');
+
             //Loại các TH hs bị chuyển đi, dừng hưởng
-            $model = $model->where('trangthaihoso','<>','Dừng hưởng');
+            //$model = $model->where('trangthaihoso','Dừng hưởng');
             $model = $model->get();
 
 
@@ -161,10 +168,14 @@ class DsDoiTuongTxController extends Controller
             if(isset( $inputs['sotientc']))
                 $inputs['sotientc'] = getMoneyToDb($inputs['sotientc']);
 
-            if(session('admin')->level == 'T')
+            if(session('admin')->level == 'T') {
                 $inputs['trangthaihoso'] = 'Đã duyệt';
-            else
+                $inputs['trangthaihuong'] = 'Đang hưởng';
+            }else {
                 $inputs['trangthaihoso'] = 'Chờ chuyển';
+                $inputs['trangthaihuong'] = 'Chờ xét duyệt';
+            }
+
             //UpLoadAvatar
             if(isset($inputs['avatar'])){
                 $avatar = $request->file('avatar');
@@ -395,25 +406,13 @@ class DsDoiTuongTxController extends Controller
             $inputs = $request->all();
             $id = $inputs['idchuyen'];
             $inputs['trangthaihoso'] = 'Chờ duyệt';
+            $inputs['ttthaotac'] = session('admin')->name .'('.session('admin')->username.')'.'- Chuyển hồ sơ lên cấp trên';
             $model = DsDoiTuongTx::find($id);
             if($model->update($inputs)){
                 $inputs['ngayxinhuong'] = date('Y-m-d');
                 $modelxh = HoSoXinHuongTx::where('mahoso',$model->mahoso)->first();
                 $modelxh->update($inputs);
             }
-            $pltrocap = $model->pltrocap;
-            return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
-        } else
-            return view('errors.notlogin');
-    }
-
-    public function duyet(Request $request){
-        if (Session::has('admin')) {
-            $inputs = $request->all();
-            $id = $inputs['idduyet'];
-            $model = DsDoiTuongTx::find($id);
-            $model->trangthaihoso = 'Đã duyệt';
-            $model->save();
             $pltrocap = $model->pltrocap;
             return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
         } else
@@ -478,6 +477,9 @@ class DsDoiTuongTxController extends Controller
                 $modelxh->diachi = $model->diachi;
                 $modelxh->ndxinhuong = $inputs['ndxinhuong'];
                 $modelxh->trangthaihoso = 'Chờ duyệt';
+                $modelxh->plxinhuong = 'Mới';
+                $modelxh->maxa = $model->maxa;
+                $modelxh->mahuyen = $model->mahuyen;
                 $modelxh->save();
             }
             $pltrocap = $model->pltrocap;
@@ -491,7 +493,8 @@ class DsDoiTuongTxController extends Controller
             $inputs = $request->all();
             $id = $inputs['iddungtc'];
             $model = DsDoiTuongTx::find($id);
-            $model->trangthaihuong = 'Chờ xét duyệt dừng trợ cấp';
+            $model->trangthaihoso = 'Dừng trợ cấp';
+            $inputs['ttthaotac'] = session('admin')->name .'('.session('admin')->username.')'.'- Chuyển hồ sơ lên cấp trên dừng trợ cấp';
             if($model->save()){
                 $modeldungtc = new HoSoDungTcTx();
                 $modeldungtc->ngayxindung = date('Y-m-d');
@@ -502,6 +505,8 @@ class DsDoiTuongTxController extends Controller
                 $modeldungtc->pldunghuong = $inputs['pldunghuong'];
                 $modeldungtc->lydodunghuong = $inputs['lydodunghuong'];
                 $modeldungtc->trangthaihoso = 'Chờ duyệt';
+                $modeldungtc->mahuyen = $model->mahuyen;
+                $modeldungtc->maxa = $model->maxa;
                 $modeldungtc->save();
             }
             $pltrocap = $model->pltrocap;
@@ -513,27 +518,31 @@ class DsDoiTuongTxController extends Controller
     public function dichuyen(Request $request){
         if (Session::has('admin')) {
             $inputs = $request->all();
-            dd($inputs);
             $id = $inputs['iddichuyen'];
             $model = DsDoiTuongTx::find($id);
-            $model->trangthaihuong = 'Chờ xét duyệt di chuyển';
+            $model->trangthaihoso = 'Chờ di chuyển';
+            $inputs['ttthaotac'] = session('admin')->name .'('.session('admin')->username.')'.'- Chuyển hồ sơ lên cấp trên xác nhận di chuyển';
             if($model->save()){
-                $modeldungtc = new HoSoDungTcTx();
-                $modeldungtc->ngayxindung = date('Y-m-d');
-                $modeldungtc->mahoso = $model->mahoso;
-                $modeldungtc->hoten = $model->hoten;
-                $modeldungtc->ngaysinh = $model->ngaysinh;
-                $modeldungtc->diachi = $model->diachi;
-                $modeldungtc->pldunghuong = $inputs['pldunghuong'];
-                $modeldungtc->lydodunghuong = $inputs['lydodunghuong'];
-                $modeldungtc->trangthaihoso = 'Chờ duyệt';
-                $modeldungtc->save();
+                $modeldichuyen = new HoSoDiChuyenNtTx();
+                $modeldichuyen->ngayyc = date('Y-m-d');
+                $modeldichuyen->mahoso = $model->mahoso;
+                $modeldichuyen->hoten = $model->hoten;
+                $modeldichuyen->ngaysinh = $model->ngaysinh;
+                $modeldichuyen->diachi = $model->diachi;
+                $modeldichuyen->nddichuyen = $inputs['nddichuyen'];
+                $modeldichuyen->mahuyendichuyen = $inputs['mahuyendichuyen'];
+                $modeldichuyen->maxadichuyen = $inputs['maxadichuyen'];
+                $modeldichuyen->maxa = $model->maxa;
+                $modeldichuyen->mahuyen = $model->mahuyen;
+                $modeldichuyen->trangthaihoso = 'Chờ duyệt';
+                $modeldichuyen->save();
             }
             $pltrocap = $model->pltrocap;
             return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
         } else
             return view('errors.notlogin');
     }
+
 
 
 

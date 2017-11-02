@@ -19,12 +19,25 @@
         jQuery(document).ready(function() {
             TableManaged.init();
         });
+        function getIdXinHuong(id){
+            document.getElementById("idxinhuong").value=id;
+        }
+        function ClickXinHuong(){
+            if($('#ndxinhuong').val() == ''){
+                toastr.error("Bạn cần nhập nội dung xin hưởng", "Lỗi!!!");
+                $("#frm_xinhuong").submit(function (e){
+                    e.preventDefault();
+                });
+            }else{
+                $("#frm_xinhuong").unbind('submit').submit();
+            }
+        }
     </script>
 @stop
 
 @section('content')
     <h3 class="page-title">
-        Danh sách đối tượng dừng trợ cấp<small>&nbsp;thường xuyên</small>
+        Danh sách đối tượng thường xuyên<small>&nbsp;chờ nhận</small>
     </h3>
     <!-- END PAGE HEADER-->
     <div class="row">
@@ -74,59 +87,57 @@
                         <div class="table-toolbar">
 
                         </div>
-                    <table class="table table-striped table-bordered table-hover" id="sample_3">
-                        <thead>
-                        <tr>
-                            <th style="text-align: center" width="2%">STT</th>
-                            <th style="text-align: center" width="10%">Ảnh đại diện</th>
-                            <th style="text-align: center;width: 20%" >Họ và tên</th>
-                            <th style="text-align: center; width: 10% ">Ngày sinh</th>
-                            <th style="text-align: center" width="5%">Giới tính</th>
-                            <th style="text-align: center ; width: 10%">Hiện trạng</th>
-                            <th style="text-align: center; width: 10%" >Ngày hưởng<br>Ngày dừng trợ cấp</th>
-                            <th style="text-align: center">Thao tác</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($model as $key=>$tt)
+                        <table class="table table-striped table-bordered table-hover" id="sample_3">
+                            <thead>
                             <tr>
-                                <td style="text-align: center">{{$key+1}}</td>
-                                <td align="center" style="vertical-align: middle">
-                                    <a href="{{url('danhsachdoituongtx/'.$tt->id)}}">
-                                        <img src="{{ url('images/avatar/doituongtx/'.$tt->avatar)}}" width="96">
-                                    </a>
-                                </td>
-                                <td class="active"><b style="color: blue">{{$tt->hoten}}</b><br><u>Mã hồ sơ:</u> {{$tt->mahoso}}</td>
-                                <td style="text-align: center">{{getDayVn($tt->ngaysinh)}}</td>
-                                <td style="text-align: center">{{$tt->gioitinh}}</td>
-                                <td>{{$tt->trangthaihuong}}</td>
-                                <td style="text-align: center">{{getDayVn($tt->ngayhuong)}} {{$tt->ngaydunghuong != '' ? '- '.getDayVn($tt->ngaydunghuong) : ''}}</td>
-                                <td>
-                                    <a href="{{url('danhsachdoituongtx/'.$tt->id)}}" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
-                                </td>
+                                <th style="text-align: center" width="2%">STT</th>
+                                <th style="text-align: center" width="10%">Ảnh đại diện</th>
+                                <th style="text-align: center;width: 20%" >Họ và tên</th>
+                                <th style="text-align: center; width: 10% ">Ngày sinh</th>
+                                <th style="text-align: center" width="5%">Giới tính</th>
+                                <th style="text-align: center ; width: 10%">Hiện trạng</th>
+                                <th style="text-align: center; width: 10%" >Ngày hưởng<br>Ngày dừng trợ cấp</th>
+                                <th style="text-align: center">Thao tác</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @foreach($model as $key=>$tt)
+                                <tr>
+                                    <td style="text-align: center">{{$key+1}}</td>
+                                    <td align="center" style="vertical-align: middle">
+                                        <a href="{{url('danhsachdoituongtx/'.$tt->id)}}">
+                                            <img src="{{ url('images/avatar/doituongtx/'.$tt->avatar)}}" width="96">
+                                        </a>
+                                    </td>
+                                    <td class="active"><b style="color: blue">{{$tt->hoten}}</b><br><u>Mã hồ sơ:</u> {{$tt->mahoso}}</td>
+                                    <td style="text-align: center">{{getDayVn($tt->ngaysinh)}}</td>
+                                    <td style="text-align: center">{{$tt->gioitinh}}</td>
+                                    <td>{{$tt->trangthaihuong}}</td>
+                                    <td style="text-align: center">{{getDayVn($tt->ngayhuong)}} {{$tt->ngaydunghuong != '' ? '- '.getDayVn($tt->ngaydunghuong) : ''}}</td>
+                                    <td>
+                                        <a href="{{url('danhsachdoituongtx/'.$tt->id)}}" target="_blank" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
             </div>
-            <!-- END EXAMPLE TABLE PORTLET-->
         </div>
-    </div>
 
-    <!-- BEGIN DASHBOARD STATS -->
+        <!-- BEGIN DASHBOARD STATS -->
 
-    <!-- END DASHBOARD STATS -->
+        <!-- END DASHBOARD STATS -->
 
     </div>
     <div class="clearfix"></div>
-
-
     <script>
         $(function(){
 
             $('#select_trocap,#select_huyen,#select_xa').change(function() {
-                var current_path_url = '/danhsachdoituongdungtctx?';
+                var current_path_url = '/danhsachdoituongtxchodichuyen?';
                 var trocap = '&trocap='+$('#select_trocap').val();
                 if($(this).attr('id') == 'select_huyen'){
                     $('#select_xa').val('all');

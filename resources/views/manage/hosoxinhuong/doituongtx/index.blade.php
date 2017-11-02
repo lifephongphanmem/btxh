@@ -25,6 +25,9 @@
         function getIdDuyet(id){
             document.getElementById("idduyet").value=id;
         }
+        function getIdNhanHs(id){
+            document.getElementById("idnhanhs").value=id;
+        }
         function ClickDuyet(){
             if($('#qdhuong').val() == '' || $('#sosotc').val() == '' || $('#ngayhuong').val() == ''){
                 toastr.error("Bạn cần nhập thông tin hồ sơ", "Lỗi!!!");
@@ -104,11 +107,12 @@
                         <thead>
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
-                            <th style="text-align: center">Ngày xin hưởng</th>
+                            <th style="text-align: center">Ngày<br>xin hưởng</th>
                             <th style="text-align: center;width: 20%" >Họ và tên</th>
                             <th style="text-align: center; width: 10% ">Ngày sinh</th>
                             <th style="text-align: center">Địa chỉ</th>
                             <th style="text-align: center">Nội dung xin huỏng</th>
+                            <th style="text-align: center">Phân loại<br> xin hưởng</th>
                             <th style="text-align: center ; width: 5%">Trạng thái</th>
                             <th style="text-align: center">Thao tác</th>
                         </tr>
@@ -117,10 +121,11 @@
                             <tr>
                                 <td style="text-align: center">{{$key+1}}</td>
                                 <td style="text-align: center">{{getDayVn($tt->ngayxinhuong)}}</td>
-                                <td>{{$tt->hoten}}</td>
+                                <td>{{$tt->hoten}}<br>Mã hồ sơ: <b>{{$tt->mahoso}}</b></td>
                                 <td>{{getDayVn($tt->ngaysinh)}}</td>
                                 <td>{{$tt->diachi}}</td>
                                 <td>{{$tt->ndxinhuong}}</td>
+                                <td style="text-align: center">{{$tt->plxinhuong}}</td>
                                 @if($tt->trangthaihoso == 'Đã duyệt')
                                     <td style="text-align: center"><span class="label label-sm label-success">Đã duyệt</span></td>
                                 @elseif($tt->trangthaihoso == 'Chờ duyệt')
@@ -132,9 +137,16 @@
                                     <a href="{{url('hosoxinhuongtx/'.$tt->mahoso)}}" target="_blank" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Thông tin hồ sơ</a>
                                     @if(canDuyet($tt->trangthaihoso))
                                         @if($tt->trangthaihoso == 'Chờ duyệt')
-                                            <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Duyệt</button>
-                                            <button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
-                                                Trả lại</button>
+                                            @if($tt->plxinhuong == 'Mới')
+                                                <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Duyệt</button>
+                                                <button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                    Trả lại</button>
+                                            @else
+                                                <button type="button" onclick="getIdNhanHs('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#nhanhs-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Nhận hồ sơ</button>
+                                            @endif
+                                        @endif
+                                        @if($tt->trangthaihoso == 'Bị trả lại')
+                                            <button type="button" data-target="#lydo-modal" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ShowLyDo('{{$tt->id}}}')" ><i class="fa fa-search"></i>&nbsp;Lý do trả lại</button>
                                         @endif
                                     @endif
                                 </td>
@@ -176,6 +188,32 @@
                     </div>
                 </div>
                 <input type="hidden" name="idduyet" id="idduyet">
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue" onclick="ClickDuyet()">Đồng ý</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="nhanhs-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url'=>'hosoxinhuongtx/nhanhs','id' => 'frm_nhanhs'])!!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý xác nhận hồ sơ quản lý tại đơn vị?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Thông tin quyết định hưởng trợ cấp</b></label>
+                        {!!Form::text('qdhuong',null, array('id' => 'qdhuong','class' => 'form-control required'))!!}
+                    </div>
+                </div>
+                <input type="hidden" name="idnhanhs" id="idnhanhs">
                 <div class="modal-footer">
                     <button type="submit" class="btn blue" onclick="ClickDuyet()">Đồng ý</button>
                     <button type="button" class="btn default" data-dismiss="modal">Hủy</button>

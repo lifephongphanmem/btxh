@@ -27,6 +27,8 @@ class CreateHosodungtctxTable extends Migration
             $table->string('qddunghuong')->nullable();
             $table->string('lydodunghuong')->nullable();
             $table->string('pldunghuong')->nullable();
+            $table->string('mahuyen')->nullable();
+            $table->string('maxa')->nullable();
             $table->timestamps();
         });
     }

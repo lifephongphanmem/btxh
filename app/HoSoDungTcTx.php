@@ -20,6 +20,8 @@ class HoSoDungTcTx extends Model
         'ngaydunghuong',
         'qddunghuong',
         'lydodunghuong',
-        'pldunghuong'
+        'pldunghuong',
+        'mahuyen',
+        'maxa'
     ];
 }

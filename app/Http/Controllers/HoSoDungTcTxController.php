@@ -82,13 +82,54 @@ class HoSoDungTcTxController extends Controller
             if($model->update($inputs)){
                 $modelhs = DsDoiTuongTx::where('mahoso',$model->mahoso)->first();
                 $inputs['trangthaihuong'] = 'Dừng hưởng';
-                $inputs['trangthaihoso'] = 'Dừng hưởng';
+                $inputs['trangthaihoso'] = 'Dừng trợ cấp';
                 $inputs['lydodunghuong'] = $model->lydodunghuong;
                 $modelhs->update($inputs);
             }
             return redirect('hosoxindungtctx');
         } else
             return view('errors.notlogin');
+    }
+
+    public function tralai(Request $request){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $id = $inputs['idtralai'];
+            $inputs['trangthaihoso'] = 'Bị trả lại';
+            $model = HoSoDungTcTx::find($id);
+            if($model->update($inputs)){
+                $modelhs = DsDoiTuongTx::where('mahoso',$model->mahoso)->first();
+                $inputs['trangthaihuong'] = 'Đang hưởng';
+                $inputs['trangthaihoso'] = 'Đã duyệt';
+                $modelhs->update($inputs);
+            }
+            return redirect('hosoxindungtctx');
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function lydo(Request $request){
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if(!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+        //dd($request);
+        $inputs = $request->all();
+
+        if(isset($inputs['id'])){
+            $model = HoSoDungTcTx::where('id',$inputs['id'])
+                ->first();
+            $result['message'] = '<div id="lydo" style="color: blue">'.$model->lydotralai.'</div>';
+            $result['status'] = 'success';
+        }
+        die(json_encode($result));
     }
 
 }

@@ -9,7 +9,6 @@
 
 @section('custom-script')
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-
     <script type="text/javascript" src="{{url('assets/global/plugins/select2/select2.min.js')}}"></script>
     <script type="text/javascript" src="{{url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script type="text/javascript" src="{{url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js')}}"></script>
@@ -23,7 +22,7 @@
             document.getElementById("idduyet").value=id;
         }
         function ClickDuyet(){
-            if($('#qddunghuong').val() == '' || $('#ngaydunghuong').val() == ''){
+            if($('#ttqd').val() == ''){
                 toastr.error("Bạn cần nhập thông tin hồ sơ", "Lỗi!!!");
                 $("#frm_duyet").submit(function (e){
                     e.preventDefault();
@@ -31,6 +30,37 @@
             }else{
                 $("#frm_duyet").unbind('submit').submit();
             }
+        }
+        function getIdTraLai(id){
+            document.getElementById("idtralai").value=id;
+        }
+        function ClickTraLai(){
+            if($('#lydotralai').val() == ''){
+                toastr.error("Bạn cần nhập lý do trả lại hồ sơ", "Lỗi!!!");
+                $("#frm_tralai").submit(function (e){
+                    e.preventDefault();
+                });
+            }else{
+                $("#frm_tralai").unbind('submit').submit();
+            }
+        }
+        function ShowLyDo(id) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            //alert(id);
+            $.ajax({
+                url: 'ajax/lydotldichuyen',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if(data.status == 'success') {
+                        $('#lydo').replaceWith(data.message);
+                    }
+                }
+            })
         }
     </script>
 @stop
@@ -88,11 +118,13 @@
                         <thead>
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
-                            <th style="text-align: center">Ngày yêu cầu</th>
-                            <th style="text-align: center;width: 20%" >Họ và tên</th>
+                            <th style="text-align: center;width: 10%">Ngày yêu cầu</th>
+                            <th style="text-align: center;width: 15%" >Họ và tên</th>
                             <th style="text-align: center; width: 10% ">Ngày sinh</th>
                             <th style="text-align: center">Địa chỉ</th>
-                            <th style="text-align: center">Thông tin di chuyển</th>
+                            <th style="text-align: center;width: 15%">Thông tin di chuyển</th>
+                            <th style="text-align: center;width: 15%">Nơi di chuyển</th>
+                            <th style="text-align: center;width: 15%">TT xét duyệt di chuyển</th>
                             <th style="text-align: center ; width: 5%">Trạng thái</th>
                             <th style="text-align: center">Thao tác</th>
                         </tr>
@@ -100,11 +132,13 @@
                         @foreach($model as $key=>$tt)
                             <tr>
                                 <td style="text-align: center">{{$key+1}}</td>
-                                <td style="text-align: center">{{getDayVn($tt->ngayxindung)}}</td>
+                                <td style="text-align: center">{{getDayVn($tt->ngayyc)}}</td>
                                 <td>{{$tt->hoten}}</td>
                                 <td>{{getDayVn($tt->ngaysinh)}}</td>
                                 <td>{{$tt->diachi}}</td>
-                                <td></td>
+                                <td>{{$tt->nddichuyen}}</td>
+                                <td>{{$tt->noidichuyen}}</td>
+                                <td>{{$tt->ttqd}}</td>
                                 @if($tt->trangthaihoso == 'Đã duyệt')
                                     <td style="text-align: center"><span class="label label-sm label-success">Đã duyệt</span></td>
                                 @elseif($tt->trangthaihoso == 'Chờ duyệt')
@@ -117,9 +151,12 @@
                                     @if(canDuyet($tt->trangthaihoso))
                                         @if($tt->trangthaihoso == 'Chờ duyệt')
                                             <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Duyệt</button>
-                                            <!--button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
-                                                Trả lại</button-->
+                                            <button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                Trả lại</button>
                                         @endif
+                                            @if($tt->trangthaihoso == 'Bị trả lại')
+                                                <button type="button" data-target="#lydo-modal" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ShowLyDo('{{$tt->id}}}')" ><i class="fa fa-search"></i>&nbsp;Lý do trả lại</button>
+                                            @endif
                                     @endif
                                 </td>
                             </tr>
@@ -140,19 +177,15 @@
     <div class="modal fade" id="duyet-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'hosoxindungtctx/duyet','id' => 'frm_duyet'])!!}
+                {!! Form::open(['url'=>'hosodichuyennttx/duyet','id' => 'frm_duyet'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Đồng ý duyệt hồ sơ?</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label><b>Thông tin quyết định dừng hưởng trợ cấp</b></label>
-                        {!!Form::text('qddunghuong',null, array('id' => 'qddunghuong','class' => 'form-control required'))!!}
-                    </div>
-                    <div class="form-group">
-                        <label><b>Ngày dừng hưởng trợ cấp</b></label>
-                        {!!Form::text('ngaydunghuong',date('d/m/Y'), array('id' => 'ngaydunghuong','data-inputmask'=>"'alias': 'date'",'class' => 'form-control required'))!!}
+                        <label><b>Thông tin quyết định di chuyển đối tượng</b></label>
+                        <textarea id="ttqd" class="form-control required" name="ttqd" cols="30" rows="5"></textarea>
                     </div>
                 </div>
                 <input type="hidden" name="idduyet" id="idduyet">
@@ -166,12 +199,59 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="tralai-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url'=>'hosodichuyennttx/tralai','id' => 'frm_tralai'])!!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý trả lại?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Lý do trả lại</b></label>
+                        <textarea id="lydotralai" class="form-control required" name="lydotralai" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+                <input type="hidden" name="idtralai" id="idtralai">
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue" onclick="ClickTraLai()">Đồng ý</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="lydo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Lý do bị trả lại?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Lý do trả lại</b></label>
+                        <div id="lydo"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 
     <script>
         $(function(){
 
             $('#select_thang,#select_nam').change(function() {
-                var current_path_url = '/hosoxindungtctx?';
+                var current_path_url = '/hosodichuyennttx?';
                 var thang = '&thang='+ $('#select_thang').val();
                 var nam = '&nam='+$('#select_nam').val();
 

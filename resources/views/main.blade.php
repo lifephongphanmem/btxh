@@ -292,7 +292,8 @@ License: You must have a valid license purchased only from themeforest(the above
                             @if(canGeneral('dttx','index'))
                                 @if(can('dttx','index'))
                                     <li><a href="{{url('danhsachdoituongtx')}}">Thường xuyên</a></li>
-                                    <li><a href="{{url('danhsachdoituongdungtctx')}}">Dừng trợ cấp</a></li>
+
+
                                 @endif
                             @endif
                             @if(canGeneral('dtdx','index'))
@@ -345,6 +346,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             @if(canGeneral('dttx','index'))
                                 @if(can('dttx','index'))
                                     <li><a href="{{url('hosoxindungtctx')}}">Thường xuyên</a></li>
+                                    <li><a href="{{url('danhsachdoituongdungtctx')}}">Đối tượng dừng trợ cấp</a></li>
                                 @endif
                             @endif
                         </ul>
@@ -358,7 +360,10 @@ License: You must have a valid license purchased only from themeforest(the above
                         <ul class="sub-menu">
                             @if(canGeneral('dttx','index'))
                                 @if(can('dttx','index'))
+
                                     <li><a href="{{url('hosodichuyennttx')}}">Nội tỉnh</a></li>
+                                    <li><a href="{{url('danhsachdoituongtxchodichuyen')}}">Đối tượng chờ di chuyển</a></li>
+                                    <li><a href="{{url('danhsachdoituongtxchonhan')}}">Đối tượng chờ nhận</a></li>
                                 @endif
                             @endif
                         </ul>

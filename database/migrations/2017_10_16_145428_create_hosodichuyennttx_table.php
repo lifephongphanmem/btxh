@@ -25,6 +25,11 @@ class CreateHosodichuyennttxTable extends Migration
             $table->string('mahuyendichuyen')->nullable();
             $table->string('maxa')->nullable();
             $table->string('mahuyen')->nullable();
+            $table->string('trangthaihoso')->nullable();
+            $table->string('ttqd')->nullable();
+            $table->string('maxa')->nullable();
+            $table->string('mahuyen')->nullable();
+            $table->text('lydotralai')->nullable();
             $table->timestamps();
         });
     }

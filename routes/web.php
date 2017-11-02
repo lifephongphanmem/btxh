@@ -67,13 +67,19 @@ Route::post('dmtrocaptx/delete','DmTroCapTxController@destroy');
 Route::resource('hosoxinhuongtx','HoSoXinHuongTxController');
 Route::post('hosoxinhuongtx/duyet','HoSoXinHuongTxController@duyet');
 Route::post('hosoxinhuongtx/tralai','HoSoXinHuongTxController@tralai');
+Route::post('hosoxinhuongtx/nhanhs','HoSoXinHuongTxController@nhanhs');
 
     //Hồ sơ xin dừng
 Route::resource('hosoxindungtctx','HoSoDungTcTxController');
 Route::post('hosoxindungtctx/duyet','HoSoDungTcTxController@duyet');
+Route::post('hosoxindungtctx/tralai','HoSoDungTcTxController@tralai');
+Route::get('ajax/lydotldungtc','HoSoDungTcTxController@lydo');
 
     //Hồ sơ xin di chuyển
 Route::resource('hosodichuyennttx','HoSoDiChuyenNtTxController');
+Route::post('hosodichuyennttx/duyet','HoSoDiChuyenNtTxController@duyet');
+Route::post('hosodichuyennttx/tralai','HoSoDiChuyenNtTxController@tralai');
+Route::get('ajax/lydotldichuyen','HoSoDiChuyenNtTxController@lydo');
 
 //Danh sách đối tượng thường xuyên
 Route::resource('danhsachdoituongtx','DsDoiTuongTxController');
@@ -88,6 +94,11 @@ Route::post('danhsachdoituongtx/dungtc','DsDoiTuongTxController@dungtc');
 Route::post('danhsachdoituongtx/dichuyen','DsDoiTuongTxController@dichuyen');
 
 Route::resource('danhsachdoituongdungtctx','DsDoiTuongDungTcTxController');
+
+Route::resource('danhsachdoituongtxchodichuyen','DsDoiTuongTxChoDiChuyenController');
+
+Route::resource('danhsachdoituongtxchonhan','DanhSachDoiTuongTxChoNhanController');
+Route::post('danhsachdoituongtxchonhan/xinhuong','DanhSachDoiTuongTxChoNhanController@xinhuong');
 //End danh sách đối tượng thường xuyên
 
 //Trợ cấp đối tượng thường xuyên

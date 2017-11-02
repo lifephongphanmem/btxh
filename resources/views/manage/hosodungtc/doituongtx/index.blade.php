@@ -22,6 +22,9 @@
         function getIdDuyet(id){
             document.getElementById("idduyet").value=id;
         }
+        function getIdTraLai(id){
+            document.getElementById("idtralai").value=id;
+        }
         function ClickDuyet(){
             if($('#qddunghuong').val() == '' || $('#ngaydunghuong').val() == ''){
                 toastr.error("Bạn cần nhập thông tin hồ sơ", "Lỗi!!!");
@@ -31,6 +34,34 @@
             }else{
                 $("#frm_duyet").unbind('submit').submit();
             }
+        }
+        function ClickTraLai(){
+            if($('#lydotralai').val() == ''){
+                toastr.error("Bạn cần nhập lý do trả lại hồ sơ", "Lỗi!!!");
+                $("#frm_tralai").submit(function (e){
+                    e.preventDefault();
+                });
+            }else{
+                $("#frm_tralai").unbind('submit').submit();
+            }
+        }
+        function ShowLyDo(id) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            //alert(id);
+            $.ajax({
+                url: 'ajax/lydotldungtc',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if(data.status == 'success') {
+                        $('#lydo').replaceWith(data.message);
+                    }
+                }
+            })
         }
     </script>
 @stop
@@ -105,7 +136,7 @@
                             <tr>
                                 <td style="text-align: center">{{$key+1}}</td>
                                 <td style="text-align: center">{{getDayVn($tt->ngayxindung)}}</td>
-                                <td>{{$tt->hoten}}</td>
+                                <td>{{$tt->hoten}}<br>Mã hồ sơ: <b>{{$tt->mahoso}}</b></td>
                                 <td>{{getDayVn($tt->ngaysinh)}}</td>
                                 <td>{{$tt->diachi}}</td>
                                 <td>{{$tt->pldunghuong}}</td>
@@ -122,8 +153,11 @@
                                     @if(canDuyet($tt->trangthaihoso))
                                         @if($tt->trangthaihoso == 'Chờ duyệt')
                                             <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Duyệt</button>
-                                            <!--button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
-                                                Trả lại</button-->
+                                            <button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                Trả lại</button>
+                                        @endif
+                                        @if($tt->trangthaihoso == 'Bị trả lại')
+                                            <button type="button" data-target="#lydo-modal" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ShowLyDo('{{$tt->id}}}')" ><i class="fa fa-search"></i>&nbsp;Lý do trả lại</button>
                                         @endif
                                     @endif
                                 </td>
@@ -166,6 +200,54 @@
                     <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
                 </div>
                 {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="tralai-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url'=>'hosoxindungtctx/tralai','id' => 'frm_tralai'])!!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý trả lại?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Lý do trả lại</b></label>
+                        <textarea id="lydotralai" class="form-control required" name="lydotralai" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+                <input type="hidden" name="idtralai" id="idtralai">
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue" onclick="ClickTraLai()">Đồng ý</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="lydo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Lý do bị trả lại?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Lý do trả lại</b></label>
+                        <div id="lydo"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
             </div>
             <!-- /.modal-content -->
         </div>

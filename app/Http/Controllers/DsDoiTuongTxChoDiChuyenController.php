@@ -11,7 +11,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
-class DsDoiTuongDungTcTxController extends Controller
+class DsDoiTuongTxChoDiChuyenController extends Controller
 {
     public function index(Request $request){
         if (Session::has('admin')) {
@@ -53,19 +53,17 @@ class DsDoiTuongDungTcTxController extends Controller
             }else{
                 $model = $model->where('maxa', $xa);
             }
-            //Loại các TH hs bị chuyển đi, dừng hưởng
-            $model = $model->where('trangthaihoso','Dừng trợ cấp');
+            $model = $model->where('trangthaihoso','Chờ di chuyển');
             $model = $model->get();
 
-
-            return view('manage.danhsachdoituong.dungtc.index')
+            return view('manage.danhsachdoituong.chodichuyen.index')
                 ->with('huyens', $huyens)
                 ->with('xas', $xas)
                 ->with('mahuyen', $huyen)
                 ->with('maxa', $xa)
                 ->with('trocap', $trocap)
                 ->with('model',$model)
-                ->with('pageTitle', 'Danh sách đối tượng dừng trợ cấp thường xuyên');
+                ->with('pageTitle', 'Danh sách đối tượng thường xuyên chờ di chuyển');
         }else
             return view('errors.notlogin');
     }

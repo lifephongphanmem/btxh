@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Districts;
 use App\DsDoiTuongTx;
+use App\HoSoXinHuongTx;
 use App\Towns;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
-class DsDoiTuongDungTcTxController extends Controller
+class DanhSachDoiTuongTxChoNhanController extends Controller
 {
     public function index(Request $request){
         if (Session::has('admin')) {
@@ -53,20 +54,44 @@ class DsDoiTuongDungTcTxController extends Controller
             }else{
                 $model = $model->where('maxa', $xa);
             }
-            //Loại các TH hs bị chuyển đi, dừng hưởng
-            $model = $model->where('trangthaihoso','Dừng trợ cấp');
+            $model = $model->where('trangthaihoso','Chờ nhận di chuyển')
+                ->OrWhere('trangthaihoso','Chờ duyệt nhận di chuyển');
             $model = $model->get();
 
-
-            return view('manage.danhsachdoituong.dungtc.index')
+            return view('manage.danhsachdoituong.chonhan.index')
                 ->with('huyens', $huyens)
                 ->with('xas', $xas)
                 ->with('mahuyen', $huyen)
                 ->with('maxa', $xa)
                 ->with('trocap', $trocap)
                 ->with('model',$model)
-                ->with('pageTitle', 'Danh sách đối tượng dừng trợ cấp thường xuyên');
+                ->with('pageTitle', 'Danh sách đối tượng thường xuyên chờ nhận');
         }else
+            return view('errors.notlogin');
+    }
+
+    public function xinhuong(Request $request){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $id = $inputs['idxinhuong'];
+            $model = DsDoiTuongTx::find($id);
+            $inputs['trangthaihoso'] = 'Chờ duyệt nhận di chuyển';
+            if($model->save()){
+                $modelxh = new HoSoXinHuongTx();
+                $modelxh->ngayxinhuong = date('Y-m-d');
+                $modelxh->mahoso = $model->mahoso;
+                $modelxh->hoten = $model->hoten;
+                $modelxh->ngaysinh = $model->ngaysinh;
+                $modelxh->diachi = $model->diachi;
+                $modelxh->ndxinhuong = $inputs['ndxinhuong'];
+                $modelxh->trangthaihoso = 'Chờ duyệt';
+                $modelxh->plxinhuong = 'Chuyển đến';
+                $modelxh->maxa = $model->maxa;
+                $modelxh->mahuyen = $model->mahuyen;
+                $modelxh->save();
+            }
+            return redirect('danhsachdoituongtxchonhan');
+        } else
             return view('errors.notlogin');
     }
 }

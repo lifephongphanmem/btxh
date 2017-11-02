@@ -19,5 +19,8 @@ class HoSoDiChuyenNtTx extends Model
         'mahuyendichuyen',
         'maxa',
         'mahuyen',
+        'trangthaihoso',
+        'ttqd',
+        'lydotralai'
     ];
 }

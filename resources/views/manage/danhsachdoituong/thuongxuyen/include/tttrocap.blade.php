@@ -150,8 +150,9 @@
             </div>
         @else
             <div id="tttrocap">
+                {!!Form::hidden('matrocap',null, array('id' => 'matrocap','class' => 'form-control'))!!}
             </div>
-            {!!Form::hidden('matrocap',null, array('id' => 'matrocap','class' => 'form-control'))!!}
+
         @endif
     </div>
 </div>
