@@ -368,6 +368,20 @@ License: You must have a valid license purchased only from themeforest(the above
                             @endif
                         </ul>
                     </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-users"></i>
+                            <span class="title">Hồ sơ thay đổi</span>
+                            <span class="arrow "></span>
+                        </a>
+                        <ul class="sub-menu">
+                            @if(canGeneral('dttx','index'))
+                                @if(can('dttx','index'))
+                                    <li><a href="{{url('hosothaydoitctx')}}">Trợ cấp thường xuyên</a></li>
+                                @endif
+                            @endif
+                        </ul>
+                    </li>
 
                     @if(canGeneral('baocao','index'))
                     <li>

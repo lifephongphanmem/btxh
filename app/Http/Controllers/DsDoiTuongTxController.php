@@ -7,6 +7,7 @@ use App\DmTroCapTx;
 use App\DsDoiTuongTx;
 use App\HoSoDiChuyenNtTx;
 use App\HoSoDungTcTx;
+use App\HoSoThayDoiTcTx;
 use App\HoSoXinHuongTx;
 use App\PlTroCapTx;
 use App\Towns;
@@ -56,23 +57,17 @@ class DsDoiTuongTxController extends Controller
             }
             if($xa != 'all' && $xa != ''){
                 $model = $model->where('maxa', $xa);
-            }else{
-                $model = $model->where('maxa', $xa);
             }
 
             //Hồ sơ đã duyệt mới hiển thị lên cấp H và T nhìn thấy và chỉnh sửa còn hồ sơ còn lại xã nhìn th
             if (session('admin')->level == 'T' || session('admin')->level == 'H') {
                 $model = $model->where('trangthaihoso', 'Đã duyệt');
             }else
-                $model = $model ->where('trangthaihoso','Chờ chuyển')
-                    ->OrWhere('trangthaihoso','Chờ duyệt')
-                    ->OrWhere('trangthaihoso','Bị trả lại')
-                    ->OrWhere('trangthaihoso','Đã duyệt');
+                $model = $model ->whereIn('trangthaihoso',['Chờ chuyển','Chờ duyệt','Bị trả lại','Đã duyệt']);
 
             //Loại các TH hs bị chuyển đi, dừng hưởng
             //$model = $model->where('trangthaihoso','Dừng hưởng');
             $model = $model->get();
-
 
             return view('manage.danhsachdoituong.thuongxuyen.index')
                 ->with('huyens', $huyens)
@@ -539,6 +534,59 @@ class DsDoiTuongTxController extends Controller
             }
             $pltrocap = $model->pltrocap;
             return redirect('danhsachdoituongtx?&trocap='.$pltrocap);
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function thaydoitc(Request $request){
+        if (Session::has('admin')) {
+            $input = $request->all();
+            $tths = DsDoiTuongTx::where('id',$input['idthaydoi'])->first();
+            $tttc = DmTroCapTx::where('matrocap',$tths->matrocap)->first();
+            $value['mahoso'] = $tths->mahoso;
+            $value['hoten'] = $tths->hoten;
+            $value['ngaysinh'] = $tths->ngaysinh;
+            $value['diachi'] = $tths->diachi;
+            $value['noidung'] = $tttc->noidung;
+            $value['chitiet'] = $tttc->chitiet;
+            $value['heso'] = $tttc->heso;
+            $value['plthaydoi'] = $input['plthaydoi'];
+            $value['maxa'] = $tths->maxa;
+            $value['mahuyen'] = $tths->mahuyen;
+            if($input['plthaydoi'] == 'Thay đổi mức trợ cấp'){
+                $value['sotientc'] = getGeneralConfigs()['muctrocapchuan'] * $value['heso'];
+                $value['matrocap'] = $tths->matrocap;
+            }
+            $input['pltrocapm'] = isset($input['pltrocapm']) ? $input['pltrocapm'] : $tths->pltrocap;
+            $value['pltrocapm'] =  $input['pltrocapm'];
+            $selectloaidt = DmTroCapTx::where('pltrocap', $input['pltrocapm'])->get();
+            $selectnoidungtc = $this->getNoiDungTcTx($input['pltrocapm']);
+            $selectchitiettc = $this->getChiTietTcTx($selectnoidungtc);
+
+            return view('manage.danhsachdoituong.thuongxuyen.thaydoitc.create')
+                ->with('value',$value)
+                ->with('selectloaidt', $selectloaidt)
+                ->with('selectnoidungtc',$selectnoidungtc)
+                ->with('selectchitiettc',$selectchitiettc)
+                ->with('pageTitle','Thông tin thay đổi trợ cấp');
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function createthaydoitc(Request $request){
+        if (Session::has('admin')) {
+            $input = $request->all();
+            $input['ngaysinh'] = getDateToDb($input['ngaysinh']);
+            $input['ngayyc'] = date('Y-m-d');
+            $input['trangthaihoso'] = 'Chờ duyệt';
+            $input['sotientcm'] = getMoneyToDb($input['sotientcm']);
+            $model = new HoSoThayDoiTcTx();
+            if($model->create($input)){
+                $modelhs = DsDoiTuongTx::where('mahoso',$input['mahoso'])->first();
+                $modelhs->trangthaihoso = 'Chờ xét duyệt thay đổi trợ cấp';
+                $modelhs->save();
+            }
+            return redirect('danhsachdoituongtx');
         } else
             return view('errors.notlogin');
     }

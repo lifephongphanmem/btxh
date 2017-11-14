@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHosoxinhuongtxTable extends Migration
+class CreateHosothaydoitctxTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,24 @@ class CreateHosoxinhuongtxTable extends Migration
      */
     public function up()
     {
-        Schema::create('hosoxinhuongtx', function (Blueprint $table) {
+        Schema::create('hosothaydoitctx', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('ngayxinhuong')->nullable();
+            $table->date('ngayyc')->nullable();
             $table->string('mahoso')->nullable();
             $table->string('hoten')->nullable();
             $table->date('ngaysinh')->nullable();
             $table->string('diachi')->nullable();
-            $table->string('ndxinhuong')->nullable();
+            $table->string('plthaydoi')->nullable();
+            $table->string('noidungthaydoi')->nullable();
+            $table->string('pltrocapm')->nullable();
+            $table->string('matrocapm')->nullable();
+            $table->string('hesom')->nullable();
+            $table->string('sotientcm')->nullable();
+
             $table->string('trangthaihoso')->nullable();
             $table->string('lydotralai')->nullable();
             $table->date('ngayhuong')->nullable();
             $table->string('qdhuong')->nullable();
-            $table->string('sosotc')->nullable();
-            $table->string('plxinhuong')->nullable();
             $table->string('maxa')->nullable();
             $table->string('mahuyen')->nullable();
             $table->timestamps();
@@ -40,6 +44,6 @@ class CreateHosoxinhuongtxTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hosoxinhuongtx');
+        Schema::dropIfExists('hosothaydoitctx');
     }
 }

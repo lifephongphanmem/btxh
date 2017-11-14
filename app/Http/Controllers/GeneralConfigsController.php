@@ -32,7 +32,7 @@ class GeneralConfigsController extends Controller
     {
         if (Session::has('admin')) {
             $model = GeneralConfigs::findOrFail($id);
-            if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin = 'sa') {
+            if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
                 return view('system.general.edit')
                     ->with('model', $model)
                     ->with('pageTitle', 'Chỉnh sửa cấu hình hệ thống');

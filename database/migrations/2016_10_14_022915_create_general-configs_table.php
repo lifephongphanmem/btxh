@@ -22,7 +22,6 @@ class CreateGeneralConfigsTable extends Migration
             $table->string('dienthoai')->nullable();
             $table->string('fax')->nullable();
             $table->string('email')->nullable();
-            $table->string('muctrocapchuan');
             $table->string('thutruong')->nullable();
             $table->string('ketoan')->nullable();
             $table->string('nguoilapbieu')->nullable();

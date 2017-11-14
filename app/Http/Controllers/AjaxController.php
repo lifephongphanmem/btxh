@@ -8,6 +8,7 @@ use App\DmTroCapTx;
 use App\KetHon;
 use App\KhaiSinh;
 use App\KhaiTu;
+use App\PlTroCapTx;
 use App\SoHoTich;
 use App\TcDoiTuongTx;
 use App\Towns;
@@ -237,6 +238,107 @@ class AjaxController extends Controller
                 $result['message'] .= '</select>';
                 $result['status'] = 'success';
             }
+        }
+
+        die(json_encode($result));
+    }
+
+    public function getPlthaydoitctx(Request $request){
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if(!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+
+        $inputs = $request->all();
+
+        if(($inputs['plthaydoi'] == 'Thay đổi loại trợ cấp')){
+
+            $pltc = PlTroCapTx::all();
+            $result['message'] = '<div class="form-group" id="pltcm">';
+            $result['message'] .= '<label><b>Phân loại trợ cấp</b></label>';
+            $result['message'] .= '<select id="pltrocapm" name="pltrocapm" class="form-control">';
+            foreach($pltc as $tt){
+                $result['message'] .= '<option value="'.$tt->maloai.'">'.$tt->tenloai.'</option>';
+            }
+            $result['message'] .= '</select>';
+
+            $result['message'] .= '</div>';
+
+        }else{
+            $result['message'] = '<div class="form-group" id="pltcm">';
+            $result['message'] .= '</div>';
+        }
+
+        $result['status'] = 'success';
+
+        die(json_encode($result));
+    }
+
+    public function addTcTxTd(Request $request){
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if(!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+
+        $inputs = $request->all();
+
+        if(isset($inputs['matrocap'])){
+            $tttrocap = DmTroCapTx::where('matrocap',$inputs['matrocap'])->first();
+
+            $muctcchuan = getGeneralConfigs()['muctrocapchuan'];
+            $sotien = $tttrocap->heso * $muctcchuan;
+
+            $result['message'] = '<div id="ndtcmoi">';
+            $result['message'] .='<div class="row">';
+            $result['message'] .='<div class="col-md-12">';
+            $result['message'] .='<div class="form-group">';
+            $result['message'] .='<label class="control-label">Nội dung</label>';
+            $result['message'] .='<div class="form-control" style="color: blue;font-size: 15px">'.$tttrocap->noidung.'</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+
+            $result['message'] .='<div class="row">';
+            $result['message'] .='<div class="col-md-12">';
+            $result['message'] .='<div class="form-group">';
+            $result['message'] .='<label class= "control-label">Chi tiết</label>';
+            $result['message'] .='<div class="form-control" style="color: blue;margin: auto; font-size: 15px" >'.$tttrocap->chitiet.'</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+
+            $result['message'] .='<div class="row">';
+            $result['message'] .='<div class="col-md-6">';
+            $result['message'] .='<div class="form-group">';
+            $result['message'] .='<label class="control-label">Hệ số</label>';
+            $result['message'] .='<input type="text" class="form-control" name="hesom" id="hesom" value="'.$tttrocap->heso.'" readonly>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .='<div class="col-md-6">';
+            $result['message'] .='<div class="form-group">';
+            $result['message'] .='<label class="control-label">Số tiền</label>';
+            $result['message'] .='<input type="text" style="text-align: right" class="form-control" name="sotientcm" id="sotientcm" value="'.number_format($sotien).'" readonly>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+
+            $result['message'] .= '<input type="hidden" id="matrocapm" name="matrocapm" value="'.$tttrocap->matrocap.'">';
+            $result['message'] .= '</div>';
+            $result['status'] = 'success';
         }
 
         die(json_encode($result));

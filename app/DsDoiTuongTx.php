@@ -39,6 +39,7 @@ class DsDoiTuongTx extends Model
         'ngaydunghuong',
         'qddunghuong',
         'lydodunghuong',
+        'action',
 
         'ipt1',
         'ipf1',

@@ -37,6 +37,9 @@
         function getIdDiChuyen(id){
             document.getElementById("iddichuyen").value=id;
         }
+        function getIdThayDoiTc(id){
+            document.getElementById("idthaydoi").value=id;
+        }
         function ClickXinHuong(){
             if($('textarea[id="ndxinhuong"]').val() == '') {
                 toastr.error("Bạn cần nhập nội dung xin hưởng", "Lỗi!!!");
@@ -69,6 +72,10 @@
         }
         function ClickDelete(){
             $('#frm_delete').submit();
+        }
+
+        function ClickThayDoiTc(){
+            $('#frm_thaydoitc').submit();
         }
 
         function ShowLyDo(id) {
@@ -211,6 +218,8 @@
                                             Dừng trợ cấp</button>
                                         <button type="button" onclick="getIdDiChuyen('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#dichuyen-modal" data-toggle="modal"><i class="fa fa-send"></i>&nbsp;
                                             Di chuyển</button>
+                                        <button type="button" onclick="getIdThayDoiTc('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#thaydoi-modal" data-toggle="modal"><i class="fa fa-exchange"></i>&nbsp;
+                                            Thay đổi trợ cấp</button>
 
                                         @endif
                                     @endif
@@ -383,6 +392,41 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="thaydoi-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url'=>'danhsachdoituongtx/thaydoitc','id' => 'frm_thaydoitc'])!!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý thay đổi trợ cấp đối tượng?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Phân loại thay đổi trợ cấp</b></label>
+                        {!! Form::select(
+                        'plthaydoi',
+                        array(
+                        'Thay đổi mức trợ cấp' => 'Thay đổi mức trợ cấp',
+                        'Thay đổi loại trợ cấp' => 'Thay đổi loại trợ cấp'
+                        ),null,
+                        array('id' => 'plthaydoi', 'class' => 'form-control'))
+                        !!}
+                    </div>
+                    <div class="form-group" id="pltcm">
+
+                    </div>
+                </div>
+                <input type="hidden" name="idthaydoi" id="idthaydoi">
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue" onclick="ClickThayDoiTc()">Đồng ý</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 
     <script>
@@ -424,6 +468,22 @@
                 } else {
                     $('select[name="maxa"]').val('all');
                 }
+            });
+            $('select[name="plthaydoi"]').change(function(){
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: '/getPlthaydoitctx/',
+                    type: 'GET',
+                    data: {
+                        _token: CSRF_TOKEN,
+                        plthaydoi: $(this).val()
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if(data.status == 'success')
+                            $('#pltcm').replaceWith(data.message);
+                    }
+                });
             });
         })
     </script>

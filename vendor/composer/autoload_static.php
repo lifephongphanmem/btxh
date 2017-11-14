@@ -308,6 +308,7 @@ class ComposerStaticInitd7de3fb6aaadd474bf447891cb3bef8d
         'CreateHosodexuattxTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_25_100129_create_hosodexuattx_table.php',
         'CreateHosodichuyennttxTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_16_145428_create_hosodichuyennttx_table.php',
         'CreateHosodungtctxTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_09_150447_create_hosodungtctx_table.php',
+        'CreateHosothaydoitctxTable' => __DIR__ . '/../..' . '/database/migrations/2017_11_03_101419_create_hosothaydoitctx_table.php',
         'CreateHosoxinhuongtxTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_02_144613_create_hosoxinhuongtx_table.php',
         'CreatePltrocaptxTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_05_144124_create_pltrocaptx_table.php',
         'CreateQuoctichTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_07_095652_create_quoctich_table.php',

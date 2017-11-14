@@ -11,6 +11,8 @@ Route::get('getChiTietTc','AjaxController@getChiTietTc');
 Route::get('/addTcTx','AjaxController@addTcTx');
 Route::get('/tcdoituongtx/check','AjaxController@checktcdoituongtx');
 Route::get('getXasDiChuyen','AjaxController@getXasDiChuyen');
+Route::get('getPlthaydoitctx','AjaxController@getPlthaydoitctx');
+Route::get('/addTcTxTd','AjaxController@addTcTxTd');
 // </editor-fold>//End Ajax
 
 // <editor-fold defaultstate="collapsed" desc="--Setting--">
@@ -81,6 +83,13 @@ Route::post('hosodichuyennttx/duyet','HoSoDiChuyenNtTxController@duyet');
 Route::post('hosodichuyennttx/tralai','HoSoDiChuyenNtTxController@tralai');
 Route::get('ajax/lydotldichuyen','HoSoDiChuyenNtTxController@lydo');
 
+    //Hồ sơ thay đổi trợ cấp
+Route::resource('hosothaydoitctx','HoSoThayDoiTcTxController');
+Route::post('hosothaydoitctx/duyet','HoSoThayDoiTcTxController@duyet');
+Route::post('hosothaydoitctx/tralai','HoSoThayDoiTcTxController@tralai');
+Route::get('ajax/lydothaydoitc','HoSoThayDoiTcTxController@lydo');
+
+
 //Danh sách đối tượng thường xuyên
 Route::resource('danhsachdoituongtx','DsDoiTuongTxController');
 Route::get('danhsachdoituongtx/{trocap}/create','DsDoiTuongTxController@create');
@@ -92,6 +101,8 @@ Route::get('ajax/lydodttx','DsDoiTuongTxController@lydo');
 Route::post('danhsachdoituongtx/xinhuong','DsDoiTuongTxController@xinhuong');
 Route::post('danhsachdoituongtx/dungtc','DsDoiTuongTxController@dungtc');
 Route::post('danhsachdoituongtx/dichuyen','DsDoiTuongTxController@dichuyen');
+Route::post('danhsachdoituongtx/thaydoitc','DsDoiTuongTxController@thaydoitc');
+Route::post('thaydoitctx','DsDoiTuongTxController@createthaydoitc');
 
 Route::resource('danhsachdoituongdungtctx','DsDoiTuongDungTcTxController');
 

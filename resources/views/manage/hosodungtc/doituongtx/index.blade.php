@@ -15,10 +15,12 @@
     <script type="text/javascript" src="{{url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js')}}"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <script src="{{url('assets/admin/pages/scripts/table-managed.js')}}"></script>
+
     <script>
         jQuery(document).ready(function() {
             TableManaged.init();
         });
+
         function getIdDuyet(id){
             document.getElementById("idduyet").value=id;
         }
@@ -268,6 +270,11 @@
         })
 
 
+    </script>
+    <script>
+        $(document).ready(function(){
+            $(":input").inputmask();
+        });
     </script>
 
 @stop
