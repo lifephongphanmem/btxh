@@ -392,7 +392,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </li>
                     @endif
                 @endif
-                @if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'ssa')
+                @if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa')
                 <li>
                     <a href="">
                         <i class="icon-settings"></i>
