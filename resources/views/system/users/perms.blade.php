@@ -76,12 +76,14 @@
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" {{ (isset($permission->dttx->forward) && $permission->dttx->forward == 1) ? 'checked' : '' }} value="1" name="roles[dttx][forward]"/></td>
-                                        <td>Chuyển/Trả lại</td>
+                                        <td>{{$model->level == 'X' ? 'Chuyển' : 'Duyệt'}}</td>
                                     </tr>
+                                    @if($model->level !='X')
                                     <tr>
                                         <td><input type="checkbox" {{ (isset($permission->dttx->approve) && $permission->dttx->approve == 1) ? 'checked' : '' }} value="1" name="roles[dttx][approve]"/></td>
                                         <td>Duyệt</td>
                                     </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -117,12 +119,14 @@
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" {{ (isset($permission->dtdx->forward) && $permission->dtdx->forward == 1) ? 'checked' : '' }} value="1" name="roles[dtdx][forward]"/></td>
-                                        <td>Chuyển/Trả lại</td>
+                                        <td>{{$model->level == 'X' ? 'Chuyển' : 'Duyệt'}}</td>
                                     </tr>
+                                    @if($model->level !='X')
                                     <tr>
                                         <td><input type="checkbox" {{ (isset($permission->dtdx->approve) && $permission->dtdx->approve == 1) ? 'checked' : '' }} value="1" name="roles[dtdx][approve]"/></td>
                                         <td>Duyệt</td>
                                     </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -158,12 +162,14 @@
                                         </tr>
                                         <tr>
                                             <td><input type="checkbox" {{ (isset($permission->ctdttx->forward) && $permission->ctdttx->forward == 1) ? 'checked' : '' }} value="1" name="roles[ctdttx][forward]"/></td>
-                                            <td>Chuyển/Trả lại</td>
+                                            <td>{{$model->level == 'X' ? 'Chuyển' : 'Duyệt'}}</td>
                                         </tr>
+                                        @if($model->level !='X')
                                         <tr>
                                             <td><input type="checkbox" {{ (isset($permission->ctdttx->approve) && $permission->ctdttx->approve == 1) ? 'checked' : '' }} value="1" name="roles[ctdttx][approve]"/></td>
                                             <td>Duyệt</td>
                                         </tr>
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -199,12 +205,14 @@
                                         </tr>
                                         <tr>
                                             <td><input type="checkbox" {{ (isset($permission->ctdtdx->forward) && $permission->ctdtdx->forward == 1) ? 'checked' : '' }} value="1" name="roles[ctdtdx][forward]"/></td>
-                                            <td>Chuyển/Trả lại</td>
+                                            <td>{{$model->level == 'X' ? 'Chuyển' : 'Duyệt'}}</td>
                                         </tr>
+                                        @if($model->level !='X')
                                         <tr>
                                             <td><input type="checkbox" {{ (isset($permission->ctdtdx->approve) && $permission->ctdtdx->approve == 1) ? 'checked' : '' }} value="1" name="roles[ctdtdx][approve]"/></td>
                                             <td>Duyệt</td>
                                         </tr>
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>

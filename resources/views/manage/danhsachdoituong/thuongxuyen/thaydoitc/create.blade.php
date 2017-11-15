@@ -77,6 +77,7 @@
                     <!-- BEGIN FORM-->
                     {!! Form::open(['url'=>'thaydoitctx', 'id' => 'create_thaydoitctx', 'class'=>'horizontal-form']) !!}
                         <meta name="csrf-token" content="{{ csrf_token() }}" />
+                    <input type="hidden" value="{{$value['pltrocapm']}}" id="pltrocapm" name="pltrocapm">
                     <div class="form-body">
                         <div class="row">
                             {!! Form::hidden('mahoso',$value['mahoso'],array('id' => 'mahoso', 'class' => 'form-control','readonly'))!!}
@@ -145,7 +146,7 @@
                                 </div>
                             </div>
                             <input type="hidden" value="{{$value['matrocap']}}" id="matrocapm" name="matrocapm">
-                            <input type="hidden" value="{{$value['pltrocapm']}}" id="pltrocapm" name="pltrocapm">
+
                         </div>
                         @else
                         <div class="row">
