@@ -137,12 +137,14 @@
                                     <a href="{{url('hosoxinhuongtx/'.$tt->mahoso)}}" target="_blank" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Thông tin hồ sơ</a>
                                     @if(canDuyet($tt->trangthaihoso))
                                         @if($tt->trangthaihoso == 'Chờ duyệt')
-                                            @if($tt->plxinhuong == 'Mới')
-                                                <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Duyệt</button>
-                                                <button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
-                                                    Trả lại</button>
-                                            @else
-                                                <button type="button" onclick="getIdNhanHs('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#nhanhs-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Nhận hồ sơ</button>
+                                            @if(can('dttx','approve'))
+                                                @if($tt->plxinhuong == 'Mới')
+                                                    <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Duyệt</button>
+                                                    <button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                        Trả lại</button>
+                                                @else
+                                                    <button type="button" onclick="getIdNhanHs('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#nhanhs-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Nhận hồ sơ</button>
+                                                @endif
                                             @endif
                                         @endif
                                         @if($tt->trangthaihoso == 'Bị trả lại')

@@ -359,6 +359,25 @@ class DsDoiTuongTxController extends Controller
             $xa = Towns::where('maxa',$model->maxa)->first()->tenxa;
             $loaitc = DmTroCapTx::where('matrocap',$model->matrocap)->first();
             $loaidt = PlTroCapTx::where('maloai',$model->pltrocap)->first()->tenloai;
+            $ttxinhuong = HoSoXinHuongTx::where('mahoso',$model->mahoso)
+                ->where('trangthaihoso','Đã duyệt')
+                ->get();
+            $ttdichuyen = HoSoDiChuyenNtTx::where('mahoso',$model->mahoso)
+                ->where('trangthaihoso','Đã duyệt')
+                ->get();
+            foreach($ttdichuyen as $tt){
+                $modelhuyen = Districts::where('mahuyen',$tt->mahuyendichuyen)->first();
+                $modelxa = Towns::where('maxa',$tt->maxadichuyen)->first();
+                $tt->noidichuyen = $modelxa->tenxa.'-'.$modelhuyen->tenhuyen;
+            }
+            $ttthaydoi = HoSoThayDoiTcTx::where('mahoso',$model->mahoso)
+                ->where('trangthaihoso','Đã duyệt')
+                ->get();
+            foreach($ttthaydoi as $tt){
+                $modelpltc = PlTroCapTx::where('maloai',$tt->pltrocapm)->first();
+                $modeldmtc = DmTroCapTx::where('matrocap',$tt->matrocapm)->first();
+                $tt->tttctd = $modelpltc->tenloai.'-'.$modeldmtc->noidung.'-'.$modeldmtc->chitiet.'- Hệ số: '.$tt->hesom.'- Số tiền: '.number_format($tt->sotientcm);
+            }
 
             return view('manage.danhsachdoituong.thuongxuyen.show')
                 ->with('model',$model)
@@ -366,6 +385,9 @@ class DsDoiTuongTxController extends Controller
                 ->with('loaitc',$loaitc)
                 ->with('loaidt',$loaidt)
                 ->with('attachments',$this->getAttachments($model))
+                ->with('ttxinhuong',$ttxinhuong)
+                ->with('ttdichuyen',$ttdichuyen)
+                ->with('ttthaydoi',$ttthaydoi)
                 ->with('pageTitle', 'Thông tin đối tượng trợ cấp thường xuyên');
         } else
             return view('errors.notlogin');

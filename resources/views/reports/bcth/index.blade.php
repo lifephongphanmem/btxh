@@ -30,6 +30,7 @@
                                 <li><a href="{{url('reports/hscqdbtxh')}}" target="_blank"> Danh sách hồ sơ có quyết định trợ cấp</a></li>
                                 <li><a href="{{url('reports/hsdctc')}}" target="_blank"> Danh sách hồ sơ điều chỉnh trợ cấp</a></li>
                                 <li><a href="{{url('reports/dscttcht')}}" target="_blank"> Danh sách chi trả trợ cấp hàng tháng</a></li>
+                                <!--li><a data-target="#BC1-thoai-confirm" data-toggle="modal">Báo cáo tổng hợp hồ sơ kê khai giá (theo đơn vị chủ quản)</a></li-->
                             </ol>
                         </div>
                     </div>

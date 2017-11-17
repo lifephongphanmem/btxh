@@ -40,8 +40,8 @@ Route::patch('users/{id}','UsersController@update');
 Route::get('users/{id}/permission','UsersController@permission');
 Route::post('users/permission','UsersController@uppermission');
 Route::post('users/delete','UsersController@destroy');
-Route::get('users/lock/{ids}','UsersController@lockuser');
-Route::get('users/unlock/{ids}','UsersController@unlockuser');
+Route::get('users/lock/{ids}/{pl}','UsersController@lockuser');
+Route::get('users/unlock/{ids}/{pl}','UsersController@unlockuser');
 
 Route::get('users/print/pl={pl}','UsersController@prints');
 //EndUsers

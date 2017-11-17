@@ -274,7 +274,7 @@ class UsersController extends Controller
             return view('errors.notlogin');
     }
 
-    public function lockuser($ids)
+    public function lockuser($ids,$pl)
     {
 
         $arrayid = explode('-', $ids);
@@ -283,11 +283,11 @@ class UsersController extends Controller
             $model->status = "Vô hiệu";
             $model->save();
         }
-        return redirect('users');
+        return redirect('users?&level='.$pl);
 
     }
 
-    public function unlockuser($ids)
+    public function unlockuser($ids,$pl)
     {
         $arrayid = explode('-', $ids);
         foreach ($arrayid as $id) {
@@ -295,7 +295,7 @@ class UsersController extends Controller
             $model->status = "Kích hoạt";
             $model->save();
         }
-        return redirect('users');
+        return redirect('users?&level='.$pl);
 
     }
 

@@ -31,7 +31,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Mã huyện<span class="require">*</span></label>
-                                    {!!Form::text('mahuyen', null, array('id' => 'mahuyen','class' => 'form-control required','autofocus'=>'autofocus'))!!}
+                                    <label class="form-control">{{$model->mahuyen}}</label>
                                 </div>
                             </div>
                             <!--/span-->

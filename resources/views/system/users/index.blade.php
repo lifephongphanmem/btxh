@@ -31,7 +31,7 @@
         function multiLock() {
 
             var ids = getSelectedCheckboxes();
-            var pl = $('#phanloai').val();
+            var pl = $('#select_level').val();
             if(ids == '') {
                 $('#btnMultiLockUser').attr('data-target', '#notid-modal-confirm');
             }else {
@@ -44,7 +44,7 @@
         function multiUnLock() {
 
             var ids = getSelectedCheckboxes();
-            var pl = $('#phanloai').val();
+            var pl = $('#select_level').val();
             if(ids == '') {
                 $('#btnMultiUnLockUser').attr('data-target', '#notid-modal-confirm');
             }else {

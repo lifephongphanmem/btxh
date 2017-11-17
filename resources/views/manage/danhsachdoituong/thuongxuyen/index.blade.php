@@ -113,7 +113,9 @@
                     <div class="caption">
                     </div>
                     <div class="actions">
+                        @if(can('dttx','create'))
                         <a href="{{url('danhsachdoituongtx/'.$trocap.'/create')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-plus"></i>&nbsp;Thêm mới</a>
+                        @endif
                     </div>
                 </div>
 
@@ -192,7 +194,9 @@
                                 <td>
                                     <a href="{{url('danhsachdoituongtx/'.$tt->id)}}" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                     @if(canEdit($tt->trangthaihoso))
+                                        @if(can('dttx','edit'))
                                         <a href="{{url('danhsachdoituongtx/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                        @endif
                                         @if($tt->trangthaihoso == 'Chờ chuyển')
                                             @if(can('dttx','forward'))
                                             <button type="button" onclick="getIdXinHuong('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#xinhuong-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;

@@ -45,7 +45,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Mã xã<span class="require">*</span></label>
-                                        {!!Form::text('maxa', null, array('id' => 'maxa','class' => 'form-control required','autofocus'=>'autofocus'))!!}
+                                        <label class="form-control">{{$model->maxa}}</label>
                                     </div>
                                 </div>
                                 <!--/span-->

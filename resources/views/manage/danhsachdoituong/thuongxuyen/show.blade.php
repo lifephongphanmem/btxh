@@ -38,17 +38,27 @@
                             </li>
                             <li>
                                 <a href="#tab_2" data-toggle="tab">
-                                    Thông tin thay đổi</a>
+                                    Thông tin giấy tờ đính kèm</a>
                             </li>
                             <li>
                                 <a href="#tab_3" data-toggle="tab">
-                                    Thông tin giấy tờ đính kèm</a>
+                                    Thông tin xin hưởng</a>
+                            </li>
+                            <li>
+                                <a href="#tab_4" data-toggle="tab">
+                                    Thông tin di chuyển</a>
+                            </li>
+                            <li>
+                                <a href="#tab_5" data-toggle="tab">
+                                    Thông tin thay đổi</a>
                             </li>
                         </ul>
                         <div class="tab-content">
                             @include('manage.danhsachdoituong.thuongxuyen.include.tthosoprofile')
-                            @include('manage.danhsachdoituong.thuongxuyen.include.ttthaydoiprofile')
                             @include('manage.danhsachdoituong.thuongxuyen.include.ttdinhkemprofile')
+                            @include('manage.danhsachdoituong.thuongxuyen.include.ttxinhuongprofile')
+                            @include('manage.danhsachdoituong.thuongxuyen.include.ttdichuyenprofile')
+                            @include('manage.danhsachdoituong.thuongxuyen.include.ttthaydoiprofile')
                         </div>
                     </div>
                 </div>

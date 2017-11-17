@@ -147,12 +147,14 @@
                                     <td style="text-align: center"><span class="label label-sm label-danger">Bị trả lại</span></td>
                                 @endif
                                 <td>
-                                    <a href="{{url('hosoxindungtctx/'.$tt->mahoso)}}" target="_blank" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Thông tin hồ sơ</a>
+                                    <a href="{{url('hosodichuyennttx/'.$tt->mahoso)}}" target="_blank" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Thông tin hồ sơ</a>
                                     @if(canDuyet($tt->trangthaihoso))
                                         @if($tt->trangthaihoso == 'Chờ duyệt')
+                                            @if(can('dttx','approve'))
                                             <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;Duyệt</button>
                                             <button type="button" onclick="getIdTraLai('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#tralai-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
                                                 Trả lại</button>
+                                            @endif
                                         @endif
                                             @if($tt->trangthaihoso == 'Bị trả lại')
                                                 <button type="button" data-target="#lydo-modal" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ShowLyDo('{{$tt->id}}}')" ><i class="fa fa-search"></i>&nbsp;Lý do trả lại</button>
