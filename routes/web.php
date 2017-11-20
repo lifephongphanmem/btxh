@@ -110,6 +110,8 @@ Route::resource('danhsachdoituongtxchodichuyen','DsDoiTuongTxChoDiChuyenControll
 
 Route::resource('danhsachdoituongtxchonhan','DanhSachDoiTuongTxChoNhanController');
 Route::post('danhsachdoituongtxchonhan/xinhuong','DanhSachDoiTuongTxChoNhanController@xinhuong');
+
+Route::resource('danhsachdoituongtxh','DsDoiTuongTxHController');
 //End danh sách đối tượng thường xuyên
 
 //Trợ cấp đối tượng thường xuyên

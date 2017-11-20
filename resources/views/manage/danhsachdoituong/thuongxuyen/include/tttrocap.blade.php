@@ -180,6 +180,7 @@
                 data: {
                     _token: CSRF_TOKEN,
                     noidung: $("#select_noidung option:selected" ).text(),
+                    pltrocap : $('#pltrocap').val()
                 },
                 dataType: 'JSON',
                 success: function (data) {

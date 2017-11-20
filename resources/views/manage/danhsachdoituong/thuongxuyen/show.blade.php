@@ -69,7 +69,7 @@
     <div class="row">
         <div style="text-align: center">
             <a href="{{url('danhsachdoituongtx?&trocap='.$model->pltrocap)}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
-            <a href="" class="btn btn-default"><i class="fa fa-search"></i>&nbsp;Lịch sử</a>
+            <a href="{{url('danhsachdoituongtxh?&mahoso='.$model->mahoso)}}" class="btn btn-default"><i class="fa fa-search"></i>&nbsp;Lịch sử</a>
         </div>
     </div>
 @stop

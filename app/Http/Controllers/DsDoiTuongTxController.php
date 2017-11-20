@@ -105,8 +105,7 @@ class DsDoiTuongTxController extends Controller
             }
             $selectloaidt = DmTroCapTx::where('pltrocap', $trocap)->get();
             $selectnoidungtc = $this->getNoiDungTcTx($trocap);
-            $selectchitiettc = $this->getChiTietTcTx($selectnoidungtc);
-
+            $selectchitiettc = $this->getChiTietTcTx($selectnoidungtc[0],$trocap);
             $loaitrocapdf = $selectloaidt->first()->matrocap;
             $loaitrocap = PlTroCapTx::where('maloai', $trocap)->first();
             return view('manage.danhsachdoituong.thuongxuyen.create')
@@ -138,8 +137,9 @@ class DsDoiTuongTxController extends Controller
         return $options;
     }
 
-    public function getChiTietTcTx($noidung){
-        $model = DmTroCapTx::where('noidung',$noidung)->get();
+    public function getChiTietTcTx($noidung,$trocap){
+        $model = DmTroCapTx::where('noidung',$noidung)
+            ->where('pltrocap',$trocap)->get();
         $options = array();
 
         foreach ($model as $tt) {
@@ -582,8 +582,9 @@ class DsDoiTuongTxController extends Controller
             $input['pltrocapm'] = isset($input['pltrocapm']) ? $input['pltrocapm'] : $tths->pltrocap;
             $value['pltrocapm'] =  $input['pltrocapm'];
             $selectloaidt = DmTroCapTx::where('pltrocap', $input['pltrocapm'])->get();
+
             $selectnoidungtc = $this->getNoiDungTcTx($input['pltrocapm']);
-            $selectchitiettc = $this->getChiTietTcTx($selectnoidungtc);
+            $selectchitiettc = $this->getChiTietTcTx($selectnoidungtc[0],$input['pltrocapm']);
 
             return view('manage.danhsachdoituong.thuongxuyen.thaydoitc.create')
                 ->with('value',$value)

@@ -8,6 +8,7 @@ use App\DnDvLt;
 use App\DnDvLtReg;
 use App\DonViDvVt;
 use App\DonViDvVtReg;
+use App\DsDoiTuongTx;
 use App\GeneralConfigs;
 use App\KhaiSinh;
 use App\Register;
@@ -26,9 +27,26 @@ class HomeController extends Controller
         if (Session::has('admin')) {
             if(session('admin')->sadmin == 'sa')
                 return redirect('cau_hinh_he_thong');
-            else
+            else {
+                if(session('admin')->level == 'T'){
+                    $hosotx = DsDoiTuongTx::count();
+                }elseif(session('admin')->level =='H'){
+                    $hosotx = DsDoiTuongTx::where('mahuyen',session('admin')->mahuyen)
+                    ->count();
+                }else{
+                    $hosotx = DsDoiTuongTx::where('mahuyen',session('admin')->mahuyen)
+                        ->where('maxa',session('admin')->maxa)
+                        ->count();
+                }
+                $array = '';
+                $array['hosotx'] = $hosotx;
+
+
+
                 return view('dashboard')
-                    ->with('pageTitle','Tổng quan');
+                    ->with('sl',$array)
+                    ->with('pageTitle', 'Tổng quan');
+            }
         }else
             return view('welcome');
 

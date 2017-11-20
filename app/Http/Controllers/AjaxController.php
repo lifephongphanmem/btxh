@@ -108,7 +108,8 @@ class AjaxController extends Controller
         $inputs = $request->all();
 
         if(isset($inputs['noidung'])){
-            $chitiets = DmTroCapTx::where('noidung',$inputs['noidung'])->get();
+            $chitiets = DmTroCapTx::where('noidung',$inputs['noidung'])
+                ->where('pltrocap',$inputs['pltrocap'])->get();
             $result['message'] = '<select name="select_chitiet" id="select_chitiet" class="form-control">';
             if(count($chitiets) > 0){
                 foreach($chitiets as $chitiet){
@@ -138,7 +139,8 @@ class AjaxController extends Controller
         $inputs = $request->all();
 
         if(isset($inputs['matrocap'])){
-            $tttrocap = DmTroCapTx::where('matrocap',$inputs['matrocap'])->first();
+            $tttrocap = DmTroCapTx::where('matrocap',$inputs['matrocap'])
+                ->first();
 
             $muctcchuan = getGeneralConfigs()['muctrocapchuan'];
             $sotien = $tttrocap->heso * $muctcchuan;
