@@ -114,6 +114,30 @@ class HoSoXinHuongTxController extends Controller
             return view('errors.notlogin');
     }
 
+    public function lydo(Request $request){
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if(!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+        //dd($request);
+        $inputs = $request->all();
+
+        if(isset($inputs['id'])){
+            $model = HoSoXinHuongTx::where('id',$inputs['id'])
+                ->first();
+            $result['message'] = '<div id="lydo" style="color: blue">'.$model->lydotralai.'</div>';
+            $result['status'] = 'success';
+        }
+        die(json_encode($result));
+    }
+
     public function nhanhs(Request $request){
         if (Session::has('admin')) {
             $inputs = $request->all();

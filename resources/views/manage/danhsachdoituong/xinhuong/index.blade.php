@@ -22,6 +22,15 @@
         function getId(id){
             document.getElementById("iddelete").value=id;
         }
+        function getIdTraLai(id){
+            document.getElementById("idtralai").value=id;
+        }
+        function getIdChuyen(id){
+            document.getElementById("idchuyen").value=id;
+        }
+        function getIdXinHuong(id){
+            document.getElementById("idxinhuong").value=id;
+        }
         function getIdDungTC(id){
             document.getElementById("iddungtc").value=id;
         }
@@ -92,24 +101,24 @@
 
 @section('content')
     <h3 class="page-title">
-        Danh sách đối tượng chi trả<small>&nbsp;thường xuyên</small>
+        Danh sách đối tượng chi trả<small>&nbsp;thường xuyên xin hưởng</small>
     </h3>
     <!-- END PAGE HEADER-->
     <div class="row">
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box">
-
+                @if(session('admin')->level == 'X')
                 <div class="portlet-title">
                     <div class="caption">
                     </div>
                     <div class="actions">
                         @if(can('dttx','create'))
-                        <a href="{{url('danhsachdoituongtx/'.$trocap.'/create')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-plus"></i>&nbsp;Thêm mới</a>
+                        <a href="{{url('danhsachdoituongxinhuongtctx/'.$trocap.'/create')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-plus"></i>&nbsp;Thêm mới</a>
                         @endif
                     </div>
                 </div>
-
+                @endif
                 <div class="portlet-body">
                     <div class="row mbm">
                         <div class="col-md-6">
@@ -173,9 +182,7 @@
                                 <td style="text-align: center">{{$tt->gioitinh}}</td>
                                 <td>{{$tt->trangthaihuong}}</td>
                                 <td style="text-align: center">{{getDayVn($tt->ngayhuong)}} {{$tt->ngaydunghuong != '' ? '- '.getDayVn($tt->ngaydunghuong) : ''}}</td>
-                                @if($tt->trangthaihoso == 'Đã duyệt')
-                                    <td style="text-align: center"><span class="label label-sm label-success">Đã duyệt</span></td>
-                                @elseif($tt->trangthaihoso == 'Chờ duyệt')
+                                @if($tt->trangthaihoso == 'Chờ duyệt')
                                     <td style="text-align: center"><span class="label label-sm label-warning">Chờ duyệt</span></td>
                                 @elseif($tt->trangthaihoso == 'Bị trả lại')
                                     <td style="text-align: center"><span class="label label-sm label-danger">Bị trả lại</span></td>
@@ -183,24 +190,29 @@
                                     <td style="text-align: center"><span class="label label-sm label-info">Chờ chuyển </span></td>
                                 @endif
                                 <td>
-                                    <a href="{{url('danhsachdoituongtx/'.$tt->id)}}" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
+                                    <a href="{{url('danhsachdoituongxinhuongtctx/'.$tt->id)}}" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                     @if(canEdit($tt->trangthaihoso))
                                         @if(can('dttx','edit'))
-                                        <a href="{{url('danhsachdoituongtx/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                        <a href="{{url('danhsachdoituongxinhuongtctx/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                         @endif
+                                        @if($tt->trangthaihoso == 'Chờ chuyển')
+                                            @if(can('dttx','forward'))
+                                            <button type="button" onclick="getIdXinHuong('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#xinhuong-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                Xin hưởng</button>
+                                            @endif
+                                        @endif
+                                        @if($tt->trangthaihoso == 'Bị trả lại')
+                                            @if(can('dttx','forward'))
+                                                <button type="button" onclick="getIdXinHuong('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#xinhuong-modal" data-toggle="modal"><i class="fa fa-mail-forward"></i>&nbsp;
+                                                    Xin hưởng</button>
+                                            @endif
+                                                <button type="button" data-target="#lydo-modal" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ShowLyDo('{{$tt->id}}}')" ><i class="fa fa-search"></i>&nbsp;Lý do trả lại</button>
+                                        @endif
+                                        @if($tt->trangthaihoso == 'Chờ chuyển')
                                         <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
                                             Xóa</button>
-                                    @endif
-                                    @if($tt->trangthaihoso == 'Đã duyệt' && session('admin')->level == 'X')
-                                        @if($tt->trangthaihuong == 'Đang hưởng')
-                                        <button type="button" onclick="getIdDungTC('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#stop-modal" data-toggle="modal"><i class="fa fa-stop"></i>&nbsp;
-                                            Dừng trợ cấp</button>
-                                        <button type="button" onclick="getIdDiChuyen('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#dichuyen-modal" data-toggle="modal"><i class="fa fa-send"></i>&nbsp;
-                                            Di chuyển</button>
-                                        <button type="button" onclick="getIdThayDoiTc('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#thaydoi-modal" data-toggle="modal"><i class="fa fa-exchange"></i>&nbsp;
-                                            Thay đổi trợ cấp</button>
-
                                         @endif
+
                                     @endif
                                 </td>
                             </tr>
@@ -222,7 +234,7 @@
     <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'danhsachdoituongtx/delete','id' => 'frm_delete'])!!}
+                {!! Form::open(['url'=>'danhsachdoituongxinhuongtctx/delete','id' => 'frm_delete'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Đồng ý xóa?</h4>
@@ -233,6 +245,58 @@
                     <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
                 </div>
                 {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="xinhuong-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url'=>'danhsachdoituongtx/xinhuong','id' => 'frm_xinhuong'])!!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý chuyển hồ sơ xin hưởng lên cấp trên?</h4>
+                </div>
+                <div class="modal-body" id="ttnhanhsedit">
+                    <!--div class="form-group">
+                        <label><b>Ngày chuyển</b></label>
+                        {!!Form::text('ngayxinhuong',date('d/m/Y'), array('id' => 'ngayxinhuong','data-inputmask'=>"'alias': 'date'",'class' => 'form-control required'))!!}
+                    </div-->
+                    <div class="form-group">
+                        <label><b>Nội dung xin hưởng</b></label>
+                        <textarea id="ndxinhuong" class="form-control required" name="ndxinhuong" cols="30" rows="5"></textarea>
+                    </div>
+                    <input type="hidden" name="idxinhuong" id="idxinhuong">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn blue" onclick="ClickXinHuong()">Đồng ý</button>
+                        <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+
+    <div class="modal fade" id="lydo-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Lý do bị trả lại?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><b>Lý do trả lại</b></label>
+                        <div id="lydo"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
             </div>
             <!-- /.modal-content -->
         </div>
@@ -358,9 +422,8 @@
 
     <script>
         $(function(){
-
             $('#select_trocap,#select_huyen,#select_xa').change(function() {
-                var current_path_url = '/danhsachdoituongtx?';
+                var current_path_url = '/danhsachdoituongxinhuongtctx?';
                 var trocap = '&trocap='+$('#select_trocap').val();
                 if($(this).attr('id') == 'select_huyen'){
                     $('#select_xa').val('all');
@@ -375,42 +438,6 @@
                 }
                 var url = current_path_url+trocap+mahuyen+maxa;
                 window.location.href = url;
-            });
-            $('select[name="mahuyendichuyen"]').change(function(){
-                if($(this).val() != 'all'){
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                    $.ajax({
-                        url: '/getXasDiChuyen/',
-                        type: 'GET',
-                        data: {
-                            _token: CSRF_TOKEN,
-                            mahuyen: $(this).val()
-                        },
-                        dataType: 'JSON',
-                        success: function (data) {
-                            if(data.status == 'success')
-                                $('select[name="maxadichuyen"]').replaceWith(data.message);
-                        }
-                    });
-                } else {
-                    $('select[name="maxa"]').val('all');
-                }
-            });
-            $('select[name="plthaydoi"]').change(function(){
-                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    url: '/getPlthaydoitctx/',
-                    type: 'GET',
-                    data: {
-                        _token: CSRF_TOKEN,
-                        plthaydoi: $(this).val()
-                    },
-                    dataType: 'JSON',
-                    success: function (data) {
-                        if(data.status == 'success')
-                            $('#pltcm').replaceWith(data.message);
-                    }
-                });
             });
         })
     </script>

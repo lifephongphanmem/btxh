@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CongDan;
+use App\Districts;
 use App\DmDvQl;
 use App\DnDvLt;
 use App\DnDvLtReg;
@@ -12,6 +13,7 @@ use App\DsDoiTuongTx;
 use App\GeneralConfigs;
 use App\KhaiSinh;
 use App\Register;
+use App\Towns;
 use App\Users;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
@@ -76,5 +78,48 @@ class HomeController extends Controller
         }else
             return view('errors.forgotpass-errors');
 
+    }
+
+    public function thongtindonvi(){
+        if (Session::has('admin')) {
+            if(session('admin')->level == 'H'){
+                $model = Districts::where('mahuyen',session('admin')->mahuyen)
+                    ->first();
+            }else{
+                $model = Towns::where('maxa',session('admin')->maxa)
+                    ->first();
+            }
+            return view('system.thongtindonvi.index')
+                ->with('model',$model)
+                ->with('pageTitle','Thông tin đơn vị');
+        }else
+            return view('errors.notlogin');
+    }
+
+    public function thongtindonviedit($id){
+        if (Session::has('admin')) {
+            if(session('admin')->level == 'H'){
+                $model = Districts::find($id);
+            }else{
+                $model = Towns::find($id);
+            }
+            return view('system.thongtindonvi.edit')
+                ->with('model',$model)
+                ->with('pageTitle','Thông tin đơn vị chỉnh sửa');
+        }else
+            return view('errors.notlogin');
+    }
+    public function thongtindonviupdate(Request $request,$id){
+        if (Session::has('admin')) {
+            $input = $request->all();
+            if(session('admin')->level == 'H'){
+                $model = Districts::find($id);
+            }else{
+                $model = Towns::find($id);
+            }
+            $model->update($input);
+            return redirect('thongtindonvi');
+        }else
+            return view('errors.notlogin');
     }
 }

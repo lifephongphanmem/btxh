@@ -24,6 +24,10 @@ Route::patch('cau_hinh_he_thong/{id}','GeneralConfigsController@update');
 Route::get('/setting','GeneralConfigsController@setting');
 Route::post('/setting','GeneralConfigsController@upsetting');
 
+Route::get('thongtindonvi','HomeController@thongtindonvi');
+Route::get('thongtindonvi/{id}/edit','HomeController@thongtindonviedit');
+Route::patch('thongtindonvi/{id}','HomeController@thongtindonviupdate');
+
 //Users
 Route::get('login','UsersController@login');
 Route::post('signin','UsersController@signin');
@@ -70,6 +74,7 @@ Route::resource('hosoxinhuongtx','HoSoXinHuongTxController');
 Route::post('hosoxinhuongtx/duyet','HoSoXinHuongTxController@duyet');
 Route::post('hosoxinhuongtx/tralai','HoSoXinHuongTxController@tralai');
 Route::post('hosoxinhuongtx/nhanhs','HoSoXinHuongTxController@nhanhs');
+Route::get('ajax/lydotlxhtc','HoSoXinHuongTxController@lydo');
 
     //Hồ sơ xin dừng
 Route::resource('hosoxindungtctx','HoSoDungTcTxController');
@@ -103,6 +108,12 @@ Route::post('danhsachdoituongtx/dungtc','DsDoiTuongTxController@dungtc');
 Route::post('danhsachdoituongtx/dichuyen','DsDoiTuongTxController@dichuyen');
 Route::post('danhsachdoituongtx/thaydoitc','DsDoiTuongTxController@thaydoitc');
 Route::post('thaydoitctx','DsDoiTuongTxController@createthaydoitc');
+
+Route::resource('danhsachdoituongxinhuongtctx','DsDoiTuongXhTxTxController');
+Route::get('danhsachdoituongxinhuongtctx/{trocap}/create','DsDoiTuongXhTxTxController@create');
+Route::post('danhsachdoituongxinhuongtctx/delete','DsDoiTuongXhTxTxController@destroy');
+Route::post('danhsachdoituongtx/xinhuong','DsDoiTuongXhTxTxController@xinhuong');
+Route::get('ajax/lydodttx','DsDoiTuongXhTxTxController@lydo');
 
 Route::resource('danhsachdoituongdungtctx','DsDoiTuongDungTcTxController');
 

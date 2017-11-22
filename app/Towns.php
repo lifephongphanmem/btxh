@@ -20,6 +20,8 @@ class Towns extends Model
         'website',
         'chucvunguoiky',
         'nguoiky',
-        'nguoithuchien'
+        'nguoithuchien',
+        'thutruong',
+        'ketoan',
     ];
 }

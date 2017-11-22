@@ -332,6 +332,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             @if(canGeneral('dttx','index'))
                                 @if(can('dttx','index'))
                                     <li><a href="{{url('hosoxinhuongtx')}}">Thường xuyên</a></li>
+                                    <li><a href="{{url('danhsachdoituongxinhuongtctx')}}">Đối tượng xin hưởng</a></li>
                                 @endif
                             @endif
                         </ul>
@@ -391,7 +392,16 @@ License: You must have a valid license purchased only from themeforest(the above
                         </a>
                     </li>
                     @endif
+                    @if(session('admin')->level == 'X' || session('admin')->level == 'H')
+                    <li>
+                        <a href="{{url('thongtindonvi')}}">
+                            <i class="icon-settings"></i>
+                            <span class="title">Thông tin đơn vị</span>
+                        </a>
+                    </li>
+                    @endif
                 @endif
+
                 @if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa')
                 <li>
                     <a href="">

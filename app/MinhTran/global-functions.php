@@ -574,4 +574,24 @@ function getXaHuyen($model){
     }
     return $model;
 }
+
+function getAttachments($model) {
+
+    $attachments = array();
+
+    $attachment = array();
+
+    for ($i = 1; $i <= 10; $i++) {
+        $ipf = 'ipf' . $i;
+        if ($model->$ipf != null) {
+            $ipt = 'ipt' . $i;
+            $attachment['ipt'] = $model->$ipt;
+            $attachment['ipf'] = $model->$ipf;
+            $attachments[] = $attachment;
+        }
+    }
+
+    return $attachments;
+}
+
 ?>

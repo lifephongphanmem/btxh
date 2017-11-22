@@ -48,6 +48,24 @@
                 $("#frm_tralai").unbind('submit').submit();
             }
         }
+        function ShowLyDo(id) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            //alert(id);
+            $.ajax({
+                url: 'ajax/lydotlxhtc',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if(data.status == 'success') {
+                        $('#lydo').replaceWith(data.message);
+                    }
+                }
+            })
+        }
     </script>
 @stop
 

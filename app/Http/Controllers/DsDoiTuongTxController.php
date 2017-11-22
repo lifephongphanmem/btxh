@@ -60,10 +60,7 @@ class DsDoiTuongTxController extends Controller
             }
 
             //Hồ sơ đã duyệt mới hiển thị lên cấp H và T nhìn thấy và chỉnh sửa còn hồ sơ còn lại xã nhìn th
-            if (session('admin')->level == 'T' || session('admin')->level == 'H') {
-                $model = $model->where('trangthaihoso', 'Đã duyệt');
-            }else
-                $model = $model ->whereIn('trangthaihoso',['Chờ chuyển','Chờ duyệt','Bị trả lại','Đã duyệt']);
+            $model = $model->where('trangthaihoso', 'Đã duyệt');
 
             //Loại các TH hs bị chuyển đi, dừng hưởng
             //$model = $model->where('trangthaihoso','Dừng hưởng');
