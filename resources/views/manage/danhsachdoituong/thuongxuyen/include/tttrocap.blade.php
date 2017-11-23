@@ -1,6 +1,5 @@
 <div id="tab2" class="tab-pane active" >
     <div class="form-horizontal">
-        @if(session('admin')->level == 'T' || session('admin')=='H')
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -98,7 +97,6 @@
                 </div>
             </div>
         </div>
-        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">

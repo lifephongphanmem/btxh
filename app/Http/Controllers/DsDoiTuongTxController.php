@@ -160,13 +160,7 @@ class DsDoiTuongTxController extends Controller
             if(isset( $inputs['sotientc']))
                 $inputs['sotientc'] = getMoneyToDb($inputs['sotientc']);
 
-            if(session('admin')->level == 'T') {
-                $inputs['trangthaihoso'] = 'Đã duyệt';
-                $inputs['trangthaihuong'] = 'Đang hưởng';
-            }else {
-                $inputs['trangthaihoso'] = 'Chờ chuyển';
-                $inputs['trangthaihuong'] = 'Chờ xét duyệt';
-            }
+            $inputs['trangthaihoso'] = 'Đã duyệt';
 
             //UpLoadAvatar
             if(isset($inputs['avatar'])){
