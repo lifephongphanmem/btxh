@@ -22,6 +22,17 @@ class HoSoDungTcTx extends Model
         'lydodunghuong',
         'pldunghuong',
         'mahuyen',
-        'maxa'
+        'maxa',
+        'pltrocap',
+        'matrocap',
+        'sotientc',
+        'donviqd',
+        'diadanhqd',
+        'ngayqd',
+        'cancuqd',
+        'xettheototrinh',
+        'chucdanhkyqd',
+        'chucdanhqd',
+        'soqd'
     ];
 }

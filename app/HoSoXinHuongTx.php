@@ -22,6 +22,17 @@ class HoSoXinHuongTx extends Model
         'sosotc',
         'plxinhuong',
         'maxa',
-        'mahuyen'
+        'mahuyen',
+        'pltrocap',
+        'matrocap',
+        'sotientc',
+        'donviqd',
+        'diadanhqd',
+        'ngayqd',
+        'cancuqd',
+        'xettheototrinh',
+        'chucdanhkyqd',
+        'chucdanhqd',
+        'soqd'
     ];
 }

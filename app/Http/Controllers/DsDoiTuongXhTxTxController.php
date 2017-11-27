@@ -387,6 +387,9 @@ class DsDoiTuongXhTxTxController extends Controller
                 $modelxh->hoten = $model->hoten;
                 $modelxh->ngaysinh = $model->ngaysinh;
                 $modelxh->diachi = $model->diachi;
+                $modelxh->pltrocap = $model->pltrocap;
+                $modelxh->matrocap = $model->matrocap;
+                $modelxh->sotientc = $model->sotientc;
                 $modelxh->ndxinhuong = $inputs['ndxinhuong'];
                 $modelxh->trangthaihoso = 'Chờ duyệt';
                 $modelxh->plxinhuong = 'Mới';

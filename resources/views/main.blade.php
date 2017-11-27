@@ -281,6 +281,13 @@ License: You must have a valid license purchased only from themeforest(the above
                         <span class="selected"></span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{url('maubieutokhai')}}">
+                        <i class="fa fa-file-o fa-fw"></i>
+                        <span class="title">Mẫu biểu tờ khai</span>
+                    </a>
+                </li>
+
                 @if(session('admin')->sadmin != 'sa')
                     <li>
                         <a href="">
@@ -332,7 +339,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             @if(canGeneral('dttx','index'))
                                 @if(can('dttx','index'))
                                     <li><a href="{{url('hosoxinhuongtx')}}">Thường xuyên</a></li>
+                                    @if(session('admin')->level == 'X')
                                     <li><a href="{{url('danhsachdoituongxinhuongtctx')}}">Đối tượng xin hưởng</a></li>
+                                    @endif
                                 @endif
                             @endif
                         </ul>
@@ -347,7 +356,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             @if(canGeneral('dttx','index'))
                                 @if(can('dttx','index'))
                                     <li><a href="{{url('hosoxindungtctx')}}">Thường xuyên</a></li>
+                                    @if(session('admin')->level == 'X')
                                     <li><a href="{{url('danhsachdoituongdungtctx')}}">Đối tượng dừng trợ cấp</a></li>
+                                    @endif
                                 @endif
                             @endif
                         </ul>
@@ -363,8 +374,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                 @if(can('dttx','index'))
 
                                     <li><a href="{{url('hosodichuyennttx')}}">Nội tỉnh</a></li>
+                                    @if(session('admin')->level == 'X')
                                     <li><a href="{{url('danhsachdoituongtxchodichuyen')}}">Đối tượng chờ di chuyển</a></li>
                                     <li><a href="{{url('danhsachdoituongtxchonhan')}}">Đối tượng chờ nhận</a></li>
+                                    @endif
                                 @endif
                             @endif
                         </ul>

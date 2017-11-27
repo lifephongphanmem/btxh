@@ -76,6 +76,7 @@ Route::post('hosoxinhuongtx/tralai','HoSoXinHuongTxController@tralai');
 Route::post('hosoxinhuongtx/nhanhs','HoSoXinHuongTxController@nhanhs');
 Route::get('ajax/lydotlxhtc','HoSoXinHuongTxController@lydo');
 
+
     //Hồ sơ xin dừng
 Route::resource('hosoxindungtctx','HoSoDungTcTxController');
 Route::post('hosoxindungtctx/duyet','HoSoDungTcTxController@duyet');
@@ -139,6 +140,10 @@ Route::post('trocapdoituongtxct/duyet','TcDoiTuongTxCtController@duyet');
 
 //End Trợ cấp đối tượng thường xuyên
 
+//Mẫu biểu tờ khai
+Route::resource('maubieutokhai','MauBieuToKhaiController');
+//End mẫu biểu tờ khai
+
 
 
 
@@ -153,4 +158,6 @@ Route::get('reports/hsxhbtxh','ReportsController@hsxhbtxh');
 Route::get('reports/hscqdbtxh','ReportsController@hscqdbtxh');
 Route::get('reports/hsdctc','ReportsController@hsdctc');
 Route::get('reports/dscttcht','ReportsController@dscttcht');
+Route::get('reports/quyetdinhhuong/{id}','ReportsQdController@qdxinhuong');
+Route::get('reports/quyetdinhdungtc/{id}','ReportsQdController@qddungtc');
 // </editor-fold>//End Reports

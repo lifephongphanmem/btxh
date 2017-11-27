@@ -246,7 +246,8 @@ class DsDoiTuongTxController extends Controller
             $huyendf = $model->mahuyen;
             $xadf = $model->maxa;
             $selectnoidungtc = $this->getNoiDungTcTx($model->pltrocap);
-            $selectchitiettc = $this->getChiTietTcTx($selectnoidungtc);
+
+            $selectchitiettc = $this->getChiTietTcTx($selectnoidungtc[0],$model->pltrocap);
 
             $tttrocap = DmTroCapTx::where('matrocap',$model->matrocap)->first();
             $loaitrocap = PlTroCapTx::where('maloai', $model->pltrocap)->first();

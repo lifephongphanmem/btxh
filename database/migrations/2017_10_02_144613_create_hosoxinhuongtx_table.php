@@ -27,8 +27,18 @@ class CreateHosoxinhuongtxTable extends Migration
             $table->string('qdhuong')->nullable();
             $table->string('sosotc')->nullable();
             $table->string('plxinhuong')->nullable();
+            $table->string('pltrocap')->nullable();
+            $table->string('matrocap')->nullable();
+            $table->string('sotientc')->nullable();
+            $table->string('donviqd')->nullable();
+            $table->string('diadanhqd')->nullable();
+            $table->string('chucdanhqd')->nullable();
+            $table->text('cancuqd')->nullable();
+            $table->text('xettheototrinh')->nullable();
+            $table->string('chucdanhkyqd')->nullable();
             $table->string('maxa')->nullable();
             $table->string('mahuyen')->nullable();
+            $table->string('soqd')->nullable();
             $table->timestamps();
         });
     }

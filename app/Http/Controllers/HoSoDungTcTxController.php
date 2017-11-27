@@ -132,4 +132,25 @@ class HoSoDungTcTxController extends Controller
         die(json_encode($result));
     }
 
+    public function edit($id){
+        if (Session::has('admin')) {
+            $model = HoSoDungTcTx::find($id);
+            return view('manage.hosodungtc.doituongtx.edit')
+                ->with('model',$model)
+                ->with('pageTitle','Chỉnh sửa thông tin quyết định dừng hưởng');
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function update(Request $request,$id){
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $model = HoSoDungTcTx::find($id);
+            $inputs['ngayqd'] = getDateToDb($inputs['ngayqd']);
+            $model->update($inputs);
+            return redirect('hosoxindungtctx');
+        } else
+            return view('errors.notlogin');
+    }
+
 }

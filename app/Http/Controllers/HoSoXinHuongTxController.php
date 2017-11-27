@@ -153,4 +153,28 @@ class HoSoXinHuongTxController extends Controller
         } else
             return view('errors.notlogin');
     }
+
+    public function edit($id){
+        if (Session::has('admin')) {
+            $model = HoSoXinHuongTx::find($id);
+            return view('manage.hosoxinhuong.doituongtx.edit')
+                ->with('model',$model)
+                ->with('pageTitle','Thông tin in quyết định');
+
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function update(Request $request,$id){
+        if (Session::has('admin')) {
+
+            $inputs = $request->all();
+            $inputs['ngayqd'] = getDateToDb($inputs['ngayqd']);
+            $model = HoSoXinHuongTx::find($id);
+            $model->update($inputs);
+            return redirect('hosoxinhuongtx');
+
+        } else
+            return view('errors.notlogin');
+    }
 }

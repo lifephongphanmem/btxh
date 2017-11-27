@@ -168,6 +168,12 @@
                                         @if($tt->trangthaihoso == 'Bị trả lại')
                                             <button type="button" data-target="#lydo-modal" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ShowLyDo('{{$tt->id}}}')" ><i class="fa fa-search"></i>&nbsp;Lý do trả lại</button>
                                         @endif
+                                        @if($tt->trangthaihoso == 'Đã duyệt')
+                                            @if($tt->plxinhuong == 'Mới')
+                                            <a href="{{url('hosoxinhuongtx/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs" ><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa quyết định</a>
+                                            <a href="{{url('reports/quyetdinhhuong/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-print"></i>&nbsp;In quyết định</a>
+                                            @endif
+                                        @endif
                                     @endif
                                 </td>
                             </tr>
