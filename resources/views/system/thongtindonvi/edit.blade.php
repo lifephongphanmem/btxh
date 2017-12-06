@@ -45,7 +45,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Địa chỉ<span class="require">*</span></label>
-                                    {!!Form::text('diachi', null, array('id' => 'diachi','class' => 'form-control'))!!}
+                                    {!!Form::text('diachi', null, array('id' => 'diachi','class' => 'form-control required'))!!}
                                 </div>
                             </div>
                         </div>
@@ -67,13 +67,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Thủ trưởng đơn vị<span class="require">*</span></label>
-                                    {!!Form::text('thutruong', null, array('id' => 'thutruong','class' => 'form-control '))!!}
+                                    {!!Form::text('thutruong', null, array('id' => 'thutruong','class' => 'form-control required'))!!}
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Kế toán<span class="require">*</span></label>
-                                    {!!Form::text('ketoan', null, array('id' => 'ketoan','class' => 'form-control'))!!}
+                                    {!!Form::text('ketoan', null, array('id' => 'ketoan','class' => 'form-control required'))!!}
                                 </div>
                             </div>
                         </div>
@@ -81,10 +81,25 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Người lập biểu<span class="require">*</span></label>
-                                    {!!Form::text('nguoithuchien', null, array('id' => 'nguoithuchienb','class' => 'form-control'))!!}
+                                    {!!Form::text('nguoithuchien', null, array('id' => 'nguoithuchienb','class' => 'form-control required'))!!}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Chức vụ ký<span class="require">*</span></label>
+                                    {!!Form::text('chucvuky', null, array('id' => 'chucvuky','class' => 'form-control required'))!!}
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Họ tên ngời ký<span class="require">*</span></label>
+                                    {!!Form::text('hotennguoiky', null, array('id' => 'hotennguoiky','class' => 'form-control required'))!!}
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- END FORM-->

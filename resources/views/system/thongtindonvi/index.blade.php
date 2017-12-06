@@ -95,6 +95,24 @@
                                 </span>
                             </td>
                         </tr>
+                        <tr>
+                            <td style="width:15%">
+                                <b>Chức vụ ký</b>
+                            </td>
+                            <td style="width:35%">
+                                <span class="text-muted">{{$model->chucvuky}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:15%">
+                                <b>Họ tên người ký</b>
+                            </td>
+                            <td style="width:35%">
+                                <span class="text-muted">{{$model->hotennguoiky}}
+                                </span>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

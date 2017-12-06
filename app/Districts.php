@@ -21,5 +21,7 @@ class Districts extends Model
         'nguoithuchien',
         'thutruong',
         'ketoan',
+        'chucvuky',
+        'hotennguoiky'
     ];
 }

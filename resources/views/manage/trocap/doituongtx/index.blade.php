@@ -45,21 +45,26 @@
             <div class="portlet box">
 
                 <div class="portlet-title">
-                    <div class="caption">
-                    </div>
                     <div class="actions">
+                        @if(can('ctdttx','create'))
                         <a href="{{url('trocapdoituongtx/'.$trocap.'/create')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-plus"></i>&nbsp;Lập danh sách chi trả trợ cấp</a>
+                        @endif
                     </div>
                 </div>
 
                 <div class="portlet-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <select id="select_trocap" class="form-control">
+                            <!--select id="select_trocap" class="form-control">
                                 <option value="NXH" {{$trocap == 'NXH' ? 'selected' : ''}}>Đối tượng BTXH sống trong nhà xã hội tại cộng đồng do xã, phường quản lý</option>
                                 <option value="CD" {{$trocap == 'CD' ? 'selected' : ''}}>Đối tượng BTXH tại cộng đồng do xã, phường quản lý</option>
                                 <option value="CS" {{$trocap == 'CS' ? 'selected' : ''}}>Đối tượng bảo trợ xã hội sống trong các cơ sở bảo trợ xã hội</option>
-                            </select>
+                            </select-->
+                            {!! Form::select(
+                            'select_trocap',
+                            $modelpltrocap, $trocap,
+                            array('id' => 'select_trocap', 'class' => 'form-control'))
+                            !!}
                         </div>
                         <div class="col-md-2">
                             <select name="select_thang" id="select_thang" class="form-control">
@@ -118,10 +123,13 @@
                                 <td>
                                     <a href="{{url('trocapdoituongtx/'.$tt->id)}}" class="btn btn-default btn-xs mbs"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                     @if(canEdit($tt->trangthai))
-
+                                        @if(can('ctdttx','edit'))
                                         <a href="{{url('trocapdoituongtx/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                        @endif
+                                        @if(can('ctdttx','delete'))
                                         <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
                                             Xóa</button>
+                                        @endif
                                         @if($tt->trangthai == 'Chờ duyệt')
                                         <button type="button" onclick="getIdDuyet('{{$tt->id}}}')" class="btn btn-default btn-xs mbs" data-target="#duyet-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;
                                             Duyệt</button>

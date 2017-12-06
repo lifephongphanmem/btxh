@@ -65,6 +65,7 @@ class DsDoiTuongTxController extends Controller
             //Loại các TH hs bị chuyển đi, dừng hưởng
             //$model = $model->where('trangthaihoso','Dừng hưởng');
             $model = $model->get();
+            $modelpltrocap = getpldoituong();
 
             return view('manage.danhsachdoituong.thuongxuyen.index')
                 ->with('huyens', $huyens)
@@ -73,6 +74,7 @@ class DsDoiTuongTxController extends Controller
                 ->with('maxa', $xa)
                 ->with('trocap', $trocap)
                 ->with('model',$model)
+                ->with('modelpltrocap',$modelpltrocap)
                 ->with('pageTitle', 'Danh sách đối tượng trợ cấp thường xuyên');
         }else
             return view('errors.notlogin');
@@ -567,6 +569,10 @@ class DsDoiTuongTxController extends Controller
             $value['plthaydoi'] = $input['plthaydoi'];
             $value['maxa'] = $tths->maxa;
             $value['mahuyen'] = $tths->mahuyen;
+            $value['pltrocap'] = $tths->pltrocap;
+            $value['matrocap'] = $tths->matrocap;
+            $value['heso'] = $tths->heso;
+            $value['sotientc'] = $tths->sotientc;
             if($input['plthaydoi'] == 'Thay đổi mức trợ cấp'){
                 $value['sotientc'] = getGeneralConfigs()['muctrocapchuan'] * $value['heso'];
                 $value['matrocap'] = $tths->matrocap;
@@ -595,6 +601,7 @@ class DsDoiTuongTxController extends Controller
             $input['ngayyc'] = date('Y-m-d');
             $input['trangthaihoso'] = 'Chờ duyệt';
             $input['sotientcm'] = getMoneyToDb($input['sotientcm']);
+            $input['sotientc'] = getMoneyToDb($input['sotientc']);
             $model = new HoSoThayDoiTcTx();
             if($model->create($input)){
                 $modelhs = DsDoiTuongTx::where('mahoso',$input['mahoso'])->first();

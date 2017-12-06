@@ -154,10 +154,10 @@ Route::resource('maubieutokhai','MauBieuToKhaiController');
 
 //<editor-fold defaultstate="collapsed" desc="--Reports--">
 Route::get('reports','ReportsController@index');
-Route::get('reports/hsxhbtxh','ReportsController@hsxhbtxh');
-Route::get('reports/hscqdbtxh','ReportsController@hscqdbtxh');
-Route::get('reports/hsdctc','ReportsController@hsdctc');
-Route::get('reports/dscttcht','ReportsController@dscttcht');
+Route::post('reports/hsxhbtxh','ReportsController@hsxhbtxh');
+Route::post('reports/hscqdbtxh','ReportsController@hscqdbtxh');
+Route::post('reports/hsdctc','ReportsController@hsdctc');
+Route::post('reports/dscttcht','ReportsController@dscttcht');
 Route::get('reports/quyetdinhhuong/{id}','ReportsQdController@qdxinhuong');
 Route::get('reports/quyetdinhdungtc/{id}','ReportsQdController@qddungtc');
 // </editor-fold>//End Reports

@@ -176,7 +176,7 @@
                         <!--div class="table-toolbar">
 
                         </div-->
-                    <table class="table table-striped table-bordered table-hover" id="sample_3">
+                        <table class="table table-striped table-bordered table-hover" id="sample_3">
                         <thead>
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
@@ -225,9 +225,14 @@
                         @endforeach
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+        <div style="text-align: center">
+            <a href="{{url('trocapdoituongtx?&trocap='.$modeltc->pltrocap.'&thang='.$modeltc->thang.'&nam='.$modeltc->nam)}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+            <!--button type="submit" class="btn green"  onclick="validateForm()"><i class="fa fa-check"></i> Hoàn thành</button-->
         </div>
     </div>
 

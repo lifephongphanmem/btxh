@@ -19,7 +19,7 @@
         }
 
         td, th {
-            padding: 10px;
+            padding: 5px;
         }
         p{
             padding: 5px;
@@ -36,7 +36,7 @@
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="text-transform: uppercase;">
-            <b></b><br>
+            <b>{{$modeldv->tenxa}}</b><br>
             --------<br>
         </td>
         <td>
@@ -47,6 +47,7 @@
 </table>
 
 <p style="text-align: center; font-weight: bold; font-size: 16px;">DANH SÁCH CHI TRẢ TRỢ CẤP HÀNG THÁNG</p>
+<p style="text-align: center">{{$thang !='all' ? 'Tháng '. $thang.' Năm '.$nam : 'Năm '.$nam}}</p>
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;">
     <tr>
@@ -66,26 +67,44 @@
         <th>Ký</th>
         <th>Họ tên</th>
     </tr>
+    @foreach($modelct as $key=>$tt)
+        <tr>
+            <td>{{$key+1}}</td>
+            <td>{{$tt->hoten}}</td>
+            <td>{{$tt->namsinh}}</td>
+            <td>{{$tt->qdhuong}}</td>
+            <td></td>
+            <td>{{$tt->sotientc}}</td>
+            <td>{{$tt->thangtl}}</td>
+            <td>{{number_format($tt->sotientl)}}</td>
+            <td>{{number_format($tt->sotientc - $tt->sotientl)}}</td>
+            <td></td>
+            <td></td>
+        </tr>
+    @endforeach
 
 </table>
 <table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin:0px auto; text-align: center;">
     <tr>
-        <td style="text-align: left;" width="50%">
-
-        </td>
+        <td style="text-align: left;" width="50%"></td>
         <td style="text-align: center;" width="50%">
-            Ngày tháng năm<br>
+            <i>Ngày... tháng.... năm 20.. </i>
         </td>
     </tr>
     <tr>
-        <td style="text-align: center">NGƯỜI LẬP</td>
-        <td style="text-align: center"><b>CHỨC VỤ KÝ</b></td>
+        <td style="text-align: center"><b>NGƯỜI LẬP BIỂU</b></td>
+        <td style="text-align: center"><b>{{$modeldv->chucvuky}}</b></td>
     </tr>
     <tr>
         <td style="text-align: center"><i>(Ký, ghi rõ họ tên, chức vụ)</i></td>
         <td style="text-align: center"><i>(Ký, ghi rõ họ tên, đóng dấu</i></td>
     </tr>
-
+</table>
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin:80px auto; text-align: center;">
+    <tr>
+        <td style="text-align: center;" width="50%"><b>{{$modeldv->nguoithuchien}}</b></td>
+        <td style="text-align: center;" width="50%"><b>{{$modeldv->hotennguoiky}}</b></td>
+    </tr>
 </table>
 </body>
 </html>

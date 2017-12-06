@@ -33,11 +33,12 @@ class TcDoiTuongTxController extends Controller
                         ->where('trangthai','Duyệt');
                 }
             }
-
             $model = $model->get();
             $model = getXaHuyen($model);
+            $modelpltrocap = getpldoituong();
             return view('manage.trocap.doituongtx.index')
                 ->with('model',$model)
+                ->with('modelpltrocap',$modelpltrocap)
                 ->with('trocap',$inputs['trocap'])
                 ->with('thang',$inputs['thang'])
                 ->with('nam',$inputs['nam'])

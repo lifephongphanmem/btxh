@@ -96,19 +96,19 @@ function getPermissionDefault($level) {
         ),
         'ctdttx' => array(
             'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
+            'create' => 0,
+            'edit' => 0,
+            'delete' => 0,
             'approve'=> 0,
-            'forward'=> 1,
+            'forward'=> 0,
         ),
         'ctdtdx' => array(
             'index' => 1,
-            'create' => 1,
-            'edit' => 1,
-            'delete' => 1,
+            'create' => 0,
+            'edit' => 0,
+            'delete' => 0,
             'approve'=> 0,
-            'forward'=> 1,
+            'forward'=> 0,
         ),
         'baocao' => array(
             'index' => 1,
@@ -302,6 +302,19 @@ function getQuocTichSelectOptions() {
     foreach ($quoctichs as $quoctich) {
 
         $options[$quoctich->quoctich] = $quoctich->quoctich;
+    }
+    return $options;
+}
+
+function getpldoituong() {
+
+    $pltrocaps = \App\PlTroCapTx::all();
+
+    $options = array();
+
+    foreach ($pltrocaps as $pltrocap) {
+
+        $options[$pltrocap->maloai] = $pltrocap->tenloai;
     }
     return $options;
 }

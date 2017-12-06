@@ -163,6 +163,11 @@
                         @endif
                         <input type="hidden" name="maxa" id="maxa" value="{{$value['maxa']}}">
                         <input type="hidden" name="mahuyen" id="mahuyen" value="{{$value['mahuyen']}}">
+
+                        <input type="hidden" name="pltrocap" id="pltrocap" value="{{$value['pltrocap']}}">
+                        <input type="hidden" name="matrocap" id="matrocap" value="{{$value['matrocap']}}">
+                        <input type="hidden" name="heso" id="heso" value="{{$value['heso']}}">
+                        <input type="hidden" name="sotientc" id="sotientc" value="{{$value['sotientc']}}">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">

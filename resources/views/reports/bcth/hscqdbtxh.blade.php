@@ -8,7 +8,6 @@
         body {
             font: normal 14px/16px time, serif;
         }
-
         table, p {
             width: 98%;
             margin: auto;
@@ -19,7 +18,7 @@
         }
 
         td, th {
-            padding: 10px;
+            padding: 5px;
         }
         p{
             padding: 5px;
@@ -36,7 +35,7 @@
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="text-transform: uppercase;">
-            <b></b><br>
+            <b>{{$modeldv->tenxa}}</b><br>
             --------<br>
         </td>
         <td>
@@ -47,38 +46,53 @@
 </table>
 
 <p style="text-align: center; font-weight: bold; font-size: 16px;">HỒ SƠ ĐƯỢC DUYỆT HƯỞNG TRỢ CẤP XÃ HỘI</p>
+<p style="text-align: center">{{$thang !='all' ? 'Tháng '. $thang.' Năm '.$nam : 'Năm '.$nam}}</p>
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;">
     <tr>
-        <th>STT</th>
-        <th>Tên chủ hộ<br>(cá nhân)</th>
-        <th>Ngày sinh</th>
-        <th>Giới tính</th>
-        <th>Địa chỉ</th>
-        <th>Đối tượng</th>
-        <th>Hệ số</th>
-        <th>Số tiền</th>
+        <th style="text-align: center;width: 2%">STT</th>
+        <th style="text-align: center;width: 10%">Tên chủ hộ<br>(cá nhân)</th>
+        <th style="text-align: center;width: 5%">Ngày sinh</th>
+        <!--th>Giới tính</th-->
+        <th style="text-align: center;width: 10%">Địa chỉ</th>
+        <th style="text-align: center;width: 20%">Đối tượng</th>
+        <th style="text-align: center;width: 5%">Hệ số</th>
+        <th style="text-align: center;width: 5%">Số tiền</th>
     </tr>
+    @foreach($model as $key=>$tt)
+        <tr>
+            <td style="text-align: center">{{$key+1}}</td>
+            <td>{{$tt->hoten}}</td>
+            <td  style="text-align: center">{{getDayVn($tt->ngaysinh)}}</td>
+            <td>{{$tt->diachi}}</td>
+            <td>{{$tt->tttctd}}</td>
+            <td  style="text-align: center">{{$tt->heso}}</td>
+            <td  style="text-align: right">{{number_format($tt->sotientc)}}</td>
+        </tr>
+    @endforeach
 
 </table>
 <table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin:0px auto; text-align: center;">
     <tr>
-        <td style="text-align: left;" width="50%">
-
-        </td>
+        <td style="text-align: left;" width="50%"></td>
         <td style="text-align: center;" width="50%">
-            Ngày tháng năm<br>
+            <i>Ngày... tháng.... năm 20.. </i>
         </td>
     </tr>
     <tr>
-        <td style="text-align: center">NGƯỜI LẬP</td>
-        <td style="text-align: center"><b>CHỨC VỤ KÝ</b></td>
+        <td style="text-align: center"><b>NGƯỜI LẬP BIỂU</b></td>
+        <td style="text-align: center"><b>{{$modeldv->chucvuky}}</b></td>
     </tr>
     <tr>
         <td style="text-align: center"><i>(Ký, ghi rõ họ tên, chức vụ)</i></td>
         <td style="text-align: center"><i>(Ký, ghi rõ họ tên, đóng dấu</i></td>
     </tr>
-
+</table>
+<table width="96%" border="0" cellspacing="0" cellpadding="0" style="margin:80px auto; text-align: center;">
+    <tr>
+        <td style="text-align: center;" width="50%"><b>{{$modeldv->nguoithuchien}}</b></td>
+        <td style="text-align: center;" width="50%"><b>{{$modeldv->hotennguoiky}}</b></td>
+    </tr>
 </table>
 </body>
 </html>

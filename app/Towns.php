@@ -23,5 +23,7 @@ class Towns extends Model
         'nguoithuchien',
         'thutruong',
         'ketoan',
+        'chucvuky',
+        'hotennguoiky'
     ];
 }

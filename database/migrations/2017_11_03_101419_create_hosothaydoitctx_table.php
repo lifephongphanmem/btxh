@@ -19,9 +19,15 @@ class CreateHosothaydoitctxTable extends Migration
             $table->string('mahoso')->nullable();
             $table->string('hoten')->nullable();
             $table->date('ngaysinh')->nullable();
+            $table->string('gioitinh')->nullable();
             $table->string('diachi')->nullable();
             $table->string('plthaydoi')->nullable();
             $table->string('noidungthaydoi')->nullable();
+
+            $table->string('pltrocap')->nullable();
+            $table->string('matrocap')->nullable();
+            $table->string('heso')->nullable();
+            $table->string('sotientc')->nullable();
             $table->string('pltrocapm')->nullable();
             $table->string('matrocapm')->nullable();
             $table->string('hesom')->nullable();

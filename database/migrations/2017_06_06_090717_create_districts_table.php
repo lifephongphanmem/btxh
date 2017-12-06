@@ -25,6 +25,8 @@ class CreateDistrictsTable extends Migration
             $table->string('thutruong')->nullable();
             $table->string('ketoan')->nullable();
             $table->string('nguoithuchien')->nullable();
+            $table->string('chucvuky')->nullable();
+            $table->string('hotennguoiky')->nullable();
             $table->timestamps();
         });
     }

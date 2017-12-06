@@ -18,6 +18,7 @@
             TableManaged.init();
         });
     </script>
+
 @stop
 
 @section('content')
