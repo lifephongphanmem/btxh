@@ -57,6 +57,7 @@ class DanhSachDoiTuongTxChoNhanController extends Controller
             $model = $model->where('trangthaihoso','Chờ nhận di chuyển')
                 ->OrWhere('trangthaihoso','Chờ duyệt nhận di chuyển');
             $model = $model->get();
+            $modelpltrocap = getpldoituong();
 
             return view('manage.danhsachdoituong.chonhan.index')
                 ->with('huyens', $huyens)
@@ -65,6 +66,7 @@ class DanhSachDoiTuongTxChoNhanController extends Controller
                 ->with('maxa', $xa)
                 ->with('trocap', $trocap)
                 ->with('model',$model)
+                ->with('modelpltrocap',$modelpltrocap)
                 ->with('pageTitle', 'Danh sách đối tượng thường xuyên chờ nhận');
         }else
             return view('errors.notlogin');

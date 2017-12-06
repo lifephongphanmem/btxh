@@ -60,6 +60,7 @@ class DsDoiTuongXhTxTxController extends Controller
                 $model = $model ->whereIn('trangthaihoso',['Chờ chuyển','Chờ duyệt','Bị trả lại']);
 
             $model = $model->get();
+            $modelpltrocap = getpldoituong();
 
             return view('manage.danhsachdoituong.xinhuong.index')
                 ->with('huyens', $huyens)
@@ -68,6 +69,7 @@ class DsDoiTuongXhTxTxController extends Controller
                 ->with('maxa', $xa)
                 ->with('trocap', $trocap)
                 ->with('model',$model)
+                ->with('modelpltrocap',$modelpltrocap)
                 ->with('pageTitle', 'Danh sách đối tượng trợ cấp thường xuyên xin hưởng');
         }else
             return view('errors.notlogin');

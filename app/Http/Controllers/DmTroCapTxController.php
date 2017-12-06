@@ -17,10 +17,12 @@ class DmTroCapTxController extends Controller
             $trocap = isset($inputs['trocap']) ? $inputs['trocap'] : 'NXH';
             $model = DmTroCapTx::where('pltrocap',$trocap)
                 ->get();
+            $modelpltrocap = getpldoituong();
 
             return view('system.dmtrocap.thuongxuyen.index')
                 -> with('model', $model)
                 ->with('trocap',$trocap)
+                ->with('modelpltrocap',$modelpltrocap)
                 -> with('pageTitle','Danh mục trợ cấp thường xuyên');
         }else
             return view('errors.notlogin');

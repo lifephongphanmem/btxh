@@ -56,7 +56,7 @@ class DsDoiTuongDungTcTxController extends Controller
             //Loại các TH hs bị chuyển đi, dừng hưởng
             $model = $model->where('trangthaihoso','Dừng trợ cấp');
             $model = $model->get();
-
+            $modelpltrocap = getpldoituong();
 
             return view('manage.danhsachdoituong.dungtc.index')
                 ->with('huyens', $huyens)
@@ -65,6 +65,7 @@ class DsDoiTuongDungTcTxController extends Controller
                 ->with('maxa', $xa)
                 ->with('trocap', $trocap)
                 ->with('model',$model)
+                ->with('modelpltrocap',$modelpltrocap)
                 ->with('pageTitle', 'Danh sách đối tượng dừng trợ cấp thường xuyên');
         }else
             return view('errors.notlogin');

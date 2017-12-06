@@ -42,11 +42,16 @@
                 <div class="portlet-body">
                     <div class="row mbm">
                         <div class="col-md-6">
-                            <select id="select_trocap" class="form-control">
+                            <!--select id="select_trocap" class="form-control">
                                 <option value="NXH" {{$trocap == 'NXH' ? 'selected' : ''}}>Đối tượng BTXH sống trong nhà xã hội tại cộng đồng do xã, phường quản lý</option>
                                 <option value="CD" {{$trocap == 'CD' ? 'selected' : ''}}>Đối tượng BTXH tại cộng đồng do xã, phường quản lý</option>
                                 <option value="CS" {{$trocap == 'CS' ? 'selected' : ''}}>Đối tượng bảo trợ xã hội sống trong các cơ sở bảo trợ xã hội</option>
-                            </select>
+                            </select-->
+                            {!! Form::select(
+                            'select_trocap',
+                            $modelpltrocap, $trocap,
+                            array('id' => 'select_trocap', 'class' => 'form-control'))
+                            !!}
                         </div>
                         @if(session('admin')->level == 'T')
                             <div class="col-md-3">
