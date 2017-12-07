@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <table class="table table-striped table-bordered table-hover table-dulieubang" >
                 <thead>
                 <tr>
                     <th style="text-align: center" width="2%">STT</th>

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <table class="table table-striped table-bordered table-hover table-dulieubang">
                 <thead>
                 <tr>
                     <th style="text-align: center" width="2%">STT</th>
@@ -21,7 +21,7 @@
                         <td width="30%">{{$tt->ndxinhuong}}</td>
                         <td width="10%" style="text-align: center">{{$tt->plxinhuong}}</td>
                         <td width="40%">{{$tt->qdhuong.' - '.getDayVn($tt->ngayhuong)}}<br>
-                        <a href="{{url('reports/quyetdinhhuong/'.$tt->id)}}">In quyết định</a> </td>
+                        <a href="{{url('reports/quyetdinhhuong/'.$tt->id)}}" target="_blank">In quyết định</a> </td>
                     </tr>
                 @endforeach
                 </tbody>
